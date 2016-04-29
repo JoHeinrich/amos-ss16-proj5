@@ -6,9 +6,9 @@ compiler:
   - gcc
 # Build steps
 script:
-	- docker/build
-	- docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-	- docker pull amosproj5/amosbuildimage:v1
-	- docker build -t amosproj5/amosbuildimage:v1 docker/
-	- docker push amosproj5/amosbuildimage:v1
+  - docker/build
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker pull amosproj5/amosbuildimage:v1
+  - docker build -t amosproj5/amosbuildimage:v1 docker/
+  - docker push amosproj5/amosbuildimage:v1
 
