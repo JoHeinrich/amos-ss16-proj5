@@ -1,0 +1,22 @@
+sudo: required
+
+services:
+  - docker
+# Enable C++ support
+language: cpp
+# Compiler selection
+compiler:
+  - clang
+  - gcc
+# Build steps
+script:
+  - mkdir build
+  - cd build
+  - cmake .. && make
+  - cd ..
+  - docker/build
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker pull amosproj5/amosbuildimage:v1
+  - docker build -t amosproj5/amosbuildimage:v1 docker/
+  - docker push amosproj5/amosbuildimage:v1
+
