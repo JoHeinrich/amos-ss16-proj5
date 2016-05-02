@@ -10,9 +10,11 @@ compiler:
   - gcc
 # Install dependencies
 before_install:
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test
   - sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1397BC53640DB551
   - sudo apt-get -qq update
-  - sudo apt-get install libhdf5-serial-dev
+  - sudo apt-get install -y hdf5-tools libhdf5-cpp-11
+#  - sudo apt-get install -y libhdf5-serial-dev libhdf5-dev
 #  - sudo apt-get install -y libhdf5-cpp-11 hdf5-tools libprotobuf9v5
 # Build steps
 script:
