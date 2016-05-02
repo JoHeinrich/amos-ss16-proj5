@@ -10,9 +10,8 @@ compiler:
   - gcc
 # Install dependencies
 before_install:
-#  - sudo apt-get -qq update
+  - sudo apt-get -qq update
 #  - sudo apt-get install -y libhdf5-cpp-11 hdf5-tools libprotobuf9v5
-  - sudo apt-get install -y gedit
 # Build steps
 script:
   - mkdir build
