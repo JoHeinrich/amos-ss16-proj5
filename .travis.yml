@@ -12,7 +12,8 @@ compiler:
 before_install:
   - sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1397BC53640DB551
   - sudo apt-get -qq update
-  - sudo apt-get install -y libhdf5-cpp-11 hdf5-tools libprotobuf9v5
+  - sudo apt-get install libhdf5-serial-dev
+#  - sudo apt-get install -y libhdf5-cpp-11 hdf5-tools libprotobuf9v5
 # Build steps
 script:
   - mkdir build
