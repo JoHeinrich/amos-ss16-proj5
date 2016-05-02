@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 MAINTAINER Daniel Goetz <daniel.dg.goetz@fau.de>
 RUN apt-get update && apt-get install -y \ 
  libprotobuf8 \
