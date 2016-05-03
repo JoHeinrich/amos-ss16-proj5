@@ -1,4 +1,4 @@
-#include <string.h>
+		#include <string.h>
 #include <cstring>
 #include <unistd.h>
 #include <stdio.h>
@@ -73,7 +73,11 @@ int main (int argc, char* argv[])
     cout << "Object detected" << endl;
     cout << "Warn other cars" << endl;
 
+    sleep(2);
+
     write(listenFd, "Caution! Object detected", strlen("Caution! Object detected"));
+
+    sleep(2);
 
     cout << "Warning sent" << endl;
 }
