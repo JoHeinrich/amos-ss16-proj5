@@ -8,6 +8,12 @@ language: cpp
 compiler:
   - clang
   - gcc
+# Install dependencies
+before_install:
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1397BC53640DB551
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libhdf5-serial-dev libhdf5-dev libprotobuf8 hdf5-tools
 # Build steps
 script:
   - mkdir build
