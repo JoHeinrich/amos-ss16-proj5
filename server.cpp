@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     bool loop = false;
     struct sockaddr_in svrAdd, clntAdd;
     
-    pthread_t threadA[3];
+    pthread_t thread;
     
     if (argc < 2)
     {
@@ -66,8 +66,6 @@ int main(int argc, char* argv[])
     listen(listenFd, 5);
     
     len = sizeof(clntAdd);
-    
-    int noThread = 0;
 
     cout << "Listening" << endl;
 
@@ -84,9 +82,9 @@ int main(int argc, char* argv[])
         cout << "Connection successful" << endl;
     }
        
-    pthread_create(&threadA[0], NULL, task1, NULL); 
+    pthread_create(&thread, NULL, task1, NULL); 
     
-    pthread_join(threadA[0], NULL);
+    pthread_join(thread, NULL);
     
     
     
@@ -94,7 +92,6 @@ int main(int argc, char* argv[])
 
 void *task1 (void *dummyPt)
 {
-    cout << "Thread No: " << pthread_self() << endl;
     char test[300];
     bzero(test, 301);
     
