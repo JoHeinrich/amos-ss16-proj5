@@ -1,0 +1,41 @@
+// base file  : SensorNearData\MFC\CameraInterface.h
+package pb.Grid;
+
+import "header.proto"; 
+
+message MsgCameraImage
+{
+  optional  Header header                  =   1;                    //  common message header
+  optional  uint32    m_ImageCounter          =  20 [default = 0];      //  Image Counter
+  optional  sint32    m_ImageWidth            =  30 [default = 1176];   //  Image Width
+  optional  sint32    m_ImageHeight           =  40 [default = 640];    //  Image Height
+  optional  sint32    m_ImageShiftU           =  50 [default = 0];      //  partial Image shift to Original Image
+  optional  sint32    m_ImageShiftV           =  60 [default = 0];      //  partial Image shift to Original Image
+  optional  sint32    m_OImageWidth           =  70 [default = 1176];   //  Original Image Size (Width)
+  optional  sint32    m_OImageHeight          =  80 [default = 640];    //  Original Image Size (Height)
+  optional  sint32    m_ImagerSizeU           =  90 [default = 1280];   //  Imager Size U(Width) --> Could be moved in Calibration data
+  optional  sint32    m_ImagerSizeV           = 100 [default = 960];    //  Imager Size V(Height) --> Could be moved in Calibration data
+  optional  uint32    m_OImagePattern         = 110 [default = 3];      //  0 = Gray
+                                                                        //  1 = BGGR
+                                                                        //  2 = RGGB
+                                                                        //  3 = GRBG (MFC [Status 02.02.2011])
+                                                                        //  4 = GBRG
+                                                                        //  5 = RCCC
+                                                                        //  6 = CRCC
+                                                                        //  7 = CCRC
+                                                                        //  8 = CCCR  
+  optional  bool      m_ImageCompressed       = 120 [default = true];   //  False = Not Compressed,
+                                                                        //  True = Compressed
+  optional  uint32    m_ImageCompressionType  = 130 [default = 2];      //  0 = No Compression,
+                                                                        //  1 = BIT-Shift without any lost bits
+  optional  uint32    m_ImageType             = 140 [default = 3];      //  0 = 12-Bit RAW-Image,
+                                                                        //  1 = 11 Bit Disparity Overview Map ( DDDDDDD|PPP|V ),
+                                                                        //  2 = 11 Bit Disparity Lupe Map ( DDDDDD|PPPP|V )
+                                                                        //  3 =  8 Bit MSB RAW Image
+  optional  uint32    m_BytePerPixel          = 150 [default = 1];      //  Number of Byte per Pixel
+  optional  uint32    m_BitPerPixel           = 160 [default = 8];      //  Number of Bit per Pixel (CSF = 10 Bit, MFC = 12)
+  optional  bytes     m_ImagePayload          = 170;                    //  Payload
+                                                                        //  default = m_ImageWidth*m_ImageHeight*m_BytePerPixel
+  optional  bytes     mBmpImage               = 180;                    //  contains image in bmp-format
+                                                                        //  default = CalcBmpBufferSize(1176, 640)
+}
