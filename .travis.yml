@@ -24,6 +24,7 @@ before_install:
   - make check
   - sudo make install
   - sudo ldconfig
+  - cd ..
 # Build steps
 script:
   - mkdir build
