@@ -9,13 +9,13 @@ file(GLOB_RECURSE sources "./src/*.cpp")
 file(GLOB_RECURSE headers "./src/*.h")
 
 #opencv
-find_package( OpenCV )
-if(OpenCV_FOUND)
-include_directories( ${OpenCV_INCLUDE_DIRS} )
-set(LINK_LIBS ${LINK_LIBS} ${OpenCV_LIBS})
-else(OpenCV_FOUND)
-message(SEND_ERROR "OpenCV not found")
-endif(OpenCV_FOUND)
+#find_package( OpenCV )
+#if(OpenCV_FOUND)
+#include_directories( ${OpenCV_INCLUDE_DIRS} )
+#set(LINK_LIBS ${LINK_LIBS} ${OpenCV_LIBS})
+#else(OpenCV_FOUND)
+#message(SEND_ERROR "OpenCV not found")
+#endif(OpenCV_FOUND)
 
 
 #hdf5

@@ -23,12 +23,12 @@ int main(int argc, const char** argv)
 				return main0();
 			case 1:
 				return main1(argc,argv);
-            		case 2:
-                		return main2(argc, argv);
-			case 3:
+            case 2:
+                return main2(argc, argv);
+            /*case 3:
 				return main3(argc, argv);
 			case 4:
-				return main4(argc, argv);
+                return main4(argc, argv);*/
 			default:
 				std::cout<<"Max ControlIndex is 1\n";
 		}
