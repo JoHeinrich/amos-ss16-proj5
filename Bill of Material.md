@@ -4,7 +4,7 @@
 This file provides the basic information about project structure, technical tools, third party software and the build process.
 
 ### About project
-This project contains four parts: Input, Object Detection(or Image Processing), Scenario Analysation and Communication. Input part does the preprocessing of the data like HDF5 and output the corresponding images. Objec
+This project contains four parts: Input(or Messaging), Object Detection(or Image Processing), Scenario Analysation and Communication. Input part does the preprocessing of the data like HDF5 and output the corresponding images. Object Detection part gives out the spatial information of detected objects. Scenario Analysation part chooses the appropriate scene for further analysations. Communication part does the information exchanging between cars.
 
 ### Technical information about project
 ##### Programming Language:
