@@ -26,7 +26,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "msg_cameraimage_reader.h"
+#include "messaging/msg_cameraimage_reader.h"
 
 using namespace std;
 

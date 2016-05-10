@@ -7,7 +7,7 @@ int main(int argc, const char** argv)
 	if(argc <= 1)
 	{
 		
-        std::cerr << "Usage:  " << argv[0] << " MAIN_INDEX \n 1: hdf5\n 2: protobuf\n 3: human detector" << std::endl;
+        std::cerr << "Usage:  " << argv[0] << " MAIN_INDEX \n 0: hdf5\n 1: protobuf\n 2: human detector" << std::endl;
 	}
 	else
 	{

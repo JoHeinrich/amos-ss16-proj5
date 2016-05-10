@@ -23,7 +23,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "MainHeader.h"
+#include "../MainHeader.h"
 
 #ifdef OLD_HEADER_FILENAME
 #include <iostream.h>
