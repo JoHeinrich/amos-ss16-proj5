@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include "MainHeader.h"
 
-int main(int argc, char** argv)
+int main(int argc, const char** argv)
 {
 	if(argc <= 1)
 	{
 		
-		std::cerr << "Usage:  " << argv[0] << " MAIN_INDEX \n 1: hdf5\n 2: protobuf" << std::endl;
+        std::cerr << "Usage:  " << argv[0] << " MAIN_INDEX \n 1: hdf5\n 2: protobuf\n 3: human detector" << std::endl;
 	}
 	else
 	{
@@ -23,6 +23,8 @@ int main(int argc, char** argv)
 				return main0();
 			case 1:
 				return main1(argc,argv);
+            case 2:
+                return main2(argc, argv);
 			default:
 				std::cout<<"Max ControlIndex is 1\n";
 		}

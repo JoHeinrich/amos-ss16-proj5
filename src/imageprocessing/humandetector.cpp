@@ -22,6 +22,7 @@
 //
 
 #include <opencv2/opencv.hpp>
+#include "humandetector.h"
 
 using namespace cv;
 
@@ -30,7 +31,7 @@ void detectAndDisplay(cv::Mat image);
 const int KEY_ESC = 27;
 
 HOGDescriptor hog;
-int main (int argc, const char * argv[])
+int humandetector::mainHumanDetector (int argc, const char * argv[])
 {
     if(argc < 2){
         std::cout << "Usage " << argv[0] << " video.mp4" << std::endl;
