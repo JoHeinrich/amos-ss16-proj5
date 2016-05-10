@@ -6,7 +6,7 @@ MAINTAINER Daniel Goetz <daniel.dg.goetz@fau.de>
 # Install nginx and patch
 COPY assets /assets
 RUN echo "deb http://nginx.org/packages/mainline/ubuntu/ trusty nginx" > /etc/apt/sources.list.d/nginx.list \
-  && apt-key add assets/nginx_signing.key \
+  && apt-key add ../assets/nginx_signing.key \
   && apt-get -y update \
   && apt-get -y --no-install-recommends install nginx patch \
   && scrub_image
@@ -19,4 +19,4 @@ ADD assets/AutoDrive /home/AutoDrive
 
 ENV HTML_INDEX_FILE AutoDrive
 ADD assets/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
-RUN bash assets/finish_docker_build
+RUN bash ../assets/finish_docker_build
