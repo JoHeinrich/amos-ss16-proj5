@@ -24,13 +24,15 @@
 //
 
 using namespace std;
-#include "imageprocessing/humandetector.h"
+//#include "imageprocessing/humandetector.h"
 
 int main2(int argc, const char* argv[]) {
 
-    humandetector det;
+    //humandetector det;
 
-    int retValue = det.mainHumanDetector(argc, argv);
+    //int retValue = det.mainHumanDetector(argc, argv);
 
-    return retValue;
+    //return retValue;
+
+    return 0;
 }
