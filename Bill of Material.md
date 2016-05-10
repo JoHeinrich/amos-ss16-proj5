@@ -57,10 +57,10 @@ License:
 ```
 ### Build process
 ##### What we have done
--Make HDF5 work in Docker
--An app, which make HDF5 API accessible and can be built in cmake
--Build CMake of protobuf deserializer on Docker
--Implement detection example work in Open CV
--Communication between two processes with protobuf
+- Make HDF5 work in Docker
+- An app, which make HDF5 API accessible and can be built in cmake
+- Build CMake of protobuf deserializer on Docker
+- Implement detection example work in Open CV
+- Communication between two processes with protobuf
 
 ##### Next Step
