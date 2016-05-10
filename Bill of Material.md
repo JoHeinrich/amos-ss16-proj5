@@ -1,7 +1,7 @@
 # Inter-Car Communication
 
 ### About this file
-This file describes the project structure and provides technical information of 
+This file provides the basic information about project structure, technical tools, third party software and the build process.
 
 ### About project
 This project contains four parts: Input, Object Detection(or Image Processing), Scenario Analysation and Communication. Input part does the preprocessing of the data like HDF5 and output the corresponding images. Objec
