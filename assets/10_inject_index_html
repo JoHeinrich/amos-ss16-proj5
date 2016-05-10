@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# Copyright 2016 The Open Source Research Group,
+#                University of Erlangen-Nürnberg
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+set -ue
+
+# Inject strings from environment into template
+sed -i "s|%HTML_INDEX_TITLE%|${HTML_INDEX_TITLE:-[TITLE]}|g" /var/www/html/index.html
+sed -i "s|%HTML_INDEX_TEAM%|${HTML_INDEX_TEAM:-[TEAM]}|g" /var/www/html/index.html
+sed -i "s|%HTML_INDEX_FILE%|${HTML_INDEX_FILE}|g" /var/www/html/index.html
+
+# Fix context path
+if [[ -n ${CONTEXT_PATH:-} ]] && [[ "$CONTEXT_PATH" != "/" ]]; then
+  mv /var/www/{html,html.tmp}
+  mkdir -p "/var/www/html/$( dirname "$CONTEXT_PATH" )"
+  mv /var/www/html.tmp "/var/www/html/$CONTEXT_PATH"
+fi
+
+# Create log directory
+mkdir -p /var/log/nginx

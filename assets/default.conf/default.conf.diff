@@ -1,0 +1,15 @@
+*** default.conf.orig	Tue Apr  5 17:20:50 2016
+--- default.conf	Wed Apr 13 10:56:44 2016
+***************
+*** 7,11 ****
+  
+      location / {
+!         root   /usr/share/nginx/html;
+          index  index.html index.htm;
+      }
+--- 7,11 ----
+  
+      location / {
+!         root   /var/www/html;
+          index  index.html index.htm;
+      }

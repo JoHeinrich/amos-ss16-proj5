@@ -1,0 +1,52 @@
+*** nginx.conf.orig	2016-02-18 09:15:53.896185554 +0100
+--- nginx.conf	2016-04-11 17:44:55.708169916 +0200
+***************
+*** 1,2 ****
+--- 1,6 ----
++ #
++ # For documentation see:
++ # http://nginx.org/en/docs/ngx_core_module.html
++ #
+  
+  user  nginx;
+***************
+*** 6,9 ****
+--- 10,15 ----
+  pid        /var/run/nginx.pid;
+  
++ daemon  off;
++ 
+  
+  events {
+***************
+*** 18,22 ****
+      log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                        '$status $body_bytes_sent "$http_referer" '
+!                       '"$http_user_agent" "$http_x_forwarded_for"';
+  
+      access_log  /var/log/nginx/access.log  main;
+--- 24,29 ----
+      log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                        '$status $body_bytes_sent "$http_referer" '
+!                       '"$http_user_agent" "$http_x_forwarded_for" '
+!                       '${request_time}s (nginx) ${upstream_response_time}s (cgi)';
+  
+      access_log  /var/log/nginx/access.log  main;
+***************
+*** 27,31 ****
+      keepalive_timeout  65;
+  
+!     #gzip  on;
+  
+      include /etc/nginx/conf.d/*.conf;
+--- 34,43 ----
+      keepalive_timeout  65;
+  
+!     gzip  on;
+!     gzip_disable "msie6";
+! 
+!     ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
+!     ssl_prefer_server_ciphers on;
+!     ssl_dhparam /etc/nginx/dhparam.pem;
+  
+      include /etc/nginx/conf.d/*.conf;

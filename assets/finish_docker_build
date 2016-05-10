@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# Copyright 2016 The Open Source Research Group,
+#                University of Erlangen-Nürnberg
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+set -ue
+
+# Install nginx service run script
+mkdir -p /etc/service/nginx
+cp /assets/run /etc/service/nginx/run
+chmod +x /etc/service/nginx/run
+
+# Configure nginx
+# Create patch with: diff -C2 nginx.conf.orig nginx.conf > nginx.conf.diff
+readonly NGINX_CONF=/etc/nginx/nginx.conf
+cp $NGINX_CONF{,.orig}
+patch $NGINX_CONF < /assets/nginx.conf/nginx.conf.diff
+
+# Configure nginx default site
+# Create patch with: diff -C2 default.conf.orig default.conf > default.conf.diff
+readonly DEFAULT_CONF=/etc/nginx/conf.d/default.conf
+cp $DEFAULT_CONF{,.orig}
+patch $DEFAULT_CONF < /assets/default.conf/default.conf.diff
+
+# Install html
+mkdir -p /var/www
+cp -r /assets/html /var/www
+
+# Install startup script
+cp /assets/10_inject_index_html /etc/my_init.d/
