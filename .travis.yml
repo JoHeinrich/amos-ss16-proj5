@@ -6,7 +6,6 @@ services:
 language: cpp
 # Compiler selection
 compiler:
-  - clang
   - gcc
 # Install dependencies
 before_install:

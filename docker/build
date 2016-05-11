@@ -7,3 +7,4 @@ echo "Copying final artifact to docker assets directory"
 rm -rf ./docker/assets/AutoDrive
 mkdir -p ./docker/assets
 cp -v build/AutoDrive ./docker/assets/AutoDrive 
+cp -v build/src/StreamDecoder/ProtobufDeserializer/ProtobufDecoder ./docker/assets/ProtobufDecoder

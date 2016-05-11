@@ -23,7 +23,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "../MainHeader.h"
+
 
 #ifdef OLD_HEADER_FILENAME
 #include <iostream.h>
@@ -63,7 +63,7 @@ namespace patch
 
 
 
-int main0(void)
+int main(void)
 {
 
    // Try block to detect exceptions raised by any of the calls inside it
