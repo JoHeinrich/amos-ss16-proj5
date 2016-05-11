@@ -5,6 +5,6 @@ RUN apt-get update && apt-get install -y \
  libhdf5-serial-dev \
  libhdf5-dev \
  hdf5-tools
-ENV HTML_INDEX_FILE AutoDrive
-ADD assets/AutoDrive /home/AutoDrive
+ENV HTML_INDEX_FILE ProtobufDecoder
+ADD assets/ProtobufDecoder /home/ProtobufDecoder
 ADD assets/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
