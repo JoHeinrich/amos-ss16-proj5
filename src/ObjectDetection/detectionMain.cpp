@@ -26,7 +26,7 @@
 using namespace std;
 //#include "imageprocessing/humandetector.h"
 
-int main2(int argc, const char* argv[]) {
+int main(int argc, const char* argv[]) {
 
     //humandetector det;
 
