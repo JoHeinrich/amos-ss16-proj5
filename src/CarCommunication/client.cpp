@@ -21,7 +21,6 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "../MainHeader.h"
 
 #include <string.h>
 #include <unistd.h>
@@ -33,31 +32,25 @@
 
 using namespace std;
 
-void *task1(void *);
-
-static int connFd;
-
-int main3(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
-    int pId, portNo, listenFd;
-    socklen_t len;
-    struct sockaddr_in svrAdd, clntAdd;
+    int listenFd, portNo;
+    struct sockaddr_in svrAdd;
+    struct hostent *server;
     
-    pthread_t thread;
-    
-    if (argc < 2)
+    if(argc < 3)
     {
-        cerr << "Syntam : ./server <port>" << endl;
+        cerr<<"Syntax : ./client <host name> <port>"<<endl;
         return 0;
     }
     
-    portNo = atoi(argv[1]);
+    portNo = atoi(argv[2]);
     
     if((portNo > 65535) || (portNo < 2000))
     {
-        cerr << "Please enter a port number between 2000 - 65535" << endl;
+        cerr<<"Please enter port number between 2000 - 65535"<<endl;
         return 0;
-    }
+    }       
     
     listenFd = socket(AF_INET, SOCK_STREAM, 0);
     
@@ -67,56 +60,37 @@ int main3(int argc, char* argv[])
         return 0;
     }
     
-    bzero((char*) &svrAdd, sizeof(svrAdd));
+    server = gethostbyname(argv[1]);
     
+    if(server == NULL)
+    {
+        cerr << "Host does not exist" << endl;
+        return 0;
+    }
+    
+    bzero((char *) &svrAdd, sizeof(svrAdd));
     svrAdd.sin_family = AF_INET;
-    svrAdd.sin_addr.s_addr = INADDR_ANY;
+    
+    bcopy((char *) server -> h_addr, (char *) &svrAdd.sin_addr.s_addr, server -> h_length);
+    
     svrAdd.sin_port = htons(portNo);
     
-    if(bind(listenFd, (struct sockaddr *)&svrAdd, sizeof(svrAdd)) < 0)
+    int checker = connect(listenFd,(struct sockaddr *) &svrAdd, sizeof(svrAdd));
+    
+    if (checker < 0)
     {
-        cerr << "Cannot bind" << endl;
+        cerr << "Cannot connect!" << endl;
         return 0;
     }
     
-    listen(listenFd, 5);
-    
-    len = sizeof(clntAdd);
+    cout << "Object detected" << endl;
+    cout << "Warn other cars" << endl;
 
-    cout << "Listening" << endl;
+    sleep(2);
 
-    connFd = accept(listenFd, (struct sockaddr *)&clntAdd, &len);
+    write(listenFd, "Caution! Object detected", strlen("Caution! Object detected"));
 
-    if (connFd < 0)
-    {
-	cerr << "Cannot accept connection" << endl;
-        return 0;
-    }
-    else
-    {
-        cout << "Connection successful" << endl;
-    }
-       
-    pthread_create(&thread, NULL, task1, NULL); 
-    
-    pthread_join(thread, NULL);
-    
-    
-    
-}
+    sleep(2);
 
-void *task1 (void *dummyPt)
-{
-    char test[300];
-    bzero(test, 301);
-    
-    bzero(test, 301);
-        
-    read(connFd, test, 300);
-       
-    string tester (test);
-    cout << tester << endl;
-
-    cout << "\nClosing thread and conn" << endl;
-    close(connFd);
+    cout << "Warning sent" << endl;
 }
