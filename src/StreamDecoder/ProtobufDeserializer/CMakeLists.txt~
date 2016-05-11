@@ -5,8 +5,8 @@ set (OUTPUT_NAME ProtobufDecoder)
 add_subdirectory(protofiles)
 
 
-file(GLOB_RECURSE sources "./*.cpp")
-file(GLOB_RECURSE headers "./*.h")
+file(GLOB_RECURSE sources "./src/*.cpp")
+file(GLOB_RECURSE headers "./src/*.h")
 
 
 add_executable(${OUTPUT_NAME} ${sources} ${headers})

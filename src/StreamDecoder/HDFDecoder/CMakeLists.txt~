@@ -3,8 +3,8 @@ project(HDFDecoder)
 set (OUTPUT_NAME HDFDecoder)
 
 
-file(GLOB_RECURSE sources "./*.cpp")
-file(GLOB_RECURSE headers "./*.h")
+file(GLOB_RECURSE sources "./src/*.cpp")
+file(GLOB_RECURSE headers "./src/*.h")
 
 #hdf5
 find_package (HDF5)
