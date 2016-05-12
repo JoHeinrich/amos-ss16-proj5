@@ -26,7 +26,7 @@ A bus stops at a bus stop vis-à-vis to a school. A car that drives behind the b
 - OpenCV 3.1: [Download](http://opencv.org/downloads.html), [Install](http://docs.opencv.org/3.1.0/d7/d9f/tutorial_linux_install.html)
 
 
-Build Command: 
+#### Build Command: 
     $ mkdir build
     $ cd build
     $ cmake ..
