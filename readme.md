@@ -12,6 +12,12 @@ A bus stops at a bus stop vis-à-vis to a school. A car that drives behind the b
 - Integrate a software agent library
 - Implement the scenario using software agents and inter-ECU (electronic control unit, i.e. car) communication
 
+#### Setup:
+- Operating System: Linux Ubuntu
+- SW Agents library: Mobile-C
+- Library for detection: OpenCV
+- Messaging format: HDF5, Google Protobuf
+
 1. Download and install CMake:  
 	▪ Download:     https://cmake.org/download/  	
 	▪ Installation:	https://cmake.org/install
