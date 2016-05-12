@@ -7,6 +7,10 @@
 This project will implement a scenario needed for autonomous driving with the help of software agents:
 A bus stops at a bus stop vis-à-vis to a school. A car that drives behind the bus cannot see the children starting to run across the street in front of the bus. Another car on the other side of the street detects the children and is able to warn the first car.
 
+#### Main tasks: 
+- Implement a simple object detection algorithm
+- Integrate a software agent library
+- Implement the scenario using software agents and inter-ECU (electronic control unit, i.e. car) communication
 
 1. Download and install CMake:  
 	▪ Download:     https://cmake.org/download/  	
