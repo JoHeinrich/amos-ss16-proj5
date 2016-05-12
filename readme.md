@@ -31,6 +31,3 @@ A bus stops at a bus stop vis-à-vis to a school. A car that drives behind the b
     $ cd build
     $ cmake ..
     $ make
-
-Run Command:
-    $ ./AutoDrive
