@@ -29,11 +29,14 @@
 #include <sys/socket.h>
 #include <iostream>
 #include <stdlib.h>
+#include <csCommunication.pb.h>
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
+
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
     int listenFd, portNo;
     struct sockaddr_in svrAdd;
     struct hostent *server;
@@ -93,4 +96,6 @@ int main(int argc, char* argv[])
     sleep(2);
 
     cout << "Warning sent" << endl;
+	// Optional:  Delete all global objects allocated by libprotobuf.
+  	google::protobuf::ShutdownProtobufLibrary();
 }
