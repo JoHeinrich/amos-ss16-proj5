@@ -74,9 +74,16 @@ public:
      * 
      *  @param iIndex The index of the desired buffer
      *
-     *  @return The vector with buffer at index iIndex, null when thi sindex doesn't exist
+     *  @return The vector with buffer at index iIndex, the first image buffer when the sindex doesn't exist
      */
     std::vector<int64_t> getImageBuffer(int iIndex);
+
+     /**
+     *  Gets the (protobuf) description attribute of the images buffer.
+     *
+     *  @return The string with the protobuf description.
+     */	
+    std::string getImageFilesDescription();
     
     /**
      *  Gets the vector with z values of all image buffers
@@ -90,7 +97,7 @@ public:
      *
      *  @param iIndex The index of the desired buffer
      *
-     *  @return The vector with z values buffer at index iIndex, null when thi sindex doesn't exist
+     *  @return The vector with z values buffer at index iIndex, the first buffer when the index doesn't exist
      */
     //std::vector<int64_t> getZValueBuffer(int iIndex);
 
@@ -100,12 +107,16 @@ private:
     std::vector<std::vector<int64_t> > m_vecImageFiles; ///< Vector of protobuf files that represent the image buffers
     
     //std::vector<std::vector<int64_t> > m_vecZValues;  ///< z values for the protobuf files
+
+    std::string m_ImagesDescription;       ///< The (protobuf) description string of the images
     
     std::vector<int> m_vecImageIds;     ///< Vector with all image ids
     
     std::string m_FileName;     ///< The file name
     
     std::string m_DataSetNameImages;   ///< The data set name of images buffer
+
+    std::string m_ImagesDescriptionAttributeName;   ///< The name of the attribute which contains the (protobuf) description string
     
     //std::string m_DataSetNameZValues;  ///< The data set name of z values
     

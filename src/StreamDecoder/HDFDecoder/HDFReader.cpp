@@ -42,6 +42,8 @@ HDFReader::HDFReader(std::string file)
     m_FileName = file;
     m_DataSetNameImages = "MFCImageRight";
     // m_DataSetNameZValues = "DisparityOverview";
+    m_ImagesDescriptionAttributeName = "Channel Description";
+    m_ImagesDescription = "";
 }
 
 int HDFReader::readFile()
@@ -152,6 +154,16 @@ int HDFReader::readFile()
         {
             std::cout << "image id " << buffer[i][1] << std::endl;
         }
+
+        // get the (protobuf) channel description
+        Attribute descriptionAttr = dataSet.openAttribute(m_ImagesDescriptionAttributeName);
+
+        DataType descriptionType = descriptionAttr.getDataType();
+
+        descriptionAttr.read(descriptionType, m_ImagesDescription);
+
+        std::cout << "Description: " << m_ImagesDescription << std::endl;
+
 
         // open dataset for every image id and read it
         for(int i = 0; i < m_vecImageIds.size(); i++)
@@ -269,6 +281,11 @@ std::vector<int64_t> HDFReader::getImageBuffer(int iIndex)
 
     return m_vecImageFiles.at(iIndex);
 }
+
+ std::string HDFReader::getImageFilesDescription()
+ {
+     return m_ImagesDescription;
+ }
 
 /*std::vector<std::vector<int64_t> > getZValues()
 {
