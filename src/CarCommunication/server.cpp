@@ -29,6 +29,7 @@
 #include <sys/socket.h>
 #include <iostream>
 #include <stdlib.h>
+#include <csCommunication.pb.h>
 
 using namespace std;
 
@@ -38,6 +39,7 @@ static int connFd;
 
 int main(int argc, char* argv[])
 {
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
     int pId, portNo, listenFd;
     socklen_t len;
     struct sockaddr_in svrAdd, clntAdd;
@@ -100,6 +102,8 @@ int main(int argc, char* argv[])
     
     pthread_join(thread, NULL);
     
+    // Optional:  Delete all global objects allocated by libprotobuf.
+   google::protobuf::ShutdownProtobufLibrary();
     
     
 }
