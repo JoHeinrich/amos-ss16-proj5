@@ -22,7 +22,7 @@
 //
 
 
-#include <string.h>
+#include <string>
 #include <unistd.h>
 #include <netdb.h>
 #include <sys/types.h>
@@ -110,15 +110,34 @@ int main(int argc, char* argv[])
 
 void *task1 (void *dummyPt)
 {
-    char test[300];
-    bzero(test, 301);
+	csCommunication::Warning otherCarWarning;
+//    otherCarWarning.set_mess("Ppl in front of bus, dude!");
+      char buf[500];
+      bzero(buf, 501);
     
-    bzero(test, 301);
+ //   bzero(test, 301);
+
+//	void* buf; 
         
-    read(connFd, test, 300);
+    read(connFd, buf, 500);
+
+	string s((char*) buf, strlen(buf));
+	
+	bool serSuccessful = otherCarWarning.ParseFromString(s);
+	
+	cout << otherCarWarning.has_mess() << endl;
+	cout << otherCarWarning.mess() << endl;
+	
        
-    string tester (test);
-    cout << tester << endl;
+	/*
+string s((char*)message,  strlen(message));
+    Person p;
+    p.ParseFromString(s))
+*/
+	
+
+  //  string tester (test);
+  //  cout << tester << endl;
 
     cout << "\nClosing thread and conn" << endl;
     close(connFd);
