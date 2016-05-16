@@ -29,7 +29,7 @@
 #include <sys/socket.h>
 #include <iostream>
 #include <stdlib.h>
-#include <csCommunication.pb.h>
+#include "csCommunication.pb.h"
 
 using namespace std;
 
