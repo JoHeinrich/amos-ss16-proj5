@@ -28,6 +28,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <iostream>
+#include <iomanip>
 #include <stdlib.h>
 #include "csCommunication.pb.h"
 
@@ -85,35 +86,31 @@ int main(int argc, char* argv[])
         cerr << "Cannot connect!" << endl;
         return 0;
     }
-    
+
+	// Set message     
 	csCommunication::Warning otherCarWarning;
     otherCarWarning.set_mess("Ppl in front of bus, dude!");
-//	cout << otherCarWarning.has_mess() << endl;
-//	cout << otherCarWarning.mess() << endl;
+    // Initialize array and serialize the message
+	int size = otherCarWarning.ByteSize();
+	void* arr = malloc(size);
+	bool serSuccessful = otherCarWarning.SerializeToArray(arr,size);
 
-	string buf; 
-
-	bool serSuccessful = otherCarWarning.SerializeToString(&buf);
-
-	cout << boolalpha << serSuccessful << endl;
+	cout << "Serializing successful: " << boolalpha << serSuccessful << endl;
 
 /*
 	csCommunication::Warning test;
-	test.ParseFromString(buf);
+	test.ParseFromArray(arr,size);
 	
 	cout << test.mess() << endl;
 */
-	
-
+	// Just verbose stuff
     cout << "Object detected" << endl;
     cout << "Warn other cars" << endl;
 
     sleep(2);
 
-  //  write(listenFd, "Caution! Object detected", strlen("Caution! Object detected"));
-
-	// TODO: strlen nicht dauerhaft verwenden!
-	write(listenFd, &buf, buf.size());
+	int written = write(listenFd, arr, size);
+//	cout << "Bytes written " << written << endl;
 
     sleep(2);
 
