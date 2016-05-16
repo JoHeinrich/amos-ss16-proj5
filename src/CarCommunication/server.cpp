@@ -28,6 +28,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <iostream>
+#include <iomanip>
 #include <stdlib.h>
 #include "csCommunication.pb.h"
 
@@ -105,40 +106,31 @@ int main(int argc, char* argv[])
     // Optional:  Delete all global objects allocated by libprotobuf.
    google::protobuf::ShutdownProtobufLibrary();
     
+   close(listenFd); 
     
 }
 
 void *task1 (void *dummyPt)
 {
 	csCommunication::Warning otherCarWarning;
-//    otherCarWarning.set_mess("Ppl in front of bus, dude!");
-      char buf[500];
-      bzero(buf, 501);
-    
- //   bzero(test, 301);
+//	int size = otherCarWarning.ByteSize();
+	// TODO: Still hardcoded; Länge sollte Größe des Objekts betragen; Problem: ByteSize liefert hier 0, weil noch keins der Felder gesetzt wurde. Eventuell vorher dummy Nachricht erstellen?
+	int size = 28;
+	// Need space for header
 
-//	void* buf; 
+	void* buf = malloc(size); 
         
-    read(connFd, buf, 500);
 
-	string s((char*) buf, strlen(buf));
+	int recvSize = recv(connFd, buf, size, 0);
 	
-	bool serSuccessful = otherCarWarning.ParseFromString(s);
+//	cout << "Size received " << recvSize << endl;
 	
-	cout << otherCarWarning.has_mess() << endl;
-	cout << otherCarWarning.mess() << endl;
+	bool serSuccessful = otherCarWarning.ParseFromArray(buf,size);
 	
-       
-	/*
-string s((char*)message,  strlen(message));
-    Person p;
-    p.ParseFromString(s))
-*/
+//	cout << "Has mess " << boolalpha << otherCarWarning.has_mess() << endl;
+	cout << "Message: " << otherCarWarning.mess() << endl;
 	
-
-  //  string tester (test);
-  //  cout << tester << endl;
-
     cout << "\nClosing thread and conn" << endl;
     close(connFd);
+
 }
