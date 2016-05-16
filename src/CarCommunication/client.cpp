@@ -22,7 +22,7 @@
 //
 
 
-#include <string.h>
+#include <string>
 #include <unistd.h>
 #include <netdb.h>
 #include <sys/types.h>
@@ -86,12 +86,34 @@ int main(int argc, char* argv[])
         return 0;
     }
     
+	csCommunication::Warning otherCarWarning;
+    otherCarWarning.set_mess("Ppl in front of bus, dude!");
+//	cout << otherCarWarning.has_mess() << endl;
+//	cout << otherCarWarning.mess() << endl;
+
+	string buf; 
+
+	bool serSuccessful = otherCarWarning.SerializeToString(&buf);
+
+	cout << boolalpha << serSuccessful << endl;
+
+/*
+	csCommunication::Warning test;
+	test.ParseFromString(buf);
+	
+	cout << test.mess() << endl;
+*/
+	
+
     cout << "Object detected" << endl;
     cout << "Warn other cars" << endl;
 
     sleep(2);
 
-    write(listenFd, "Caution! Object detected", strlen("Caution! Object detected"));
+  //  write(listenFd, "Caution! Object detected", strlen("Caution! Object detected"));
+
+	// TODO: strlen nicht dauerhaft verwenden!
+	write(listenFd, &buf, buf.size());
 
     sleep(2);
 
