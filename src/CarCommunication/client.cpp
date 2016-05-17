@@ -22,18 +22,22 @@
 //
 
 
-#include <string.h>
+#include <string>
 #include <unistd.h>
 #include <netdb.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <iostream>
+#include <iomanip>
 #include <stdlib.h>
+#include "csCommunication.pb.h"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
+
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
     int listenFd, portNo;
     struct sockaddr_in svrAdd;
     struct hostent *server;
@@ -82,15 +86,35 @@ int main(int argc, char* argv[])
         cerr << "Cannot connect!" << endl;
         return 0;
     }
-    
+
+	// Set message     
+	csCommunication::Warning otherCarWarning;
+    otherCarWarning.set_mess("Ppl in front of bus, dude!");
+    // Initialize array and serialize the message
+	int size = otherCarWarning.ByteSize();
+	void* arr = malloc(size);
+	bool serSuccessful = otherCarWarning.SerializeToArray(arr,size);
+
+	cout << "Serializing successful: " << boolalpha << serSuccessful << endl;
+
+/*
+	csCommunication::Warning test;
+	test.ParseFromArray(arr,size);
+	
+	cout << test.mess() << endl;
+*/
+	// Just verbose stuff
     cout << "Object detected" << endl;
     cout << "Warn other cars" << endl;
 
     sleep(2);
 
-    write(listenFd, "Caution! Object detected", strlen("Caution! Object detected"));
+	int written = write(listenFd, arr, size);
+//	cout << "Bytes written " << written << endl;
 
     sleep(2);
 
     cout << "Warning sent" << endl;
+	// Optional:  Delete all global objects allocated by libprotobuf.
+  	google::protobuf::ShutdownProtobufLibrary();
 }
