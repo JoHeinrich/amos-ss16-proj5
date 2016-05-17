@@ -22,13 +22,15 @@
 //
 
 
-#include <string.h>
+#include <string>
 #include <unistd.h>
 #include <netdb.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <iostream>
+#include <iomanip>
 #include <stdlib.h>
+#include "csCommunication.pb.h"
 
 using namespace std;
 
@@ -38,6 +40,7 @@ static int connFd;
 
 int main(int argc, char* argv[])
 {
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
     int pId, portNo, listenFd;
     socklen_t len;
     struct sockaddr_in svrAdd, clntAdd;
@@ -100,22 +103,34 @@ int main(int argc, char* argv[])
     
     pthread_join(thread, NULL);
     
+    // Optional:  Delete all global objects allocated by libprotobuf.
+   google::protobuf::ShutdownProtobufLibrary();
     
+   close(listenFd); 
     
 }
 
 void *task1 (void *dummyPt)
 {
-    char test[300];
-    bzero(test, 301);
-    
-    bzero(test, 301);
-        
-    read(connFd, test, 300);
-       
-    string tester (test);
-    cout << tester << endl;
+	csCommunication::Warning otherCarWarning;
+//	int size = otherCarWarning.ByteSize();
+	// TODO: Still hardcoded; Länge sollte Größe des Objekts betragen; Problem: ByteSize liefert hier 0, weil noch keins der Felder gesetzt wurde. Eventuell vorher dummy Nachricht erstellen?
+	int size = 28;
+	// Need space for header
 
+	void* buf = malloc(size); 
+        
+
+	int recvSize = recv(connFd, buf, size, 0);
+	
+//	cout << "Size received " << recvSize << endl;
+	
+	bool serSuccessful = otherCarWarning.ParseFromArray(buf,size);
+	
+//	cout << "Has mess " << boolalpha << otherCarWarning.has_mess() << endl;
+	cout << "Message: " << otherCarWarning.mess() << endl;
+	
     cout << "\nClosing thread and conn" << endl;
     close(connFd);
+
 }

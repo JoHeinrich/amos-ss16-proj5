@@ -4,7 +4,11 @@ set (OUTPUT_NAME AutoDrive)
 
 add_subdirectory(src/StreamDecoder/HDFDecoder)
 add_subdirectory(src/StreamDecoder/ProtobufDeserializer)
+
+add_subdirectory(src/CarCommunication)
+
 add_subdirectory(src/StreamDecoder/DecompressionExample)
+
 
 file(GLOB_RECURSE sources "./src/*.cpp")
 file(GLOB_RECURSE headers "./src/*.h")
