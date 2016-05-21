@@ -9,6 +9,9 @@ add_subdirectory(src/CarCommunication)
 
 add_subdirectory(src/StreamDecoder/DecompressionExample)
 
+add_subdirectory(src/StreamDecoder/DecoderPipeline)
+
+
 
 file(GLOB_RECURSE sources "./src/*.cpp")
 file(GLOB_RECURSE headers "./src/*.h")

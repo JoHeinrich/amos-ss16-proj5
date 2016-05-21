@@ -74,9 +74,9 @@ public:
      * 
      *  @param iIndex The index of the desired buffer
      *
-     *  @return The vector with buffer at index iIndex, the first image buffer when the sindex doesn't exist
+     *  @return The vector with buffer at index iIndex, the first image buffer when the index doesn't exist
      */
-    std::vector<int64_t> getImageBuffer(int iIndex);
+    std::vector<int64_t> getImageBuffer(unsigned int iIndex);
 
      /**
      *  Gets the (protobuf) description attribute of the images buffer.
@@ -99,7 +99,7 @@ public:
      *
      *  @return The vector with z values buffer at index iIndex, the first buffer when the index doesn't exist
      */
-    //std::vector<int64_t> getZValueBuffer(int iIndex);
+    //std::vector<int64_t> getZValueBuffer(unsigned int iIndex);
 
     
 private:

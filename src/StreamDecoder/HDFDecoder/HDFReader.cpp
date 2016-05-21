@@ -271,9 +271,9 @@ std::vector<std::vector<int64_t> > HDFReader::getImageFiles()
     return m_vecImageFiles;
 }
 
-std::vector<int64_t> HDFReader::getImageBuffer(int iIndex)
+std::vector<int64_t> HDFReader::getImageBuffer(unsigned int iIndex)
 {
-    if(iIndex >= m_vecImageFiles.size() || iIndex < 0)
+    if(iIndex >= m_vecImageFiles.size())
     {
         // default value
         return m_vecImageFiles.at(0);
@@ -292,9 +292,9 @@ std::vector<int64_t> HDFReader::getImageBuffer(int iIndex)
     return m_vecZValues;
 }*/
 
-/*std::vector<int64_t> getZValueBuffer(int iIndex)
+/*std::vector<int64_t> getZValueBuffer(unsigned int iIndex)
 {
-    if(iIndex >= m_vecZValues.size() || iIndex < 0)
+    if(iIndex >= m_vecZValues.size())
     {
         // default value
         return m_vecZValues.at(0);
