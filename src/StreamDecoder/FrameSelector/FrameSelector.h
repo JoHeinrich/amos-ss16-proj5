@@ -1,6 +1,6 @@
 
 //
-// DecoderPipeline.h
+// FrameSelector.h
 // Projectname: amos-ss16-proj5
 //
 // Created on 21.05.2016.
@@ -31,7 +31,7 @@
 #include "../ProtobufDeserializer/msg_cameraimage_reader.h"
 
 
-class DecoderPipeline
+class FrameSelector
 {
 public:
     
@@ -40,12 +40,12 @@ public:
      *
      * @param file  The filename of the hdf5 file to read
      */
-    DecoderPipeline(std::string file);
+    FrameSelector(std::string file);
 
     /**
      * Destructor
      */
-    ~DecoderPipeline();
+    ~FrameSelector();
     
     /**
      * Reads one image at the given index from hdf5 file

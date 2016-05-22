@@ -1,5 +1,5 @@
 //
-// DecoderPipeline.cpp
+// FrameSelector.cpp
 // Projectname: amos-ss16-proj5
 //
 // Created on 21.05.2016.
@@ -26,7 +26,7 @@
 
 #include <sstream>
 
-#include "DecoderPipeline.h"
+#include "FrameSelector.h"
 
 namespace patch
 {
@@ -38,7 +38,7 @@ namespace patch
     }
 }
 
-DecoderPipeline::DecoderPipeline(std::string file)
+FrameSelector::FrameSelector(std::string file)
 {
     m_FileName = file;
     // create members
@@ -52,13 +52,13 @@ DecoderPipeline::DecoderPipeline(std::string file)
 
 }
 
-DecoderPipeline::~DecoderPipeline()
+FrameSelector::~FrameSelector()
 {
     delete m_hdfReader;
     //delete m_protobufReader;
 }
 
-void DecoderPipeline::readImage(unsigned int frameIndex)
+void FrameSelector::readImage(unsigned int frameIndex)
 {
     // get the protobuf payload from hdf5 reader
     std::vector<int64_t> imageBuffer = m_hdfReader->getImageBuffer(frameIndex);
@@ -67,7 +67,7 @@ void DecoderPipeline::readImage(unsigned int frameIndex)
 
 }
 
-void DecoderPipeline::readAllImages()
+void FrameSelector::readAllImages()
 {
     // for every image buffer from the hdf5 decoder: read the image from protobuf and add it to the return vector
 

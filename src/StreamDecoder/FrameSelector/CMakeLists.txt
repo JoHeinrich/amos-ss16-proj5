@@ -1,8 +1,9 @@
 cmake_minimum_required (VERSION 2.8)
-project(DecoderPipeline)
-set (OUTPUT_NAME DecoderPipeline)
+project(FrameSelector)
+set (OUTPUT_NAME FrameSelector)
 
-
+include_directories("../ProtobufDeserializer" "../HDFDecoder")
+#add_subdirectory(HDFDecoder)
 
 file(GLOB_RECURSE sources "./*.cpp")
 file(GLOB_RECURSE headers "./*.h")
