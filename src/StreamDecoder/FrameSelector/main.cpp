@@ -2,7 +2,7 @@
 // main.cpp
 // Projectname: amos-ss16-proj5
 //
-// Created on 10-05-2016.
+// Created on 21-05-2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -25,7 +25,7 @@
 
 #include <iostream>
 #include <sstream>
-#include "DecoderPipeline.h"
+#include "FrameSelector.h"
 
 using namespace std;
 
@@ -39,7 +39,7 @@ int main(int argc, const char* argv[]) {
     }
 
 
-    DecoderPipeline pipeline(argv[1]);
+    FrameSelector pipeline(argv[1]);
 
     if(argc == 2)
     {
