@@ -14,7 +14,9 @@ RUN echo "Installing dependencies"
 RUN apt-get update && apt-get install -y \ 
  libhdf5-serial-dev \
  libhdf5-dev \
- hdf5-tools
+ hdf5-tools \
+ g++ \
+ make
 RUN echo "Installing protobuf9"
 RUN wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz \
   && tar xzf protobuf-2.6.1.tar.gz \
