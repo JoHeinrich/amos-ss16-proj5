@@ -17,7 +17,7 @@ set(protobufheaders
   protofiles/MsgCameraImage.pb.h
 )
 
-add_library(proto ${protobufsources} ${protobufheaders})
+#add_library(proto ${protobufsources} ${protobufheaders})
 
 set(sources
   protobufMain.cpp
@@ -28,6 +28,7 @@ set(headers
   msg_cameraimage_reader.h
 )
 
-add_executable(${OUTPUT_NAME} ${sources} ${headers})
-target_link_libraries(${OUTPUT_NAME} proto ${PROTOBUF_LIBRARY})
+add_executable(${OUTPUT_NAME} ${sources} ${headers} ${protobufsources} ${protobufheaders})
+
+target_link_libraries(${OUTPUT_NAME} ${PROTOBUF_LIBRARY})
 
