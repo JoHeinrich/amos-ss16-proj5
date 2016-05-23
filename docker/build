@@ -8,5 +8,5 @@ echo "Copying final artifact to docker assets directory"
 #mkdir -p ./docker/assets
 #cp -v build/AutoDrive ./docker/assets/AutoDrive 
 #cp -v build/src/StreamDecoder/ProtobufDeserializer/ProtobufDecoder ./docker/assets/ProtobufDecoder
-mkdir -p .docker/assets/bin
-cp -v build/bin ./docker/assets/bin
+mkdir -p docker/assets/bin
+cp -v -r build/bin ./docker/assets/bin
