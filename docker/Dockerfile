@@ -19,5 +19,5 @@ ADD assets/AutoDrive /home/AutoDrive
 
 ENV HTML_INDEX_FILE AutoDrive
 ADD assets/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
-ADD ../build/bin /home/bin
+ADD /build/bin /home/bin
 RUN bash /assets/finish_docker_build
