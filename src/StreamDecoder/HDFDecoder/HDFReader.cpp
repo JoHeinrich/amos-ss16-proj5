@@ -26,6 +26,8 @@
 #include "HDFReader.h"
 
 #include <sstream>
+#include <iostream>
+#include <fstream>
 
 namespace patch
 {
@@ -214,13 +216,19 @@ int HDFReader::readFile()
             std::cout << "Reading image buffer: " << i << " image id:" << m_vecImageIds.at(i) << std::endl;
             currentImage.read(imageBuffer, PredType::NATIVE_INT64);
 
+            //open file for image
+            std::ofstream file;
+            file.open("/home/anyuser/Desktop/file.txt");
+
 
             std::vector<int64_t> vecCurrentImage;
             for(int i = 0; i < sizeImageBuffer; i++)
             {
                 vecCurrentImage.push_back(imageBuffer[i]);
-            }
+                file << imageBuffer[i];
 
+            }
+            file.close();
             // delete buffer
             delete []imageBuffer;
 
