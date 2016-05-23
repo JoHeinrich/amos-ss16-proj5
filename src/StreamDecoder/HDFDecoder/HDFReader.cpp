@@ -217,18 +217,18 @@ int HDFReader::readFile()
             currentImage.read(imageBuffer, PredType::NATIVE_INT64);
 
             //open file for image
-            std::ofstream file;
-            file.open("/home/anyuser/Desktop/file.txt");
+            //std::ofstream file;
+            //file.open("/home/anyuser/Desktop/file.txt");
 
 
             std::vector<int64_t> vecCurrentImage;
             for(int i = 0; i < sizeImageBuffer; i++)
             {
                 vecCurrentImage.push_back(imageBuffer[i]);
-                file << imageBuffer[i];
+                //file << imageBuffer[i];
 
             }
-            file.close();
+            //file.close();
             // delete buffer
             delete []imageBuffer;
 
