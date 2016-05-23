@@ -1,2 +1,0 @@
-/home/anyuser/Desktop/amos/amos-ss16-proj5/src/StreamDecoder/ProtobufDeserializer/build/protofiles/CMakeFiles/proto.dir
-/home/anyuser/Desktop/amos/amos-ss16-proj5/src/StreamDecoder/ProtobufDeserializer/build/CMakeFiles/ProtobufDecoder.dir

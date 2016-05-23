@@ -1,2 +1,0 @@
-/usr/bin/ar cq libproto.a  CMakeFiles/proto.dir/header.pb.cc.o CMakeFiles/proto.dir/MsgCameraImage.pb.cc.o
-/usr/bin/ranlib libproto.a
