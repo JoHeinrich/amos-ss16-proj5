@@ -2,13 +2,33 @@ cmake_minimum_required (VERSION 2.8)
 project(ProtobufDecoder)
 set (OUTPUT_NAME ProtobufDecoder)
 
-add_subdirectory(protofiles)
+#protobuf
+include(FindProtobuf)
+find_package(Protobuf REQUIRED)
+include_directories(${PROTOBUF_INCLUDE_DIR})
 
+set(protobufsources
+  protofiles/header.pb.cc
+  protofiles/MsgCameraImage.pb.cc
+  
+)
+set(protobufheaders
+  protofiles/header.pb.h
+  protofiles/MsgCameraImage.pb.h
+)
 
-file(GLOB_RECURSE sources "./*.cpp")
-file(GLOB_RECURSE headers "./*.h")
+#add_library(proto ${protobufsources} ${protobufheaders})
 
+set(sources
+  protobufMain.cpp
+  msg_cameraimage_reader.cpp
+)
 
-add_executable(${OUTPUT_NAME} ${sources} ${headers})
-target_link_libraries(${OUTPUT_NAME} proto ${PROTOBUF_LIBRARY})
+set(headers
+  msg_cameraimage_reader.h
+)
+
+add_executable(${OUTPUT_NAME} ${sources} ${headers} ${protobufsources} ${protobufheaders})
+
+target_link_libraries(${OUTPUT_NAME} ${PROTOBUF_LIBRARY})
 

@@ -31,7 +31,7 @@
 using namespace std;
 
 
-int main1(int argc, const char* argv[]) {
+int main(int argc, const char* argv[]) {
     // Verify compatibility of linked and compiled headers
     GOOGLE_PROTOBUF_VERIFY_VERSION;
     
