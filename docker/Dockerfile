@@ -29,7 +29,6 @@ RUN wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.
   && sudo ldconfig
 
 ENV HTML_INDEX_FILE AutoDrive
-
 ADD assets/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
 ADD assets/bin /home
 ADD assets/openCV /home/openCV
