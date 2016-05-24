@@ -81,7 +81,7 @@ int HDFReader::readFile()
 
         // get dimension size of each dimension
         hsize_t dimsOut[2];
-        int nDims = dataSpace.getSimpleExtentDims(dimsOut, NULL);
+        dataSpace.getSimpleExtentDims(dimsOut, NULL);
 
 
         std::cout << " Number of dimensions : " << dimNumber <<  " isSimple: " << isSimple <<
@@ -92,23 +92,6 @@ int HDFReader::readFile()
             std::cerr << "Wrong dimension " <<std::endl;
             return -1;
         }
-
-        /*if(typeClass == H5T_INTEGER)
-        {
-            //IntType intType = dataSet.getIntType();
-
-            // get order of the int type
-            //H5std_string order_string;
-            //std::string order_string;
-            //H5T_order_t order = intType.getOrder(order_string);
-
-            // get size of int type
-            //size_t size = intType.getSize();
-
-
-            //std::cout << "order-string: " << order_string << "int type size: "<< size << std::endl;
-
-        }*/
 
         if(typeClass != H5T_INTEGER)
         {
@@ -164,74 +147,10 @@ int HDFReader::readFile()
 
         std::cout << "Description: " << m_ImagesDescription << std::endl;
 
-
-        // open dataset for every image id and read it
-        for(int i = 0; i < m_vecImageIds.size(); i++)
-        {
-            int currentId = m_vecImageIds.at(i);
-            std::string sId = patch::to_string(currentId);
-            DataSet currentImage = pFile->openDataSet(sId);
-
-            // get the class of the datatype that is used by the dataset.
-            H5T_class_t imageTypeClass = currentImage.getTypeClass();
-
-            if(imageTypeClass != H5T_INTEGER)
-            {
-                std::cerr << "Wrong data type" <<std::endl;
-                return -1;
-            }
-
-            // get the data space of the dataset for obtaining information about dimension, sizes, etc.
-            DataSpace imageDataSpace = currentImage.getSpace();
-
-            // get info about dataspace
-            //int dimNumber = dataSpace.getSimpleExtentNdims();
-            // hssize_t elemsNumber = dataSpace.getSimpleExtentNpoints();
-            //bool isSimple = dataSpace.isSimple();
-
-            // get dimension size of each dimension
-            hsize_t imageDimsOut[1];
-            int nDims = imageDataSpace.getSimpleExtentDims(imageDimsOut, NULL);
-
-            //std::cout << "dimsOut: " << imageDimsOut[0] <<  " nDims: " << nDims << std::endl;
-
-            int sizeImageBuffer = imageDimsOut[0];
-            // create buffer for reading the image buffer
-            int64_t* imageBuffer = new int64_t[sizeImageBuffer];
-            //int64_t imageBuffer[imageDimsOut[0]];
-
-            // initialize
-            for(int k = 0; k<sizeImageBuffer; k++)
-            {
-                imageBuffer[k] = 0;
-                 //std::cout << " i: " << i << imageBuffer[i] << "      ";
-            }
-
-
-
-            // read buffer -> without input for memory data space the whole data space will be read
-
-            std::cout << "Reading image buffer: " << i << " image id:" << m_vecImageIds.at(i) << std::endl;
-            currentImage.read(imageBuffer, PredType::NATIVE_INT64);
-
-
-            std::vector<int64_t> vecCurrentImage;
-            for(int i = 0; i < sizeImageBuffer; i++)
-            {
-                vecCurrentImage.push_back(imageBuffer[i]);
-            }
-
-            // delete buffer
-            delete []imageBuffer;
-
-            m_vecImageFiles.push_back(vecCurrentImage);
-
-        }
-
         //close file
         pFile->close();
 
-        std::cout << "Number of protobuf files  " << m_vecImageFiles.size() << std::endl;
+        std::cout << "Number of protobuf files  " << m_vecImageIds.size() << std::endl;
 
     }  // end of try block
 
@@ -266,26 +185,137 @@ int HDFReader::readFile()
     return 0;
 }
 
-std::vector<std::vector<int64_t> > HDFReader::getImageFiles()
+std::vector<int64_t> HDFReader::readOneImage(unsigned int imageIndex)
 {
-    return m_vecImageFiles;
-}
+    // return value
+    std::vector<int64_t> currentImage;
 
-std::vector<int64_t> HDFReader::getImageBuffer(unsigned int iIndex)
-{
-    if(iIndex >= m_vecImageFiles.size())
+    // Try block to detect exceptions raised by any of the calls inside it
+    try
     {
-        // default value
-        return m_vecImageFiles.at(0);
+
+        // Turn off the auto-printing when failure occurs so that we can
+        // handle the errors appropriately
+        Exception::dontPrint();
+
+        // create the file and open it with read-only access.
+        H5File * pFile = new H5File( m_FileName, H5F_ACC_RDONLY );
+
+        // open the data set behind current iamge id
+        if(imageIndex >= m_vecImageIds.size())
+        {
+            imageIndex = 0;
+        }
+        std::string sId = patch::to_string(m_vecImageIds.at(imageIndex));
+        DataSet currentImageDataset = pFile->openDataSet(sId);
+
+        // get the class of the datatype that is used by the dataset.
+        H5T_class_t imageTypeClass = currentImageDataset.getTypeClass();
+
+        if(imageTypeClass != H5T_INTEGER)
+        {
+            std::cerr << "Wrong data type" <<std::endl;
+            return currentImage;
+        }
+
+        // get the data space of the dataset for obtaining information about dimension, sizes, etc.
+        DataSpace imageDataSpace = currentImageDataset.getSpace();
+
+        // get dimension size of each dimension
+        hsize_t imageDimsOut[1];
+        imageDataSpace.getSimpleExtentDims(imageDimsOut, NULL);
+
+        int sizeImageBuffer = imageDimsOut[0];
+        // create buffer for reading the image buffer
+        int64_t* imageBuffer = new int64_t[sizeImageBuffer];
+
+        // initialize image buffer
+        for(int k = 0; k < sizeImageBuffer; k++)
+        {
+            imageBuffer[k] = 0;
+        }
+
+        // read buffer -> without input for memory data space the whole data space will be read
+
+        std::cout << "Reading image buffer: image id:" << imageIndex << std::endl;
+        currentImageDataset.read(imageBuffer, PredType::NATIVE_INT64);
+
+
+        for(int i = 0; i < sizeImageBuffer; i++)
+        {
+            currentImage.push_back(imageBuffer[i]);
+        }
+
+        // delete buffer
+        delete []imageBuffer;
+
+
+        //close file
+        pFile->close();
+
+
+    }  // end of try block
+
+    // catch failure caused by the H5File operations
+    catch( FileIException error )
+    {
+        error.printError() ;
+        //return;
     }
 
-    return m_vecImageFiles.at(iIndex);
+    // catch failure caused by the DataSet operations
+    catch( DataSetIException error )
+    {
+        error.printError() ;
+        //return;
+    }
+
+    // catch failure caused by the DataSpace operations
+    catch( DataSpaceIException error )
+    {
+        error.printError();
+        //return;
+    }
+
+    // catch failure caused by the DataSpace operations
+    catch( DataTypeIException error )
+    {
+        error.printError() ;
+        //return;
+    }
+
+    return currentImage;
 }
 
- std::string HDFReader::getImageFilesDescription()
- {
-     return m_ImagesDescription;
- }
+std::vector<std::vector<int64_t> > HDFReader::readAllImages()
+{
+
+    std::vector<std::vector<int64_t> > allImages;
+
+    for(int i = 0; i < this->getNumberOfImages(); i++)
+    {
+        std::vector<int64_t> currentImage = this->readOneImage(i);
+
+        if( !(currentImage.size() == 0) )
+        {
+             allImages.push_back(currentImage);
+        }
+
+    }
+
+    std::cout << "Read all images; number of read files: " << allImages.size() << std::endl;
+    return allImages;
+}
+
+int HDFReader::getNumberOfImages()
+{
+    return m_vecImageIds.size();
+}
+
+std::string HDFReader::getImageFilesDescription()
+{
+    return m_ImagesDescription;
+}
 
 /*std::vector<std::vector<int64_t> > getZValues()
 {

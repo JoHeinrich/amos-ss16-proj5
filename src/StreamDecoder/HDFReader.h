@@ -58,26 +58,37 @@ public:
     HDFReader(std::string file);
     
     /**
-    * Reads the given hdf5 file and fills the information into the members.
+    * Reads the given hdf5 file and fills the image ids and description string information.
+    *
+    *  @return 0 if everything went good; 0 if it failed
     */
     int readFile();
-    
+	
     /**
-     *  Gets the vector with image buffers
+     *  Reads one image buffer at the given index.
+     *
+     *  @param  The index of the image buffer to be read. If it does not exist, the first image is read
+     *  @return The vector with image buffer
+     */
+    std::vector<int64_t> readOneImage(unsigned int imageIndex);
+
+    /**
+     *  Gets the vector with all image buffers
      *
      *  @return  The vector with the protobuf image buffers
      */
-    std::vector<std::vector<int64_t> > getImageFiles();
-    
-    /**
-     *  Gets an image buffer at the specialized index position
-     * 
-     *  @param iIndex The index of the desired buffer
-     *
-     *  @return The vector with buffer at index iIndex, the first image buffer when the index doesn't exist
-     */
-    std::vector<int64_t> getImageBuffer(unsigned int iIndex);
+    std::vector<std::vector<int64_t> > readAllImages();
 
+    /**
+     *  Gets the total number of protobuf images in the file
+     *
+     *  @return  The number of protobuf images
+     */
+    int getNumberOfImages();
+
+
+    
+    
      /**
      *  Gets the (protobuf) description attribute of the images buffer.
      *
@@ -103,8 +114,6 @@ public:
 
     
 private:
-    
-    std::vector<std::vector<int64_t> > m_vecImageFiles; ///< Vector of protobuf files that represent the image buffers
     
     //std::vector<std::vector<int64_t> > m_vecZValues;  ///< z values for the protobuf files
 
