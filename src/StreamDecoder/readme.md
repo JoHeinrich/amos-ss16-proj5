@@ -5,6 +5,9 @@ It takes a .hdf5 file and can read the dataset with the image ids and timestamps
 
 ##### Run: 
 To read all protobuf images from a file:
-$ ./FrameSelector FULL_PATH_TO_HDF5FILE
+
+$ ./FrameSelector HDF5FILE
+
 Or to read one protobuf image at a given index from a file: 
-$ ./FrameSelector FULL_PATH_TO_HDF5FILE image_index
+
+$ ./FrameSelector HDF5FILE image_index
