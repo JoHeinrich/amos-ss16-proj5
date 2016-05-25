@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get -y install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev 
 RUN echo "Installing protobuf9"
 RUN wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz \
-  && tar xzf protobuf-2.6.1.tar.gz \
+  && tar --no-same-owner --no-same-permissions -x -z -f protobuf-2.6.1.tar.gz \
   && cd protobuf-2.6.1 \
   && ./configure \
   && make \
