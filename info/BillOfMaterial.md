@@ -66,3 +66,6 @@ License:
 ##### Next Step
 
 ##### Release Information
+- sprint-05-release
+- mid-term-release
+Main progress in ..., user stories ... added.
