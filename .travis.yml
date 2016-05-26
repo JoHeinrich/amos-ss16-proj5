@@ -13,6 +13,7 @@ before_install:
   - sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1397BC53640DB551
   - sudo apt-get -qq update
   - sudo apt-get install -y libhdf5-serial-dev libhdf5-dev libprotobuf8 hdf5-tools
+  - sudo apt-get install -y cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
   - sudo apt-get install -y libdc1394-22-dev
   - wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz
   - tar xzf protobuf-2.6.1.tar.gz
