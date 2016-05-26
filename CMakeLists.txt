@@ -8,6 +8,7 @@ add_subdirectory(src/StreamDecoder/HDFDecoder)
 add_subdirectory(src/StreamDecoder/ProtobufDeserializer)
 
 add_subdirectory(src/CarCommunication)
+add_subdirectory(src/ObjectDetection)
 
 add_subdirectory(src/StreamDecoder/DecompressionExample)
 
