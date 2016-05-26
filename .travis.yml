@@ -22,6 +22,8 @@ before_install:
   - sudo make install
   - sudo ldconfig
   - cd ..
+before_script:
+  - export OpenCV_DIR=/home/travis/build/JoHeinrich/amos-ss16-proj5/docker/assets/openCV/share/OpenCV/
 # Build steps
 script:
   - mkdir build
