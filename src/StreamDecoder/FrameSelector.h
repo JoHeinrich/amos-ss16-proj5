@@ -25,10 +25,10 @@
 //
 
 //HDFReader
-#include "HDFReader.h"
+#include "HDFDecoder/HDFReader.h"
 
 //Protobuf Deserializer
-#include "msg_cameraimage_reader.h"
+#include "ProtobufDeserializer/msg_cameraimage_reader.h"
 
 
 class FrameSelector
