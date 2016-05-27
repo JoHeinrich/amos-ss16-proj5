@@ -19,5 +19,6 @@ ADD assets/AutoDrive /home/AutoDrive
 
 ENV HTML_INDEX_FILE AutoDrive
 ADD assets/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
-ADD assets/ProtobufDecoder /home/ProtobufDecoder
+#ADD assets/ProtobufDecoder /home/ProtobufDecoder
+ADD assets/FrameSelector /home/FrameSelector
 RUN bash /assets/finish_docker_build
