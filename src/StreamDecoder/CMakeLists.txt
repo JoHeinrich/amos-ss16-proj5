@@ -17,6 +17,14 @@ include(FindProtobuf)
 find_package(Protobuf REQUIRED)
 include_directories(${PROTOBUF_INCLUDE_DIR})
 
+#opencv
+find_package( OpenCV )
+if(OpenCV_FOUND)
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+else(OpenCV_FOUND)
+message(SEND_ERROR "OpenCV not found")
+endif(OpenCV_FOUND)
+
 set(protobufheaders
 	
 	header.pb.h
@@ -41,15 +49,17 @@ set(hdfsource
 set(header
 	frame_selector.h
 	image.h
+	image_viewer.h
 )
 
 set(sources
 	frame_selector.cpp
 	main.cpp
 	image.cpp
+	image_viewer.cpp
 )
 
 add_executable(${OUTPUT_NAME} ${sources} ${header} ${protobufsources} ${protobufheaders} ${hdfsource} ${hdfheader})
-target_link_libraries(${OUTPUT_NAME} ${PROTOBUF_LIBRARY} ${LINK_LIBS} -lhdf5_cpp -lhdf5)
+target_link_libraries(${OUTPUT_NAME} ${PROTOBUF_LIBRARY} ${LINK_LIBS}  ${OpenCV_LIBS} -lhdf5_cpp -lhdf5)
 
 
