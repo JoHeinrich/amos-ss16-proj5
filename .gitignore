@@ -1,1 +1,3 @@
 .DS_Store
+# build folder is for building and should not be added to git:
+build/
