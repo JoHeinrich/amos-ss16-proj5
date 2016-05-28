@@ -25,38 +25,39 @@
 
 #include <iostream>
 #include <sstream>
-#include "FrameSelector.h"
+#include "frame_selector.h"
 
 using namespace std;
 
 
 int main(int argc, const char* argv[]) {
 
-    if (argc > 3 || argc == 1)
-    {
+    if (argc > 3 || argc == 1){
+        
         cerr << "Usage:  " << " FULL_PATH_TO_HDF5_FILE (optional: image index)" << endl;
         return -1;
+        
     }
 
 
     FrameSelector pipeline(argv[1]);
 
-    if(argc == 2)
-    {
+    if(argc == 2){
+        
         // read all images
-        pipeline.readAllImages();
+        pipeline.ReadAllImages();
         //TODO give all images to imageviewer
-    }
-
-    else if(argc == 3)
-    {
+        
+    } else if(argc == 3){
+        
         // read one image
         unsigned int index = 0;
-        stringstream sindex(argv[2]);
-        sindex >> index;
-        pipeline.readImage(index);
+        stringstream string_index(argv[2]);
+        string_index >> index;
+        pipeline.ReadImage(index);
 
         // TODO give image to image viewer
+        
     }
 
 

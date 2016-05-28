@@ -46,8 +46,8 @@
 using namespace H5;
 #endif
 
-class HDFReader
-{
+class HDFReader {
+    
 public:
     
     /**
@@ -62,46 +62,44 @@ public:
     *
     *  @return 0 if everything went good; 0 if it failed
     */
-    int readFile();
+    int ReadFile();
 	
     /**
      *  Reads one image buffer at the given index.
      *
-     *  @param  The index of the image buffer to be read. If it does not exist, the first image is read
+     *  @param  image_index The index of the image buffer to be read. If it does not exist, the first image is read
      *  @return The vector with image buffer
      */
-    std::vector<int64_t> readOneImage(unsigned int imageIndex);
+    std::vector<int64_t> ReadOneImage(unsigned int image_index);
 
     /**
      *  Gets the vector with all image buffers
      *
      *  @return  The vector with the protobuf image buffers
      */
-    std::vector<std::vector<int64_t> > readAllImages();
+    std::vector<std::vector<int64_t> > ReadAllImages();
 
     /**
      *  Gets the total number of protobuf images in the file
      *
      *  @return  The number of protobuf images
      */
-    int getNumberOfImages();
+    int GetNumberOfImages();
 
 
-    
-    
      /**
      *  Gets the (protobuf) description attribute of the images buffer.
      *
      *  @return The string with the protobuf description.
      */	
-    std::string getImageFilesDescription();
+    std::string GetImageFilesDescription();
     
     /**
      *  Gets the vector with z values of all image buffers
      *
      *  @return  The vector with the z values of image buffers
      */
-    //std::vector<std::vector<int64_t> > getZValues();
+    //std::vector<std::vector<int64_t> > GetZValues();
     
     /**
      *  Gets an z values buffer at the specialized index position
@@ -110,23 +108,23 @@ public:
      *
      *  @return The vector with z values buffer at index iIndex, the first buffer when the index doesn't exist
      */
-    //std::vector<int64_t> getZValueBuffer(unsigned int iIndex);
+    //std::vector<int64_t> GetZValueBuffer(unsigned int index);
 
     
 private:
     
-    //std::vector<std::vector<int64_t> > m_vecZValues;  ///< z values for the protobuf files
+    //std::vector<std::vector<int64_t> > z_values_;  ///< z values for the protobuf files
 
-    std::string m_ImagesDescription;       ///< The (protobuf) description string of the images
+    std::string images_description_;       ///< The (protobuf) description string of the images
     
-    std::vector<int> m_vecImageIds;     ///< Vector with all image ids
+    std::vector<int> image_ids_;     ///< Vector with all image ids
     
-    std::string m_FileName;     ///< The file name
+    std::string file_name_;     ///< The file name
     
-    std::string m_DataSetNameImages;   ///< The data set name of images buffer
+    std::string data_set_name_images_;   ///< The data set name of images buffer
 
-    std::string m_ImagesDescriptionAttributeName;   ///< The name of the attribute which contains the (protobuf) description string
+    std::string images_description_attribute_name_;   ///< The name of the attribute which contains the (protobuf) description string
     
-    //std::string m_DataSetNameZValues;  ///< The data set name of z values
+    //std::string data_set_name_z_values_;  ///< The data set name of z values
     
 };
