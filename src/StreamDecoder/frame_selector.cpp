@@ -67,11 +67,11 @@ Image FrameSelector::ReadImage(unsigned int frame_index){
     unsigned char* file = ConvertProtobufFileToArray(protobuf_file_buffer);
 
     //convert protobuf file buffer to msgCameraImage and read image from protobuf file
-    pb::Grid::MsgCameraImage protobuf_image;
+    SensorNearData::MFC::CameraImage protobuf_image;
     protobuf_image.ParseFromArray(file, protobuf_file_size);
 
     // create an Image from msgCameraImage
-    Image result_image(protobuf_image.m_imagepayload(), protobuf_image.m_imagewidth(), protobuf_image.m_imageheight());
+    Image result_image(protobuf_image.image_payload(), protobuf_image.image_width(), protobuf_image.image_height());
     return result_image;
 
     //image_reader_->listInfosAboutMsgImage(protobuf_image);
@@ -90,10 +90,10 @@ std::vector<Image> FrameSelector::ReadAllImages(){
         // convert current image
         unsigned char* file = ConvertProtobufFileToArray(all_protobuf_files.at(i));
         
-        pb::Grid::MsgCameraImage protobuf_image;
+        SensorNearData::MFC::CameraImage protobuf_image;
         protobuf_image.ParseFromArray(file, all_protobuf_files.at(i).size());
 
-        Image current_image(protobuf_image.m_imagepayload(), protobuf_image.m_imagewidth(), protobuf_image.m_imageheight());
+        Image current_image(protobuf_image.image_payload(), protobuf_image.image_width(), protobuf_image.image_height());
 
         result_images.push_back(current_image);
         

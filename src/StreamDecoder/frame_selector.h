@@ -29,7 +29,7 @@
 
 //Protobuf Deserializer
 //#include "ProtobufDeserializer/msg_cameraimage_reader.h"
-#include "MsgCameraImage.pb.h"
+#include "protofiles/camera_image.pb.h"
 
 // Image
 #include "image.h"
