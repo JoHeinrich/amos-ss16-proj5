@@ -1,8 +1,8 @@
 //
-// main.cpp
+// image.cpp
 // Projectname: amos-ss16-proj5
 //
-// Created on 10-05-2016.
+// Created on 21.05.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -23,25 +23,46 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include <iostream>
 
-#include "HDFReader.h"
+#include <sstream>
 
-using namespace std;
+#include "image.h"
 
-
-int main(int argc, const char* argv[]) {
-
-    if (argc != 2) {
-        cerr << "Usage:  " << argv[0] << " FULL_PATH_TO_HDF5_FILE" << endl;
-        return -1;
+namespace patch{
+    
+    template < typename T > std::string to_string( const T& n ){
+        
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+        
     }
+    
+}
 
-    HDFReader hdfReader(argv[1]);
+Image::Image(std::string *payload, int width, int height){
+    
+   image_payload_ = payload;
+   image_width_ = width;
+   image_height_ = height;
+    
+}
 
-    int result = hdfReader.readFile();
+Image::~Image(){
 
-    std::cout << "Result: " << result << std::endl;
+}
 
-    return result;
+std::string* Image::GetImagePayload(){
+
+    return image_payload_;
+}
+
+int Image::GetImageWidth(){
+
+    return image_width_;
+}
+
+int Image::GetImageHeight(){
+
+    return image_height_;
 }

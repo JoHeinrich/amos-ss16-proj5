@@ -2,7 +2,7 @@
 // main.cpp
 // Projectname: amos-ss16-proj5
 //
-// Created by Richard Fuchs on 24.04.16.
+// Created on 21-05-2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -24,37 +24,43 @@
 //
 
 #include <iostream>
-#include <fstream>
-#include <string>
-#include "msg_cameraimage_reader.h"
+#include <sstream>
+#include "frame_selector.h"
 
 using namespace std;
 
 
 int main(int argc, const char* argv[]) {
-    // Verify compatibility of linked and compiled headers
-    GOOGLE_PROTOBUF_VERIFY_VERSION;
-    
-    if (argc != 2) {
-        cerr << "Usage:  " << argv[0] << " CAMERA_IMAGE_FILE" << endl;
+
+    if (argc > 3 || argc == 1){
+        
+        cerr << "Usage:  " << " FULL_PATH_TO_HDF5_FILE (optional: image index)" << endl;
         return -1;
+        
     }
-    
-    pb::Grid::MsgCameraImage camera_image;
-    {
-        // Read the existing camera image;
-        fstream input(argv[1], ios::in | ios::binary);
-        if (!camera_image.ParseFromIstream(&input)) {
-            cerr << "Failed to parse image." << endl;
-            return -1;
-        }
+
+
+    FrameSelector pipeline(argv[1]);
+
+    if(argc == 2){
+        
+        // read all images
+        pipeline.ReadAllImages();
+        //TODO give all images to imageviewer
+        
+    } else if(argc == 3){
+        
+        // read one image
+        unsigned int index = 0;
+        stringstream string_index(argv[2]);
+        string_index >> index;
+        pipeline.ReadImage(index);
+
+        // TODO give image to image viewer
+        
     }
-    
-    MsgCameraImageReader reader;
-    reader.listInfosAboutMsgImage(camera_image);
-    
-    // As suggested by Google: Delete all global objects allocated by libprotobuf.
-    google::protobuf::ShutdownProtobufLibrary();
-    
+
+
+
     return 0;
 }

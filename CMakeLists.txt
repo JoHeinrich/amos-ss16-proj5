@@ -2,16 +2,19 @@ cmake_minimum_required (VERSION 2.8)
 project(AutoDrive)
 set (OUTPUT_NAME AutoDrive)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+#add_subdirectory(src/StreamDecoder/HDFDecoder)
+#add_subdirectory(src/StreamDecoder/ProtobufDeserializer)
 
-add_subdirectory(src/StreamDecoder/HDFDecoder)
-add_subdirectory(src/StreamDecoder/ProtobufDeserializer)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_subdirectory(src/CarCommunication)
 add_subdirectory(src/ObjectDetection)
 
-add_subdirectory(src/StreamDecoder/DecompressionExample)
+#add_subdirectory(src/StreamDecoder/DecompressionExample)
 
+#add_subdirectory(src/StreamDecoder/FrameSelector)
+
+add_subdirectory(src/StreamDecoder)
 
 file(GLOB_RECURSE sources "./src/*.cpp")
 file(GLOB_RECURSE headers "./src/*.h")
