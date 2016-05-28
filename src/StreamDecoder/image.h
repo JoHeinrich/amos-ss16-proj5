@@ -1,8 +1,9 @@
+
 //
-// msg_cameraimage_reader.h
+// image.h
 // Projectname: amos-ss16-proj5
 //
-// Created by Richard Fuchs on 24.04.16.
+// Created on 21.05.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -23,21 +24,50 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __protobuf_demo__msg_cameraimage_reader__
-#define __protobuf_demo__msg_cameraimage_reader__
 
-#include "MsgCameraImage.pb.h"
 
-class MsgCameraImageReader{
+class Image{
+    
 public:
     
     /**
-     * 
-     * listInfosAboutMsgImage - prints infomation of a given MsgCameraImage
-     * e.g. timestamp, width, height
+     * Constructor
      *
+     * @param payload  The payload of the image
+     * @param width  The width of the image
+     * @param height  The height of the image
      */
-    void listInfosAboutMsgImage(const pb::Grid::MsgCameraImage camera_image);
-};
+     Image(std::string* payload, int width, int height);
 
-#endif /* defined(__protobuf_demo__msg_cameraimage_reader__) */
+    /**
+     * Destructor
+     */
+    ~Image();
+    
+     /**
+      * Gets the payload
+      *
+      * @return The image payload
+      */
+      std::string* GetImagePayload();
+
+     /**
+      * Gets the image width
+      *
+      * @return The image width
+      */
+      int GetImageWidth();
+
+     /**
+      * Gets the image height
+      *
+      * @return The image height
+      */
+      int GetImageHeight();
+
+private:
+      std::string* image_payload_;   ///< The string containing the payload of the image
+      int image_width_;		///< The image width
+      int image_height_;	///< The image height 
+  
+};

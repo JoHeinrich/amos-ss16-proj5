@@ -30,6 +30,11 @@ RUN wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.
 
 ENV HTML_INDEX_FILE AutoDrive
 ADD assets/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
+
+#ADD assets/ProtobufDecoder /home/ProtobufDecoder
+#not sure we need this any longer
+#ADD assets/FrameSelector /home/FrameSelector
+
 ADD assets/bin /home
 ADD assets/openCV /home/openCV
 #RUN export LD_LIBRARY_PATH=/home/openCV/lib/:$LD_LIBRARY_PATH
@@ -38,4 +43,5 @@ ADD assets/openCV /home/openCV
 #sudo apt-get install libdc1394-22-dev
 # export LD_LIBRARY_PATH=/home/openCV/lib/:$LD_LIBRARY_PATH
 # sudo ln /dev/null /dev/raw1394
+
 RUN bash /assets/finish_docker_build
