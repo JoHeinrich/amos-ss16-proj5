@@ -130,7 +130,7 @@ int HDFReader::ReadFile(){
 
         for(int i = 0; i<dimensions_output[0]; i++){
             
-            imahe_ids_.push_back(buffer[i][1]);
+            image_ids_.push_back(buffer[i][1]);
             
         }
 
