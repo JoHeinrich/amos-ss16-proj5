@@ -26,8 +26,6 @@
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
-namespace pb {
-
 // Internal implementation detail -- do not call these.
 void  protobuf_AddDesc_header_2eproto();
 void protobuf_AssignDesc_header_2eproto();
@@ -90,14 +88,14 @@ class Header : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional int64 timestamp = 1;
+  // optional sint64 timestamp = 1;
   inline bool has_timestamp() const;
   inline void clear_timestamp();
   static const int kTimestampFieldNumber = 1;
   inline ::google::protobuf::int64 timestamp() const;
   inline void set_timestamp(::google::protobuf::int64 value);
 
-  // @@protoc_insertion_point(class_scope:pb.Header)
+  // @@protoc_insertion_point(class_scope:Header)
  private:
   inline void set_has_timestamp();
   inline void clear_has_timestamp();
@@ -121,7 +119,7 @@ class Header : public ::google::protobuf::Message {
 
 // Header
 
-// optional int64 timestamp = 1;
+// optional sint64 timestamp = 1;
 inline bool Header::has_timestamp() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -136,19 +134,17 @@ inline void Header::clear_timestamp() {
   clear_has_timestamp();
 }
 inline ::google::protobuf::int64 Header::timestamp() const {
-  // @@protoc_insertion_point(field_get:pb.Header.timestamp)
+  // @@protoc_insertion_point(field_get:Header.timestamp)
   return timestamp_;
 }
 inline void Header::set_timestamp(::google::protobuf::int64 value) {
   set_has_timestamp();
   timestamp_ = value;
-  // @@protoc_insertion_point(field_set:pb.Header.timestamp)
+  // @@protoc_insertion_point(field_set:Header.timestamp)
 }
 
 
 // @@protoc_insertion_point(namespace_scope)
-
-}  // namespace pb
 
 #ifndef SWIG
 namespace google {
