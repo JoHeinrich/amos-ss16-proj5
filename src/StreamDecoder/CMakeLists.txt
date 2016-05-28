@@ -22,25 +22,21 @@ set(protobufsource
 )
 
 set(hdfheader
-	HDFDecoder/HDFReader.h
+	HDFDecoder/hdf_reader.h
 )
 
 set(hdfsource
-	HDFDecoder/HDFReader.cpp
+	HDFDecoder/hdf_reader.cpp
 )
 
 set(header
-	FrameSelector.h
+	frame_selector.h
 )
 
 set(sources
-	FrameSelector.cpp
+	frame_selector.cpp
 	main.cpp
 )
-
-
-#file(GLOB_RECURSE sources "./*.cpp")
-#file(GLOB_RECURSE headers "./*.h")
 
 add_executable(${OUTPUT_NAME} ${sources} ${header} ${protobufsource} ${protobufheader} ${hdfsource} ${hdfheader})
 target_link_libraries(${OUTPUT_NAME} proto ${PROTOBUF_LIBRARY} ${LINK_LIBS} -lhdf5_cpp -lhdf5)
