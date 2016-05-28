@@ -26,7 +26,7 @@
 #ifndef __protobuf_demo__msg_cameraimage_reader__
 #define __protobuf_demo__msg_cameraimage_reader__
 
-#include "protofiles/MsgCameraImage.pb.h"
+#include "MsgCameraImage.pb.h"
 
 class MsgCameraImageReader{
 public:

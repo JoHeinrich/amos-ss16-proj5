@@ -2,7 +2,6 @@ cmake_minimum_required (VERSION 2.8)
 project(FrameSelector)
 set (OUTPUT_NAME FrameSelector)
 
-add_subdirectory(ProtobufDeserializer/protofiles)
 
 #hdf5
 find_package (HDF5)
@@ -13,12 +12,22 @@ else(HDF5_FOUND)
 message(SEND_ERROR "HDF5 was not Found")
 endif(HDF5_FOUND)
 
-set(protobufheader
+#protobuf
+include(FindProtobuf)
+find_package(Protobuf REQUIRED)
+include_directories(${PROTOBUF_INCLUDE_DIR})
+
+set(protobufheaders
 	ProtobufDeserializer/msg_cameraimage_reader.h
+	ProtobufDeserializer/header.pb.h
+	ProtobufDeserializer/MsgCameraImage.pb.h
+	
 )
 
-set(protobufsource
+set(protobufsources
 	ProtobufDeserializer/msg_cameraimage_reader.cpp	
+	ProtobufDeserializer/header.pb.cc
+	ProtobufDeserializer/MsgCameraImage.pb.cc
 )
 
 set(hdfheader
@@ -38,7 +47,7 @@ set(sources
 	main.cpp
 )
 
-add_executable(${OUTPUT_NAME} ${sources} ${header} ${protobufsource} ${protobufheader} ${hdfsource} ${hdfheader})
-target_link_libraries(${OUTPUT_NAME} proto ${PROTOBUF_LIBRARY} ${LINK_LIBS} -lhdf5_cpp -lhdf5)
+add_executable(${OUTPUT_NAME} ${sources} ${header} ${protobufsources} ${protobufheaders} ${hdfsource} ${hdfheader})
+target_link_libraries(${OUTPUT_NAME} ${PROTOBUF_LIBRARY} ${LINK_LIBS} -lhdf5_cpp -lhdf5)
 
 
