@@ -44,10 +44,10 @@ namespace patch{
 HDFReader::HDFReader(std::string file){
     
     file_name_ = file;
-    data_set_name_images_ = "MFCImageRight";
+    data_set_name_protobuf_files_ = "MFCImageRight";
     // data_set_name_z_values_ = "DisparityOverview";
-    images_description_attribute_name_ = "Channel Description";
-    images_description_ = "";
+    protobuf_files_description_attribute_name_ = "Channel Description";
+    protobuf_files_description_ = "";
     
 }
 
@@ -64,7 +64,7 @@ int HDFReader::ReadFile(){
         H5File * file = new H5File( file_name_, H5F_ACC_RDONLY );
 
         // get dataset with protobuf images
-        DataSet data_set = file->openDataSet(data_set_name_images_);
+        DataSet data_set = file->openDataSet(data_set_name_protobuf_files_);
 
         // get the class of the datatype that is used by the dataset.
         H5T_class_t type_class = data_set.getTypeClass();
@@ -130,30 +130,30 @@ int HDFReader::ReadFile(){
 
         for(int i = 0; i<dimensions_output[0]; i++){
             
-            image_ids_.push_back(buffer[i][1]);
+            protobuf_file_ids_.push_back(buffer[i][1]);
             
         }
 
         // image ids output
-        for(int i = 0; i<image_ids_.size(); i++){
+        for(int i = 0; i<protobuf_file_ids_.size(); i++){
             
             std::cout << "image id " << buffer[i][1] << std::endl;
             
         }
 
         // get the (protobuf) channel description
-        Attribute description_attribute = data_set.openAttribute(images_description_attribute_name_);
+        Attribute description_attribute = data_set.openAttribute(protobuf_files_description_attribute_name_);
 
         DataType description_type = description_attribute.getDataType();
 
-        description_attribute.read(description_type, images_description_);
+        description_attribute.read(description_type, protobuf_files_description_);
 
-        std::cout << "Description: " << images_description_ << std::endl;
+        //std::cout << "Description: " << protobuf_files_description_ << std::endl;
 
         //close file
         file->close();
 
-        std::cout << "Number of protobuf files  " << image_ids_.size() << std::endl;
+        std::cout << "Number of protobuf files  " << protobuf_file_ids_.size() << std::endl;
 
     }  // end of try block
 
@@ -192,10 +192,10 @@ int HDFReader::ReadFile(){
     return 0;
 }
 
-std::vector<int64_t> HDFReader::ReadOneImage(unsigned int image_index){
+std::vector<int64_t> HDFReader::ReadOneProtobufFile(unsigned int index){
     
     // return value
-    std::vector<int64_t> current_image;
+    std::vector<int64_t> current_protobuf_file;
 
     // Try block to detect exceptions raised by any of the calls inside it
     try{
@@ -208,74 +208,58 @@ std::vector<int64_t> HDFReader::ReadOneImage(unsigned int image_index){
         H5File * file = new H5File( file_name_, H5F_ACC_RDONLY );
 
         // open the data set behind current iamge id
-        if(image_index >= image_ids_.size()){
+        if(index >= protobuf_file_ids_.size()){
             
-            image_index = 0;
+            index = 0;
             
         }
-        std::string string_id = patch::to_string(image_ids_.at(image_index));
-        DataSet current_image_data_set = file->openDataSet(string_id);
+
+        std::string string_id = patch::to_string(protobuf_file_ids_.at(index));
+        DataSet current_protobuf_file_data_set = file->openDataSet(string_id);
 
         // get the class of the datatype that is used by the dataset.
-        H5T_class_t image_type_class = current_image_data_set.getTypeClass();
+        H5T_class_t protobuf_file_type_class = current_protobuf_file_data_set.getTypeClass();
 
 
-        if(image_type_class != H5T_INTEGER){
+        if(protobuf_file_type_class != H5T_INTEGER){
             
             std::cerr << "Wrong data type" <<std::endl;
-            return current_image;
+            return current_protobuf_file;
             
         }
 
         // get the data space of the dataset for obtaining information about dimension, sizes, etc.
-        DataSpace image_data_space = current_image_data_set.getSpace();
+        DataSpace protobuf_file_data_space = current_protobuf_file_data_set.getSpace();
 
         // get dimension size of each dimension
-        hsize_t image_dimensions_output[1];
-        image_data_space.getSimpleExtentDims(image_dimensions_output, NULL);
+        hsize_t protobuf_file_dimensions_output[1];
+        protobuf_file_data_space.getSimpleExtentDims(protobuf_file_dimensions_output, NULL);
 
-        int size_image_buffer = image_dimensions_output[0];
+        int size_protobuf_file_buffer = protobuf_file_dimensions_output[0];
         // create buffer for reading the image buffer
-        int64_t* image_buffer = new int64_t[size_image_buffer];
-/*=======
-            //open file for image
-            //std::ofstream file;
-            //file.open("/home/anyuser/Desktop/file.txt");
-
-
-            std::vector<int64_t> vecCurrentImage;
-            for(int i = 0; i < sizeImageBuffer; i++)
-            {
-                vecCurrentImage.push_back(imageBuffer[i]);
-                //file << imageBuffer[i];
-
-            }
-            //file.close();
-            // delete buffer
-            delete []imageBuffer;
->>>>>>> master */
+        int64_t* protobuf_file_buffer = new int64_t[size_protobuf_file_buffer];
 
         // initialize image buffer
-        for(int k = 0; k < size_image_buffer; k++){
+        for(int k = 0; k < size_protobuf_file_buffer; k++){
             
-            image_buffer[k] = 0;
+            protobuf_file_buffer[k] = 0;
             
         }
 
         // read buffer: without input for memory data space the whole data space will be read
 
-        std::cout << "Reading image buffer: image id:" << image_index << std::endl;
-        current_image_data_set.read(image_buffer, PredType::NATIVE_INT64);
+        std::cout << "Reading protobuf file : file id:" << index << std::endl;
+        current_protobuf_file_data_set.read(protobuf_file_buffer, PredType::NATIVE_INT64);
 
 
-        for(int i = 0; i < size_image_buffer; i++){
+        for(int i = 0; i < size_protobuf_file_buffer; i++){
             
-            current_image.push_back(image_buffer[i]);
+            current_protobuf_file.push_back(protobuf_file_buffer[i]);
             
         }
 
         // delete buffer
-        delete []image_buffer;
+        delete []protobuf_file_buffer;
 
 
         //close file
@@ -316,38 +300,38 @@ std::vector<int64_t> HDFReader::ReadOneImage(unsigned int image_index){
         
     }
 
-    return current_image;
+    return current_protobuf_file;
 }
 
-std::vector<std::vector<int64_t> > HDFReader::ReadAllImages(){
+std::vector<std::vector<int64_t> > HDFReader::ReadAllProtobufFiles(){
 
-    std::vector<std::vector<int64_t> > all_images;
+    std::vector<std::vector<int64_t> > all_protobuf_files;
 
-    for(int i = 0; i < this->GetNumberOfImages(); i++){
+    for(int i = 0; i < this->GetNumberOfProtobufFiles(); i++){
         
-        std::vector<int64_t> current_image = this->ReadOneImage(i);
+        std::vector<int64_t> current_protobuf_file = this->ReadOneProtobufFile(i);
 
-        if( !(current_image.size() == 0) ){
+        if( !(current_protobuf_file.size() == 0) ){
             
-             all_images.push_back(current_image);
+             all_protobuf_files.push_back(current_protobuf_file);
             
         }
 
     }
 
-    std::cout << "Read all images; number of read files: " << all_images.size() << std::endl;
-    return all_images;
+    std::cout << "Read all protobuf files; number of read files: " << all_protobuf_files.size() << std::endl;
+    return all_protobuf_files;
 }
 
-int HDFReader::GetNumberOfImages(){
+int HDFReader::GetNumberOfProtobufFiles(){
     
-    return image_ids_.size();
+    return protobuf_file_ids_.size();
     
 }
 
-std::string HDFReader::GetImageFilesDescription(){
+std::string HDFReader::GetProtobufFilesDescription(){
     
-    return images_description_;
+    return protobuf_files_description_;
     
 }
 
