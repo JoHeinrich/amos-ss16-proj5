@@ -1,8 +1,9 @@
+
 //
-// image.cpp
+// image_viewer.h
 // Projectname: amos-ss16-proj5
 //
-// Created on 21.05.2016.
+// Created on 28.05.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -23,58 +24,8 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#include <opencv2/opencv.hpp>
 
-#include <sstream>
-
-#include "image.h"
-
-namespace patch{
-    
-    template < typename T > std::string to_string( const T& n ){
-        
-        std::ostringstream stm ;
-        stm << n ;
-        return stm.str() ;
-        
-    }
-    
-}
-
-Image::Image(const std::string & payload, int width, int height){
-    
-   image_payload_ = payload;
-   image_width_ = width;
-   image_height_ = height;
-    
-}
-
-Image::~Image(){
-
-}
-
-std::string Image::GetImagePayload(){
-
-    return image_payload_;
-}
-
-int Image::GetImageWidth(){
-
-    return image_width_;
-}
-
-int Image::GetImageHeight(){
-
-    return image_height_;
-}
-
-cv::Mat Image::GetBGGRImage(){
-
-    cv::Mat empty;
-    return empty;
-}
-
-cv::Mat Image::GetBGRImage(){
-
-    cv::Mat empty;
-    return empty;
-}
+class ImageViewer{
+  
+};

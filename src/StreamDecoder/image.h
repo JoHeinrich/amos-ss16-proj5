@@ -24,7 +24,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-
+#include <opencv2/opencv.hpp>
 
 class Image{
     
@@ -65,6 +65,21 @@ public:
       */
       int GetImageHeight();
 
+     /**
+      * Gets the bayer image
+      *
+      * @return The bayer image as opencv::Mat object
+      */
+      cv::Mat GetBGGRImage();
+
+      /**
+      * Gets the bgr image 
+      *
+      * @return The bgr image as opencv::Mat object
+      */
+      cv::Mat GetBGRImage();
+
+	
 private:
       std::string image_payload_;   ///< The string containing the payload of the image
       int image_width_;		///< The image width
