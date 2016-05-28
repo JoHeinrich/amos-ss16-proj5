@@ -19,7 +19,7 @@ License:
 
 ```sh
 Name:CMake
-Version:3.5.2
+Version:2.8
 License:BSD 3-clause License
 ```
 
@@ -40,7 +40,7 @@ License:3-clause BSD License
 ###### Object Detection(Image Processing)
 ```sh
 Name:Open CV
-Version:2.4.3
+Version:3.1
 License:3-clause BSD License
 ```
 ###### Scenario Analysation
