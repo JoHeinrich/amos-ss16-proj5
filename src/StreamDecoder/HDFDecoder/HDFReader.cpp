@@ -26,6 +26,8 @@
 #include "HDFReader.h"
 
 #include <sstream>
+#include <iostream>
+#include <fstream>
 
 namespace patch
 {
@@ -212,6 +214,7 @@ std::vector<int64_t> HDFReader::readOneImage(unsigned int imageIndex)
         // get the class of the datatype that is used by the dataset.
         H5T_class_t imageTypeClass = currentImageDataset.getTypeClass();
 
+
         if(imageTypeClass != H5T_INTEGER)
         {
             std::cerr << "Wrong data type" <<std::endl;
@@ -228,6 +231,23 @@ std::vector<int64_t> HDFReader::readOneImage(unsigned int imageIndex)
         int sizeImageBuffer = imageDimsOut[0];
         // create buffer for reading the image buffer
         int64_t* imageBuffer = new int64_t[sizeImageBuffer];
+/*=======
+            //open file for image
+            //std::ofstream file;
+            //file.open("/home/anyuser/Desktop/file.txt");
+
+
+            std::vector<int64_t> vecCurrentImage;
+            for(int i = 0; i < sizeImageBuffer; i++)
+            {
+                vecCurrentImage.push_back(imageBuffer[i]);
+                //file << imageBuffer[i];
+
+            }
+            //file.close();
+            // delete buffer
+            delete []imageBuffer;
+>>>>>>> master */
 
         // initialize image buffer
         for(int k = 0; k < sizeImageBuffer; k++)
