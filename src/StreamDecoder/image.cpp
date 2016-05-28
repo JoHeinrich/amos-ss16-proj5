@@ -40,9 +40,9 @@ namespace patch{
     
 }
 
-Image::Image(std::string *payload, int width, int height){
+Image::Image(const std::string payload, int width, int height){
     
-   image_payload_ = payload;
+   //image_payload_(payload);
    image_width_ = width;
    image_height_ = height;
     
@@ -52,7 +52,7 @@ Image::~Image(){
 
 }
 
-std::string* Image::GetImagePayload(){
+std::string Image::GetImagePayload(){
 
     return image_payload_;
 }

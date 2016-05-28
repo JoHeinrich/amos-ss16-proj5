@@ -37,7 +37,7 @@ public:
      * @param width  The width of the image
      * @param height  The height of the image
      */
-     Image(std::string* payload, int width, int height);
+     Image(const std::string payload, int width, int height);
 
     /**
      * Destructor
@@ -49,7 +49,7 @@ public:
       *
       * @return The image payload
       */
-      std::string* GetImagePayload();
+      std::string GetImagePayload();
 
      /**
       * Gets the image width
@@ -66,7 +66,7 @@ public:
       int GetImageHeight();
 
 private:
-      std::string* image_payload_;   ///< The string containing the payload of the image
+      const std::string image_payload_;   ///< The string containing the payload of the image
       int image_width_;		///< The image width
       int image_height_;	///< The image height 
   

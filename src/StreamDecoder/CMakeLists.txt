@@ -18,24 +18,24 @@ find_package(Protobuf REQUIRED)
 include_directories(${PROTOBUF_INCLUDE_DIR})
 
 set(protobufheaders
-	ProtobufDeserializer/msg_cameraimage_reader.h
-	ProtobufDeserializer/header.pb.h
-	ProtobufDeserializer/MsgCameraImage.pb.h
+	
+	header.pb.h
+	MsgCameraImage.pb.h
 	
 )
 
 set(protobufsources
-	ProtobufDeserializer/msg_cameraimage_reader.cpp	
-	ProtobufDeserializer/header.pb.cc
-	ProtobufDeserializer/MsgCameraImage.pb.cc
+		
+	header.pb.cc
+	MsgCameraImage.pb.cc
 )
 
 set(hdfheader
-	HDFDecoder/hdf_reader.h
+	hdf_reader.h
 )
 
 set(hdfsource
-	HDFDecoder/hdf_reader.cpp
+	hdf_reader.cpp
 )
 
 set(header

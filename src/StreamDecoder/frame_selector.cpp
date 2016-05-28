@@ -46,7 +46,7 @@ FrameSelector::FrameSelector(std::string file){
 
     hdf_reader_ = new HDFReader(file);
 
-    image_reader_ = new MsgCameraImageReader();
+    //image_reader_ = new MsgCameraImageReader();
 
     // read hdf5 file
     hdf_reader_->ReadFile();
@@ -56,11 +56,11 @@ FrameSelector::FrameSelector(std::string file){
 FrameSelector::~FrameSelector(){
     
     delete hdf_reader_;
-    delete image_reader_;
+    //delete image_reader_;
     
 }
 
-void FrameSelector::ReadImage(unsigned int frame_index){
+Image FrameSelector::ReadImage(unsigned int frame_index){
     
     // get the protobuf payload from hdf5 reader
     std::vector<int64_t> image_buffer = hdf_reader_->ReadOneImage(frame_index);
@@ -72,16 +72,21 @@ void FrameSelector::ReadImage(unsigned int frame_index){
     //convert imageBuffer to msgCameraImage and read image from protobuf
     pb::Grid::MsgCameraImage protobuf_image;
     protobuf_image.ParseFromArray(image,image_size);
-    image_reader_->listInfosAboutMsgImage(protobuf_image);
+
+    // create an Image from msgCameraImage
+    Image result_image(protobuf_image.m_imagepayload(), protobuf_image.m_imagewidth(), protobuf_image.m_imageheight());
+    return result_image;
+
+    //image_reader_->listInfosAboutMsgImage(protobuf_image);
     
 }
 
-void FrameSelector::ReadAllImages(){
+std::list<Image> FrameSelector::ReadAllImages(){
     
     std::vector<std::vector<int64_t> > all_images = hdf_reader_->ReadAllImages();
 
     //all result images
-    std::vector<pb::Grid::MsgCameraImage> result_images;
+    std::list<Image> result_images;
 
     for(int i = 0; i < all_images.size(); i++){
         
@@ -90,15 +95,14 @@ void FrameSelector::ReadAllImages(){
         
         pb::Grid::MsgCameraImage protobuf_image;
         protobuf_image.ParseFromArray(image, all_images.at(i).size());
-        result_images.push_back(protobuf_image);
+
+        Image current_image(protobuf_image.m_imagepayload(), protobuf_image.m_imagewidth(), protobuf_image.m_imageheight());
+
+        result_images.push_back(current_image);
         
     }
 
-    for(int k = 0; k < result_images.size(); k++){
-        
-        image_reader_->listInfosAboutMsgImage(result_images.at(k));
-        
-    }
+    return result_images;
 
 }
 
