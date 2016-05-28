@@ -25,17 +25,14 @@ else(OpenCV_FOUND)
 message(SEND_ERROR "OpenCV not found")
 endif(OpenCV_FOUND)
 
-set(protobufheaders
-	
-	header.pb.h
-	MsgCameraImage.pb.h
-	
+set(protobufheaders	
+	protofiles/header.pb.h
+	protofiles/camera_image.pb.h	
 )
 
 set(protobufsources
-		
-	header.pb.cc
-	MsgCameraImage.pb.cc
+	protofiles/header.pb.cc
+	protofiles/camera_image.pb.cpp
 )
 
 set(hdfheader
