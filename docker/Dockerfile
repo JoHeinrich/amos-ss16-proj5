@@ -33,7 +33,7 @@ ADD assets/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
 
 #ADD assets/ProtobufDecoder /home/ProtobufDecoder
 #not sure we need this any longer
-ADD assets/FrameSelector /home/FrameSelector
+#ADD assets/FrameSelector /home/FrameSelector
 
 ADD assets/bin /home
 ADD assets/openCV /home/openCV
