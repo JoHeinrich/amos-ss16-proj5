@@ -75,12 +75,12 @@ private:
       //MsgCameraImageReader  *image_reader_;   ///< The protobuf file reader
 
       /**
-       * Converts an image from hdf reader to an array (needed for parsing it with protobuf reader)
+       * Converts a protobuf file from hdf reader to an array (needed for parsing it and for creating a msgCameraImage object)
        *
-       * @param image The vector with the image buffer
+       * @param image The vector with the protobuf file buffer
        *
-       * @return The array with the image buffer
+       * @return The array with the protobuf file buffer
        */
-      unsigned char* ConvertImageToArray(std::vector<int64_t> image);
+      unsigned char* ConvertProtobufFileToArray(std::vector<int64_t> file);
        
 };

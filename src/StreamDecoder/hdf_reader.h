@@ -65,48 +65,48 @@ public:
     int ReadFile();
 	
     /**
-     *  Reads one image buffer at the given index.
+     *  Reads one protobuf file at the given index.
      *
-     *  @param  image_index The index of the image buffer to be read. If it does not exist, the first image is read
-     *  @return The vector with image buffer
+     *  @param  index The index of the protobuf to be read. If it does not exist, the first protobuf file is read
+     *  @return The vector with protobuf file
      */
-    std::vector<int64_t> ReadOneImage(unsigned int image_index);
+    std::vector<int64_t> ReadOneProtobufFile(unsigned int index);
 
     /**
-     *  Gets the vector with all image buffers
+     *  Gets the vector with all protobuf files
      *
-     *  @return  The vector with the protobuf image buffers
+     *  @return  The vector with the protobuf files
      */
-    std::vector<std::vector<int64_t> > ReadAllImages();
+    std::vector<std::vector<int64_t> > ReadAllProtobufFiles();
 
     /**
-     *  Gets the total number of protobuf images in the file
+     *  Gets the total number of protobuf files in the file
      *
-     *  @return  The number of protobuf images
+     *  @return  The number of protobuf files
      */
-    int GetNumberOfImages();
+    int GetNumberOfProtobufFiles();
 
 
      /**
-     *  Gets the (protobuf) description attribute of the images buffer.
+     *  Gets the (protobuf) description attribute of the protobuf files.
      *
      *  @return The string with the protobuf description.
      */	
-    std::string GetImageFilesDescription();
+    std::string GetProtobufFilesDescription();
     
     /**
-     *  Gets the vector with z values of all image buffers
+     *  Gets the vector with z values of all protobuf files
      *
-     *  @return  The vector with the z values of image buffers
+     *  @return  The vector with the z values of protobuf files
      */
     //std::vector<std::vector<int64_t> > GetZValues();
     
     /**
      *  Gets an z values buffer at the specialized index position
      *
-     *  @param iIndex The index of the desired buffer
+     *  @param iIndex The index of the desired protobuf file
      *
-     *  @return The vector with z values buffer at index iIndex, the first buffer when the index doesn't exist
+     *  @return The vector with z values buffer at index index, the first buffer when the index doesn't exist
      */
     //std::vector<int64_t> GetZValueBuffer(unsigned int index);
 
@@ -115,15 +115,15 @@ private:
     
     //std::vector<std::vector<int64_t> > z_values_;  ///< z values for the protobuf files
 
-    std::string images_description_;       ///< The (protobuf) description string of the images
+    std::string protobuf_files_description_;       ///< The (protobuf) description string of the protobuf files
     
-    std::vector<int> image_ids_;     ///< Vector with all image ids
+    std::vector<int> protobuf_file_ids_;     ///< Vector with all protobuf file ids
     
     std::string file_name_;     ///< The file name
     
-    std::string data_set_name_images_;   ///< The data set name of images buffer
+    std::string data_set_name_protobuf_files_;   ///< The data set name of protobuf files table
 
-    std::string images_description_attribute_name_;   ///< The name of the attribute which contains the (protobuf) description string
+    std::string protobuf_files_description_attribute_name_;   ///< The name of the attribute which contains the protobuf files description string
     
     //std::string data_set_name_z_values_;  ///< The data set name of z values
     

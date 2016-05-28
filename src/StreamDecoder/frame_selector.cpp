@@ -46,8 +46,6 @@ FrameSelector::FrameSelector(std::string file){
 
     hdf_reader_ = new HDFReader(file);
 
-    //image_reader_ = new MsgCameraImageReader();
-
     // read hdf5 file
     hdf_reader_->ReadFile();
     
@@ -56,22 +54,21 @@ FrameSelector::FrameSelector(std::string file){
 FrameSelector::~FrameSelector(){
     
     delete hdf_reader_;
-    //delete image_reader_;
-    
+
 }
 
 Image FrameSelector::ReadImage(unsigned int frame_index){
     
     // get the protobuf payload from hdf5 reader
-    std::vector<int64_t> image_buffer = hdf_reader_->ReadOneImage(frame_index);
-    int image_size = image_buffer.size();
+    std::vector<int64_t> protobuf_file_buffer = hdf_reader_->ReadOneProtobufFile(frame_index);
+    int protobuf_file_size = protobuf_file_buffer.size();
 
     // convert to char array
-    unsigned char* image = ConvertImageToArray(image_buffer);
+    unsigned char* file = ConvertProtobufFileToArray(protobuf_file_buffer);
 
-    //convert imageBuffer to msgCameraImage and read image from protobuf
+    //convert protobuf file buffer to msgCameraImage and read image from protobuf file
     pb::Grid::MsgCameraImage protobuf_image;
-    protobuf_image.ParseFromArray(image,image_size);
+    protobuf_image.ParseFromArray(file, protobuf_file_size);
 
     // create an Image from msgCameraImage
     Image result_image(protobuf_image.m_imagepayload(), protobuf_image.m_imagewidth(), protobuf_image.m_imageheight());
@@ -83,18 +80,18 @@ Image FrameSelector::ReadImage(unsigned int frame_index){
 
 std::vector<Image> FrameSelector::ReadAllImages(){
     
-    std::vector<std::vector<int64_t> > all_images = hdf_reader_->ReadAllImages();
+    std::vector<std::vector<int64_t> > all_protobuf_files = hdf_reader_->ReadAllProtobufFiles();
 
     //all result images
     std::vector<Image> result_images;
 
-    for(int i = 0; i < all_images.size(); i++){
+    for(int i = 0; i < all_protobuf_files.size(); i++){
         
         // convert current image
-        unsigned char* image = ConvertImageToArray(all_images.at(i));
+        unsigned char* file = ConvertProtobufFileToArray(all_protobuf_files.at(i));
         
         pb::Grid::MsgCameraImage protobuf_image;
-        protobuf_image.ParseFromArray(image, all_images.at(i).size());
+        protobuf_image.ParseFromArray(file, all_protobuf_files.at(i).size());
 
         Image current_image(protobuf_image.m_imagepayload(), protobuf_image.m_imagewidth(), protobuf_image.m_imageheight());
 
@@ -106,17 +103,17 @@ std::vector<Image> FrameSelector::ReadAllImages(){
 
 }
 
-unsigned char* FrameSelector::ConvertImageToArray(std::vector<int64_t> image){
+unsigned char* FrameSelector::ConvertProtobufFileToArray(std::vector<int64_t> file){
 
-    int size = image.size();
-    unsigned char *image_array = new unsigned char[size];
+    int size = file.size();
+    unsigned char *file_array = new unsigned char[size];
 
     for(int i = 0; i < size; i++){
         
-        image_array[i] = static_cast<unsigned char>(image.at(i));
+        file_array[i] = static_cast<unsigned char>(file.at(i));
         
     }
 
-    return image_array;
+    return file_array;
     
 }
