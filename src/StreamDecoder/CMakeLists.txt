@@ -40,11 +40,13 @@ set(hdfsource
 
 set(header
 	frame_selector.h
+	image.h
 )
 
 set(sources
 	frame_selector.cpp
 	main.cpp
+	image.cpp
 )
 
 add_executable(${OUTPUT_NAME} ${sources} ${header} ${protobufsources} ${protobufheaders} ${hdfsource} ${hdfheader})
