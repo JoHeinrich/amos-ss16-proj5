@@ -26,6 +26,7 @@
 #include <iostream>
 #include <sstream>
 #include "frame_selector.h"
+#include <vector>
 
 using namespace std;
 
@@ -45,8 +46,11 @@ int main(int argc, const char* argv[]) {
     if(argc == 2){
         
         // read all images
-        pipeline.ReadAllImages();
-        //TODO give all images to imageviewer
+        std::vector<Image> result_images = pipeline.ReadAllImages();
+
+        // TODO give images to image viewer and let show them
+
+
         
     } else if(argc == 3){
         
@@ -54,9 +58,9 @@ int main(int argc, const char* argv[]) {
         unsigned int index = 0;
         stringstream string_index(argv[2]);
         string_index >> index;
-        pipeline.ReadImage(index);
+        Image result_image = pipeline.ReadImage(index);
 
-        // TODO give image to image viewer
+        // TODO give image to image viewer and let it show
         
     }
 
