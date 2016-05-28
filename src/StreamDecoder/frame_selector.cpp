@@ -81,12 +81,12 @@ Image FrameSelector::ReadImage(unsigned int frame_index){
     
 }
 
-std::list<Image> FrameSelector::ReadAllImages(){
+std::vector<Image> FrameSelector::ReadAllImages(){
     
     std::vector<std::vector<int64_t> > all_images = hdf_reader_->ReadAllImages();
 
     //all result images
-    std::list<Image> result_images;
+    std::vector<Image> result_images;
 
     for(int i = 0; i < all_images.size(); i++){
         

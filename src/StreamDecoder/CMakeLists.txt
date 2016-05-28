@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.8)
-project(FrameSelector)
-set (OUTPUT_NAME FrameSelector)
+project(frameselector)
+set (OUTPUT_NAME frameselector)
 
 
 #hdf5

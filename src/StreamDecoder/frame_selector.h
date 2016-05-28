@@ -35,7 +35,7 @@
 #include "image.h"
 
 #include <vector>
-#include <list>
+
 
 class FrameSelector{
     
@@ -65,9 +65,9 @@ public:
      /**
       * Reads all images 
       *
-      * @return A list with all image objects
+      * @return A vector with all image objects
       */
-      std::list<Image> ReadAllImages();
+      std::vector<Image> ReadAllImages();
 
 private:
       std::string file_name_;   ///< The full path file name of the hdf5 file
