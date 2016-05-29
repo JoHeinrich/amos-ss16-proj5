@@ -85,11 +85,11 @@ Mat Image::GetBGRImage(){
     Mat bggr_image = this->GetBGGRImage();
 
     //convert BGGR image to BGR
-    Mat bggr_8bit_image = bggr_image.clone();
-    bggr_8bit_image.convertTo(bggr_8bit_image, CV_8UC1);
+   // Mat bggr_8bit_image = bggr_image.clone();
+   // bggr_8bit_image.convertTo(bggr_8bit_image, CV_8UC1);
 
     Mat rgb_8bit_image(this->GetImageHeight(), this->GetImageWidth(), CV_8UC3);
-    cvtColor(bggr_8bit_image, rgb_8bit_image, CV_BayerGB2BGR);
+    cvtColor(bggr_image, rgb_8bit_image, CV_BayerGR2BGR);
 
     return rgb_8bit_image;
 }
