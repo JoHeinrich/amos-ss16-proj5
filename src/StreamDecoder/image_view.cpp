@@ -32,10 +32,10 @@ void ImageView::ShowImage(Image image){
 
     // get BGGR image
     // TODO get bgr image later
-    Mat bggr_image = image.GetBGGRImage();
+    Mat bgr_image = image.GetBGRImage();
 
     // display image
     namedWindow( "Image View", WINDOW_AUTOSIZE );
-    imshow( "Image View", bggr_image );
+    imshow( "Image View", bgr_image );
     waitKey(0);
 }

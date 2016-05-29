@@ -73,6 +73,9 @@ Image FrameSelector::ReadImage(unsigned int frame_index){
     // create an Image from msgCameraImage
     Image result_image(protobuf_image.image_payload(), protobuf_image.image_width(), protobuf_image.image_height());
 
+    std::cout << "Protobuf file: WIDTH: " << result_image.GetImageWidth() << " HEIGHT: " << result_image.GetImageHeight() << std::endl;
+    std::cout << " Size of payload: " << result_image.GetImagePayload().size() << std::endl;
+
     return result_image;
 
 }
