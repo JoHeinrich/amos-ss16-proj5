@@ -72,10 +72,9 @@ Image FrameSelector::ReadImage(unsigned int frame_index){
 
     // create an Image from msgCameraImage
     Image result_image(protobuf_image.image_payload(), protobuf_image.image_width(), protobuf_image.image_height());
+
     return result_image;
 
-    //image_reader_->listInfosAboutMsgImage(protobuf_image);
-    
 }
 
 std::vector<Image> FrameSelector::ReadAllImages(){

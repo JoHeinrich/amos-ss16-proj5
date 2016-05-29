@@ -24,11 +24,13 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#ifndef FRAME_SELECTOR_H
+#define FRAME_SELECTOR_H
+
 // HDFReader
 #include "hdf_reader.h"
 
 //Protobuf Deserializer
-//#include "ProtobufDeserializer/msg_cameraimage_reader.h"
 #include "protofiles/camera_image.pb.h"
 
 // Image
@@ -70,9 +72,9 @@ public:
       std::vector<Image> ReadAllImages();
 
 private:
+
       std::string file_name_;   ///< The full path file name of the hdf5 file
       HDFReader  *hdf_reader_;    ///< The dhf5 file reader
-      //MsgCameraImageReader  *image_reader_;   ///< The protobuf file reader
 
       /**
        * Converts a protobuf file from hdf reader to an array (needed for parsing it and for creating a msgCameraImage object)
@@ -84,3 +86,5 @@ private:
       unsigned char* ConvertProtobufFileToArray(std::vector<int64_t> file);
        
 };
+
+#endif // FRAME_SELECTOR_H
