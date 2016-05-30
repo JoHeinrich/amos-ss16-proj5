@@ -1,6 +1,6 @@
 
 //
-// image_viewer.h
+// image_view.h
 // Projectname: amos-ss16-proj5
 //
 // Created on 28.05.2016.
@@ -24,8 +24,23 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include <opencv2/opencv.hpp>
+#ifndef IMAGE_VIEW_H
+#define IMAGE_VIEW_H
 
-class ImageViewer{
+#include "image.h"
+class ImageView{
+	
+public:
+
+    /**
+     * Shows the image with help of OpenCV.
+     *
+     * @param image The image object that will be shown
+     *
+     */
+	void ShowImage(Image image);
+	
   
 };
+
+#endif // IMAGE_VIEW_H

@@ -28,6 +28,7 @@
 
 #include "image.h"
 
+
 namespace patch{
     
     template < typename T > std::string to_string( const T& n ){
@@ -45,6 +46,9 @@ Image::Image(const std::string & payload, int width, int height){
    image_payload_ = payload;
    image_width_ = width;
    image_height_ = height;
+
+   // create and fill the payload array buffer
+   ConvertToArray();
     
 }
 
@@ -67,14 +71,38 @@ int Image::GetImageHeight(){
     return image_height_;
 }
 
-cv::Mat Image::GetBGGRImage(){
+Mat Image::GetBGGRImage(){
 
-    cv::Mat empty;
-    return empty;
+    // create a Mat object from data
+    // TODO is CV_16UC1 the correct type?
+    Mat result_image(this->GetImageHeight(), this->GetImageWidth(), CV_16UC1, image_payload_array_);
+
+    return result_image;
 }
 
-cv::Mat Image::GetBGRImage(){
+Mat Image::GetBGRImage(){
 
-    cv::Mat empty;
-    return empty;
+    Mat bggr_image = this->GetBGGRImage();
+
+    //convert BGGR image to BGR
+   // Mat bggr_8bit_image = bggr_image.clone();
+   // bggr_8bit_image.convertTo(bggr_8bit_image, CV_8UC1);
+
+    Mat rgb_8bit_image(this->GetImageHeight(), this->GetImageWidth(), CV_8UC3);
+    cvtColor(bggr_image, rgb_8bit_image, CV_BayerGR2BGR);
+
+    return rgb_8bit_image;
+}
+
+void Image::ConvertToArray(){
+
+    // convert image payload to unsigned char array
+    unsigned int image_buffer_size = this->GetImagePayload().size();
+    image_payload_array_ = new unsigned char[image_buffer_size];
+    const char* image = this->GetImagePayload().c_str();
+
+    for(int i = 0; i < image_buffer_size; i++){
+
+        image_payload_array_[i] = static_cast<unsigned char>(image[i]);
+    }
 }

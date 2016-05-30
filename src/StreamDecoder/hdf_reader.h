@@ -24,6 +24,8 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#ifndef HDF_READER_H
+#define HDF_READER_H
 
 //std
 #ifdef OLD_HEADER_FILENAME
@@ -128,3 +130,6 @@ private:
     //std::string data_set_name_z_values_;  ///< The data set name of z values
     
 };
+
+
+#endif // HDF_READER_H

@@ -24,7 +24,13 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#ifndef IMAGE_H
+#define IMAGE_H
+
+
 #include <opencv2/opencv.hpp>
+
+using namespace cv;
 
 class Image{
     
@@ -70,19 +76,28 @@ public:
       *
       * @return The bayer image as opencv::Mat object
       */
-      cv::Mat GetBGGRImage();
+      Mat GetBGGRImage();
 
       /**
       * Gets the bgr image 
       *
       * @return The bgr image as opencv::Mat object
       */
-      cv::Mat GetBGRImage();
+      Mat GetBGRImage();
 
 	
 private:
       std::string image_payload_;   ///< The string containing the payload of the image
+      unsigned char* image_payload_array_;  ///< The image payload as char array
       int image_width_;		///< The image width
-      int image_height_;	///< The image height 
+      int image_height_;	///< The image height
+
+      /**
+      * Converts the image payload to a char array (needed for conversion to Mat objects).
+      */
+      void ConvertToArray();
+
   
 };
+
+#endif //IMAGE_H
