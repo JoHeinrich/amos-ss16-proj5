@@ -30,26 +30,26 @@
 
 
 namespace patch{
-    
+
     template < typename T > std::string to_string( const T& n ){
-        
+
         std::ostringstream stm ;
         stm << n ;
         return stm.str() ;
-        
+
     }
-    
+
 }
 
 Image::Image(const std::string & payload, int width, int height){
-    
+
    image_payload_ = payload;
    image_width_ = width;
    image_height_ = height;
 
    // create and fill the payload array buffer
    ConvertToArray();
-    
+
 }
 
 Image::~Image(){
@@ -84,7 +84,7 @@ Mat Image::GetBGRImage(){
 
     Mat bggr_image = this->GetBGGRImage();
 
-    //convert BGGR image to BGR
+   //convert BGGR image to BGR
    // Mat bggr_8bit_image = bggr_image.clone();
    // bggr_8bit_image.convertTo(bggr_8bit_image, CV_8UC1);
 
