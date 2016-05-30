@@ -26,6 +26,7 @@
 #include <iostream>
 #include <sstream>
 #include "frame_selector.h"
+#include "image_view.h"
 #include <vector>
 
 using namespace std;
@@ -34,34 +35,34 @@ using namespace std;
 int main(int argc, const char* argv[]) {
 
     if (argc > 3 || argc == 1){
-        
+
         cerr << "Usage:  " << " FULL_PATH_TO_HDF5_FILE (optional: image index)" << endl;
         return -1;
-        
+
     }
 
 
     FrameSelector pipeline(argv[1]);
 
     if(argc == 2){
-        
+
         // read all images
         std::vector<Image> result_images = pipeline.ReadAllImages();
 
         // TODO give images to image viewer and let show them
 
 
-        
+
     } else if(argc == 3){
-        
+
         // read one image
         unsigned int index = 0;
         stringstream string_index(argv[2]);
         string_index >> index;
         Image result_image = pipeline.ReadImage(index);
 
-        // TODO give image to image viewer and let it show
-        
+        ImageView image_viewer;
+        image_viewer.ShowImage(result_image);
     }
 
 

@@ -135,11 +135,11 @@ int HDFReader::ReadFile(){
         }
 
         // image ids output
-        for(int i = 0; i<protobuf_file_ids_.size(); i++){
+        /*for(int i = 0; i<protobuf_file_ids_.size(); i++){
             
             std::cout << "image id " << buffer[i][1] << std::endl;
             
-        }
+        }*/
 
         // get the (protobuf) channel description
         Attribute description_attribute = data_set.openAttribute(protobuf_files_description_attribute_name_);

@@ -1,5 +1,5 @@
 //
-// image_viewer.cpp
+// image_view.cpp
 // Projectname: amos-ss16-proj5
 //
 // Created on 28.05.2016.
@@ -23,4 +23,19 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "image_viewer.h"
+#include "image_view.h"
+#include <opencv2/opencv.hpp>
+
+using namespace cv;
+
+void ImageView::ShowImage(Image image){
+
+    // get BGGR image
+    // TODO get bgr image later
+    Mat bgr_image = image.GetBGRImage();
+
+    // display image
+    namedWindow( "Image View", WINDOW_AUTOSIZE );
+    imshow( "Image View", bgr_image );
+    waitKey(0);
+}
