@@ -71,7 +71,7 @@ void detectAndDisplay(cv::Mat *frame){
 
     //detect people in the resizedImage
     std::vector<Rect> foundHumans;
-    hog.detectMultiScale(resizedImage, foundHumans, 0, Size(8,8), Size(32,32), 1.05, 2);
+    hog.detectMultiScale(resizedImage, foundHumans, 0.35, Size(4,4), Size(16,16), 1.04, 1);
 
     //add retangle to found humans
     for (int i=0; i<foundHumans.size(); i++){
