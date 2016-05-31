@@ -28,6 +28,7 @@ using namespace cv;
 void detectAndDisplay(cv::Mat *image);
 
 const int KEY_ESC = 27;
+const int KEY_SPACE = 32;
 
 HOGDescriptor hog;
 int main (int argc, const char * argv[])
@@ -55,6 +56,10 @@ int main (int argc, const char * argv[])
             break;
         detectAndDisplay(&frame);
         char key = cvWaitKey(10);
+
+        if (key == KEY_SPACE)
+            key = cvWaitKey(0);
+
         if (key == KEY_ESC)
             break;
     } while(1);
