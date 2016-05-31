@@ -76,7 +76,7 @@ void detectAndDisplay(cv::Mat *frame){
     //add retangle to found humans
     for (int i=0; i<foundHumans.size(); i++){
         Rect r = foundHumans[i];
-        rectangle(resizedImage, r.tl(), r.br(), Scalar(255,255,255), 3);
+        rectangle(resizedImage, r.tl(), r.br(), Scalar(0,255,0), 2);
     }
     imshow("demo", resizedImage);
 }
