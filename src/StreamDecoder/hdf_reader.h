@@ -1,6 +1,6 @@
 
 //
-// HDFReader.h
+// hdf_reader.h
 // Projectname: amos-ss16-proj5
 //
 // Created on 10.05.2016.
