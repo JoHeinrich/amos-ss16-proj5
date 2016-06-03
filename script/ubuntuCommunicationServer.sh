@@ -16,14 +16,13 @@ fi
 # Checking if server is running / exited
 containerRunning=$(docker ps -a -f name=serverContainer)
 flag=`echo $containerRunning|awk '{print match($0,"serverContainer")}'`;
-echo $flag
+#echo $flag
 if [ $flag -gt 0 ]; then
   docker stop serverContainer
   docker rm -fv serverContainer
 fi
-#docker run -ti --name=serverContainer --net=$1 amosproj5/amosbuildimage:$2 /bin/bash -c "/home/bin/server 8080"
-#echo "test"
-echo -en '\n'
 echo "Starting the server"
-docker run -ti -d --name=serverContainer --net=$1 amosproj5/amosbuildimage:$2
-docker exec -it serverContainer /bin/bash 
+echo -en '\n'
+docker run -ti --name=serverContainer --net=$1 amosproj5/amosbuildimage:$2 /bin/bash -c "/home/bin/server 8080"
+#docker run -ti -d --name=serverContainer --net=$1 amosproj5/amosbuildimage:$2
+#docker exec -it serverContainer /bin/bash 
