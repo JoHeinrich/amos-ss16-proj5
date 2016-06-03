@@ -40,97 +40,111 @@ static int connFd;
 
 int main(int argc, char* argv[])
 {
-    GOOGLE_PROTOBUF_VERIFY_VERSION;
-    int pId, portNo, listenFd;
-    socklen_t len;
-    struct sockaddr_in svrAdd, clntAdd;
+	GOOGLE_PROTOBUF_VERIFY_VERSION;
+	int pId, portNo, listenFd;
+	socklen_t len;
+	struct sockaddr_in svrAdd, clntAdd;
     
-    pthread_t thread;
+	pthread_t thread;
     
-    if (argc < 2)
-    {
-        cerr << "Syntam : ./server <port>" << endl;
-        return 0;
-    }
+	if (argc < 2)
+	{
+		cerr << "Syntam : ./server <port>" << endl;
+		return 0;
+	}
     
-    portNo = atoi(argv[1]);
+	portNo = atoi(argv[1]);
     
-    if((portNo > 65535) || (portNo < 2000))
-    {
-        cerr << "Please enter a port number between 2000 - 65535" << endl;
-        return 0;
-    }
+	if((portNo > 65535) || (portNo < 2000))
+	{
+		cerr << "Please enter a port number between 2000 - 65535" << endl;
+		return 0;
+	}
     
-    listenFd = socket(AF_INET, SOCK_STREAM, 0);
+	listenFd = socket(AF_INET, SOCK_STREAM, 0);
     
-    if(listenFd < 0)
-    {
-        cerr << "Cannot open socket" << endl;
-        return 0;
-    }
+	if(listenFd < 0)
+	{
+		cerr << "Cannot open socket" << endl;
+		return 0;
+	}
     
-    bzero((char*) &svrAdd, sizeof(svrAdd));
+	bzero((char*) &svrAdd, sizeof(svrAdd));
     
-    svrAdd.sin_family = AF_INET;
-    svrAdd.sin_addr.s_addr = INADDR_ANY;
-    svrAdd.sin_port = htons(portNo);
+	svrAdd.sin_family = AF_INET;
+	svrAdd.sin_addr.s_addr = INADDR_ANY;
+	svrAdd.sin_port = htons(portNo);
     
-    if(bind(listenFd, (struct sockaddr *)&svrAdd, sizeof(svrAdd)) < 0)
-    {
-        cerr << "Cannot bind" << endl;
-        return 0;
-    }
+	if(bind(listenFd, (struct sockaddr *)&svrAdd, sizeof(svrAdd)) < 0)
+	{
+		cerr << "Cannot bind" << endl;
+		return 0;
+	}
     
-    listen(listenFd, 5);
+	listen(listenFd, 5);
     
-    len = sizeof(clntAdd);
+	len = sizeof(clntAdd);
 
-    cout << "Listening" << endl;
+	cout << "Listening - 60 seconds without connection shuts server down" << endl;
 
-    connFd = accept(listenFd, (struct sockaddr *)&clntAdd, &len);
+	//Add timeout
+	fd_set set;
+	struct timeval timeout;
+	FD_ZERO(&set);
+	FD_SET(listenFd, &set);
+	timeout.tv_sec = 60;
+	timeout.tv_usec = 0;
 
-    if (connFd < 0)
-    {
-	cerr << "Cannot accept connection" << endl;
-        return 0;
-    }
-    else
-    {
-        cout << "Connection successful" << endl;
-    }
-       
-    pthread_create(&thread, NULL, task1, NULL); 
+	int rv = select(listenFd + 1, &set, NULL, NULL, &timeout);
+	if (rv == -1)
+	{
+    		cerr << "select error" << endl;
+	}
+	else if (rv == 0)
+	{
+		cout << "timeout" << endl;
+	}
+	else
+	{
+
+		connFd = accept(listenFd, (struct sockaddr *)&clntAdd, &len);
+
+		if (connFd < 0)
+		{
+			cerr << "Cannot accept connection" << endl;
+			return 0;
+		}
+		else
+		{
+			cout << "Connection successful" << endl;
+		}
+	       
+		pthread_create(&thread, NULL, task1, NULL); 
+	    
+		pthread_join(thread, NULL);
+    	}
+
+	// Optional:  Delete all global objects allocated by libprotobuf.
+	google::protobuf::ShutdownProtobufLibrary();
     
-    pthread_join(thread, NULL);
-    
-    // Optional:  Delete all global objects allocated by libprotobuf.
-   google::protobuf::ShutdownProtobufLibrary();
-    
-   close(listenFd); 
+	close(listenFd); 
     
 }
 
 void *task1 (void *dummyPt)
 {
 	csCommunication::Warning otherCarWarning;
-//	int size = otherCarWarning.ByteSize();
-	// TODO: Still hardcoded; Länge sollte Größe des Objekts betragen; Problem: ByteSize liefert hier 0, weil noch keins der Felder gesetzt wurde. Eventuell vorher dummy Nachricht erstellen?
-	int size = 28;
-	// Need space for header
+	int size = 50;
 
-	void* buf = malloc(size); 
-        
-
-	int recvSize = recv(connFd, buf, size, 0);
+	void* buf = malloc(size);
 	
-//	cout << "Size received " << recvSize << endl;
+	int recvSize = recv(connFd, buf, size, 0);
 	
 	bool serSuccessful = otherCarWarning.ParseFromArray(buf,size);
 	
-//	cout << "Has mess " << boolalpha << otherCarWarning.has_mess() << endl;
-	cout << "Message: " << otherCarWarning.mess() << endl;
+	cout << "Message: " << otherCarWarning.mess();
 	
-    cout << "\nClosing thread and conn" << endl;
-    close(connFd);
+	cout << "\nClosing thread and conn" << endl;
+	close(connFd);
 
 }
