@@ -37,84 +37,86 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 
-    GOOGLE_PROTOBUF_VERIFY_VERSION;
-    int listenFd, portNo;
-    struct sockaddr_in svrAdd;
-    struct hostent *server;
+	GOOGLE_PROTOBUF_VERIFY_VERSION;
+	int listenFd, portNo;
+	struct sockaddr_in svrAdd;
+	struct hostent *server;
     
-    if(argc < 3)
-    {
-        cerr<<"Syntax : ./client <host name> <port>"<<endl;
-        return 0;
-    }
+	if(argc < 3)
+	{
+		cerr<<"Syntax : ./client <host name> <port>"<<endl;
+		return 0;
+	}
     
-    portNo = atoi(argv[2]);
+	portNo = atoi(argv[2]);
     
-    if((portNo > 65535) || (portNo < 2000))
-    {
-        cerr<<"Please enter port number between 2000 - 65535"<<endl;
-        return 0;
-    }       
+	if((portNo > 65535) || (portNo < 2000))
+	{
+		cerr<<"Please enter port number between 2000 - 65535"<<endl;
+		return 0;
+	}       
     
-    listenFd = socket(AF_INET, SOCK_STREAM, 0);
+	listenFd = socket(AF_INET, SOCK_STREAM, 0);
     
-    if(listenFd < 0)
-    {
-        cerr << "Cannot open socket" << endl;
-        return 0;
-    }
+	if(listenFd < 0)
+	{
+		cerr << "Cannot open socket" << endl;
+		return 0;
+	}
     
-    server = gethostbyname(argv[1]);
+	server = gethostbyname(argv[1]);
     
-    if(server == NULL)
-    {
-        cerr << "Host does not exist" << endl;
-        return 0;
-    }
+	if(server == NULL)
+	{
+		cerr << "Host does not exist" << endl;
+		return 0;
+	}
     
-    bzero((char *) &svrAdd, sizeof(svrAdd));
-    svrAdd.sin_family = AF_INET;
+	bzero((char *) &svrAdd, sizeof(svrAdd));
+	svrAdd.sin_family = AF_INET;
     
-    bcopy((char *) server -> h_addr, (char *) &svrAdd.sin_addr.s_addr, server -> h_length);
+	bcopy((char *) server -> h_addr, (char *) &svrAdd.sin_addr.s_addr, server -> h_length);
     
-    svrAdd.sin_port = htons(portNo);
+	svrAdd.sin_port = htons(portNo);
     
-    int checker = connect(listenFd,(struct sockaddr *) &svrAdd, sizeof(svrAdd));
+	int checker = connect(listenFd,(struct sockaddr *) &svrAdd, sizeof(svrAdd));
     
-    if (checker < 0)
-    {
-        cerr << "Cannot connect!" << endl;
-        return 0;
-    }
+	if (checker < 0)
+	{
+	cerr << "Cannot connect!" << endl;
+	return 0;
+	}
 
 	// Set message     
 	csCommunication::Warning otherCarWarning;
-    otherCarWarning.set_mess("Ppl in front of bus, dude!");
-    // Initialize array and serialize the message
+	otherCarWarning.set_mess("Warning! People in front of bus!");
+	// Initialize array and serialize the message
 	int size = otherCarWarning.ByteSize();
 	void* arr = malloc(size);
 	bool serSuccessful = otherCarWarning.SerializeToArray(arr,size);
 
 	cout << "Serializing successful: " << boolalpha << serSuccessful << endl;
 
-/*
+	/*
 	csCommunication::Warning test;
 	test.ParseFromArray(arr,size);
 	
 	cout << test.mess() << endl;
-*/
+	*/
 	// Just verbose stuff
-    cout << "Object detected" << endl;
-    cout << "Warn other cars" << endl;
+	cout << "Object detected" << endl;
+	cout << "Warn other cars" << endl;
 
-    sleep(2);
+	sleep(2);
 
 	int written = write(listenFd, arr, size);
-//	cout << "Bytes written " << written << endl;
+	//	cout << "Bytes written " << written << endl;
 
-    sleep(2);
+	sleep(2);
 
-    cout << "Warning sent" << endl;
+	cout << "Warning sent" << endl;
 	// Optional:  Delete all global objects allocated by libprotobuf.
   	google::protobuf::ShutdownProtobufLibrary();
+
+	close(listenFd);	
 }
