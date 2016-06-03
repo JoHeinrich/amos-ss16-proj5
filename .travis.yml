@@ -4,6 +4,10 @@ services:
   - docker
 # Enable C++ support
 language: cpp
+# Define cache
+cache:
+  directories:
+  - /home/travis/build/JoHeinrich/amos-ss16-proj5/protobuf-2.6.1
 # Compiler selection
 compiler:
   - gcc
