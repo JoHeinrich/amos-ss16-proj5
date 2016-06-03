@@ -16,7 +16,8 @@ echo "Configuring xhost"
 xhost +local:
 echo -en '\n'
 echo "Starting the container now. All binaries can be found in /home/bin. The test video is mapped into the home directory."
-docker run -ti -v $1:/home/testVid.mp4 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$2 /bin/bash
+#docker run -ti -v $1:/home/testVid.mp4 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$2 /bin/bash
+docker run -ti -v $1:/home/testVid.mp4 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$2 /bin/bash -c "cd /home/bin/; ./humandetection ../testVid.mp4"
 echo -en '\n'
 xhost -local:
 echo "Reverting xhost settings..."

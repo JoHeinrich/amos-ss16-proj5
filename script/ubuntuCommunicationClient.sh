@@ -29,4 +29,4 @@ docker network inspect $1
 echo -en '\n'
 echo "Starting the client"
 docker run -ti -d --name=clientContainer --net=$1 amosproj5/amosbuildimage:$2
-docker exec -it serverContainer /bin/bash 
+docker exec -it clientContainer /bin/bash 
