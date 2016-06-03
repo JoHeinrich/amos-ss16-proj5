@@ -8,9 +8,9 @@ echo "This script will start our docker container. Please give the path to a HDF
 echo -en '\n'
 if [ ! -f $1 ] || [ $# -lt 2 ]; then 
   echo -en '\n'
-  echo "Wrong Usage. Usage: ubuntuVideo.sh [ _FULL_PATH_TO_HDF5_FILE_ ] [ _CONTAINER_TAG_ ] [optional: _FRAME_INDEX_ ]"
+  echo "Wrong Usage. Usage: ubuntuStreamDecoder.sh [ _FULL_PATH_TO_HDF5_FILE_ ] [ _CONTAINER_TAG_ ] [optional: _FRAME_INDEX_ ]"
   echo "Whitespaces in the path are not allowed!"
-  echo "Example: script/ubuntuVideo.sh /home/file.hdf5 v1 10"  
+  echo "Example: script/ubuntuStreamDecoder.sh /home/file.hdf5 v1 10"  
   exit
 fi  
 echo "Configuring xhost"
