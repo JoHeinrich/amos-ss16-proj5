@@ -16,17 +16,18 @@ fi
 # checking if client is running / exited
 containerRunning=$(docker ps -a -f name=clientContainer)
 flag=`echo $containerRunning|awk '{print match($0,"clientContainer")}'`;
-echo $flag
+#echo $flag
 if [ $flag -gt 0 ]; then
   docker stop clientContainer
   docker rm -fv clientContainer
 fi
-#docker run -ti --name=serverContainer --net=$1 amosproj5/amosbuildimage:$2 /bin/bash -c "/home/bin/server 8080"
-#echo "test"
+echo "Fetching server ip"
 echo -en '\n'
-echo "Take note of the server ip!"
-docker network inspect $1
-echo -en '\n'
+line=$(docker network inspect testNW | sed -n '/serverContainer/{n;n;n;p}')
+ip=$(echo $line | cut -c17-26)
+#echo "$ip"
 echo "Starting the client"
-docker run -ti -d --name=clientContainer --net=$1 amosproj5/amosbuildimage:$2
-docker exec -it clientContainer /bin/bash 
+echo -en '\n'
+docker run -ti --name=clientContainer --net=$1 amosproj5/amosbuildimage:$2 /bin/bash -c "/home/bin/client $ip 8080"
+#docker run -ti -d --name=clientContainer --net=$1 amosproj5/amosbuildimage:$2
+#docker exec -it clientContainer /bin/bash 
