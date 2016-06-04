@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
  g++ \
  make
 RUN apt-get -y install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev 
+# Install protobuf
 RUN echo "Installing protobuf9"
 RUN wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz \
   && tar --no-same-owner --no-same-permissions -x -z -f protobuf-2.6.1.tar.gz \
@@ -30,6 +31,7 @@ RUN echo "deb http://nginx.org/packages/mainline/ubuntu/ trusty nginx" > /etc/ap
   && apt-get -y --no-install-recommends install nginx patch \
   && scrub_image
 
+# Adding server vars and the binaries, starting the server
 ENV HTML_INDEX_FILE AutoDrive
 ADD assets/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
 ADD assets/bin /home
