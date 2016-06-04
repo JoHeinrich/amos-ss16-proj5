@@ -23,7 +23,7 @@ if [ $flag -gt 0 ]; then
 fi
 echo "Fetching server ip"
 echo -en '\n'
-line=$(docker network inspect testNW | sed -n '/serverContainer/{n;n;n;p}')
+line=$(docker network inspect $1 | sed -n '/serverContainer/{n;n;n;p}')
 ip=$(echo $line | cut -c17-26)
 #echo "$ip"
 echo "Starting the client"
