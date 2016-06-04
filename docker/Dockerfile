@@ -3,7 +3,6 @@ MAINTAINER Daniel Goetz <daniel.dg.goetz@fau.de>
 
 # -------------------------------------- Install packages
 
-ADD assets/bin /home
 ADD assets/openCV /home/openCV
 RUN echo "Installing dependencies"  
 RUN apt-get update && apt-get install -y \ 
@@ -23,7 +22,6 @@ RUN wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.
   && sudo make install \ 
   && sudo ldconfig
 
-
 # Install nginx and patch
 COPY assets /assets
 RUN echo "deb http://nginx.org/packages/mainline/ubuntu/ trusty nginx" > /etc/apt/sources.list.d/nginx.list \
@@ -32,20 +30,7 @@ RUN echo "deb http://nginx.org/packages/mainline/ubuntu/ trusty nginx" > /etc/ap
   && apt-get -y --no-install-recommends install nginx patch \
   && scrub_image
 
-
 ENV HTML_INDEX_FILE AutoDrive
 ADD assets/$HTML_INDEX_FILE /var/www/html/$HTML_INDEX_FILE
-
-#ADD assets/ProtobufDecoder /home/ProtobufDecoder
-#not sure we need this any longer
-#ADD assets/FrameSelector /home/FrameSelector
-
-
-#RUN export LD_LIBRARY_PATH=/home/openCV/lib/:$LD_LIBRARY_PATH
-#RUN sudo ln /dev/null /dev/raw1394 
-#sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
-#sudo apt-get install libdc1394-22-dev
-# export LD_LIBRARY_PATH=/home/openCV/lib/:$LD_LIBRARY_PATH
-# sudo ln /dev/null /dev/raw1394
-
+ADD assets/bin /home
 RUN bash /assets/finish_docker_build
