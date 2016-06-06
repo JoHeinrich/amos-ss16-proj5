@@ -24,3 +24,16 @@
 
 #include "humans_in_front_of_bus_scenario.h"
 
+bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
+
+    // first: check whether there are humans detected
+
+    // yes: check whether there are buses detected
+
+    // do the objects overlap?
+
+    // yes -> true, no -> false
+
+    return false;
+}
+

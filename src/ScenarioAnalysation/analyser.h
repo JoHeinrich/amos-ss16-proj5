@@ -29,6 +29,7 @@
 
 #include "../ObjectDetection/frame_detection_data.h"
 #include "scenario.h"
+#include "humans_in_front_of_bus_scenario.h"
 
 class Analyser {
     
@@ -37,9 +38,10 @@ public:
     /**
      * Analyses the frame detection data and detetermines which scenario is there
      *
-     * @param frame_data    The frame data with detected obejects
+     * @param detected_objects    The frame data with detected objects
+     * @return The detected scenario
      */
-    Scenario Analyse(FrameDetectionData frame_data);
+    Scenario* Analyse(FrameDetectionData detected_objects);
     
 private:
     

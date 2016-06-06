@@ -26,10 +26,11 @@
 #include "analyser.h"
 
 
-Scenario Analyser::Analyse(FrameDetectionData frame_data){
+Scenario* Analyser::Analyse(FrameDetectionData detected_objects){
 
     // TODO analyse detected objects from frame_data ...
 
-    Scenario result;
+    HumansInFrontOfBusScenario result;
+    return &result;
 
 }

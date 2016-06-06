@@ -16,6 +16,8 @@ add_subdirectory(src/ObjectDetection)
 
 add_subdirectory(src/StreamDecoder)
 
+add_subdirectory(src/ScenarioAnalysation)
+
 file(GLOB_RECURSE sources "./src/*.cpp")
 file(GLOB_RECURSE headers "./src/*.h")
 

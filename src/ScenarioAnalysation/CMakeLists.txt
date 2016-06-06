@@ -8,6 +8,8 @@ set(sources
 	analyser.cpp
 	scenario.cpp
 	humans_in_front_of_bus_scenario.cpp
+	main.cpp
+
 )
 
 set(headers

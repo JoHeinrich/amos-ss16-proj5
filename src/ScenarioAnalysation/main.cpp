@@ -1,7 +1,7 @@
 
 // Projectname: amos-ss16-proj5
 //
-// Created on 02.06.2016.
+// Created on 06-06-2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -22,23 +22,25 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "element.h"
+#include <iostream>
+#include <sstream>
+#include "analyser.h"
 
-Element::Element(std::vector<int> position, std::vector<int> box_size){
+using namespace std;
 
-    position_ = position;
-    box_size_ = box_size;
 
-}
+int main(int argc, const char* argv[]) {
 
-std::vector<int> Element::GetPosition(){
+    if (argc > 1 ){
 
-    return position_;
+        cerr << "Usage:  " << " no parameters " << endl;
+        return -1;
 
-}
+    }
 
-std::vector<int> Element::GetBoxSize(){
 
-    return box_size_;
 
+
+
+    return 0;
 }

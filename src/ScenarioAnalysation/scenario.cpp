@@ -22,5 +22,15 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include scenario.h"
+#include "scenario.h"
 
+float Scenario::Distance(Element first, Element second){
+
+    return 0.0;
+
+}
+
+bool Scenario::Overlap(Element first, Element second){
+
+    return false;
+}
