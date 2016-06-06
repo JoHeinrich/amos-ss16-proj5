@@ -52,7 +52,7 @@ public:
     virtual float Distance(Element first, Element second);
 
     /**
-    * Computes whether the two objects overlap. As default, overlapping of one pixel is enough to return true. Can be overriden in subclasses.
+    * Computes whether the two objects overlap. As default, overlapping of one pixel in the bounding boxes of the elements is enough to return true. Can be overriden in subclasses.
     *
     * @param first The first object
     * @param second The second object

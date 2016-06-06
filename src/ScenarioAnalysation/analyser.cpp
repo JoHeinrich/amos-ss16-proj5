@@ -23,14 +23,42 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+
 #include "analyser.h"
 
+//object detection
+#include "../ObjectDetection/element.h"
+
+
+//std
+#include <list>
+
+Analyser::Analyser(std::vector<Scenario *> scenarios){
+
+    all_scenarios_ = scenarios;
+
+}
+
+void Analyser::AddScenario(Scenario* scenario){
+
+    all_scenarios_.push_back(scenario);
+
+}
 
 Scenario* Analyser::Analyse(FrameDetectionData detected_objects){
 
-    // TODO analyse detected objects from frame_data ...
+    // iterate over all scenarios and return the first detected scenario
+    for(int i = 0; i < all_scenarios_.size(); i++){
 
-    HumansInFrontOfBusScenario result;
-    return &result;
+        Scenario* current_scenario = all_scenarios_.at(i);
+
+        bool detected = current_scenario->Detect(detected_objects);
+
+        if(detected){
+            return current_scenario;
+        }
+    }
+
+    return NULL;
 
 }

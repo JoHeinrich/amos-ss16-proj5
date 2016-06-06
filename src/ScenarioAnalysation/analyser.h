@@ -27,6 +27,9 @@
 #ifndef ANALYSER_H
 #define ANALYSER_H
 
+//std
+#include <vector>
+
 #include "../ObjectDetection/frame_detection_data.h"
 #include "scenario.h"
 #include "humans_in_front_of_bus_scenario.h"
@@ -35,6 +38,20 @@ class Analyser {
     
 public:
     
+    /**
+    * Constructor.
+    *
+    * @param scenarios    The vector with the possible scenarios
+    */
+    Analyser(std::vector<Scenario*> scenarios);
+
+    /**
+    * Adds a scenario to the vector with analysed scenarios.
+    *
+    * @param scenario   The scenario to add.
+    */
+    void AddScenario(Scenario* scenario);
+
     /**
      * Analyses the frame detection data and detetermines which scenario is there
      *
@@ -45,7 +62,7 @@ public:
     
 private:
     
-
+    std::vector<Scenario*> all_scenarios_;  ///< Vector with all possible scenarios
     
 };
 

@@ -28,6 +28,7 @@
 
 #include "scenario.h"
 
+
 class HumansInFrontOfBusScenario : public Scenario {
     
 public:
