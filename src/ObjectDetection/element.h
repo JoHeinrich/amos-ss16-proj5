@@ -1,6 +1,4 @@
 
-//
-// element.h
 // Projectname: amos-ss16-proj5
 //
 // Created on 02.06.2016.

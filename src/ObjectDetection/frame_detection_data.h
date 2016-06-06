@@ -1,6 +1,4 @@
 
-//
-// FrameDetectionData.h
 // Projectname: amos-ss16-proj5
 //
 // Created on 02.06.2016.
@@ -37,6 +35,10 @@
 //element
 #include "element.h"
 
+// enum for the types of detected objects
+enum ObjectType { OBJECT_HUMAN = 0, OBJECT_VEHICLE = 1 };
+
+
 class FrameDetectionData {
     
 public:
@@ -48,23 +50,20 @@ public:
      *
      * @return The list with all elements of the given type
      */
-    std::list<Element> GetElementsOfType(std::string type);
+    std::list<Element> GetElementsOfType(ObjectType type);
 
     /**
-     * Adds a list of elements with a new type
+     * Adds a list of elements with a given type
      *
      * @param type  The type of the elements
      * @param elements  The list with elements
      *
      */
-    void AddElementsOfType(std::string type, std::list<Element> elements);
+    void AddElementsOfType(ObjectType type, std::list<Element> elements);
 
 
 private:
-    
-    //TODO: encapsulate type in own class?
-    std::vector<std::string> types_;    ///< The vector with all existing types so far
-    std::map<std::string, std::list<Element> > all_elements_;   ///< The map containing all elements of all types
+    std::map<ObjectType, std::list<Element> > all_elements_;   ///< The map containing all elements of all types
 };
 
 

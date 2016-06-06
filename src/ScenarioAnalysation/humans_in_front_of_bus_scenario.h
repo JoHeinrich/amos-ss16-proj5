@@ -28,16 +28,19 @@
 
 #include "scenario.h"
 
-class HumansInFrontOfBUsScenario : public Scenario {
+class HumansInFrontOfBusScenario : public Scenario {
     
 public:
-    
 
-    
+    /**
+    * Overrides the Detect function from Scenario. Deetects whether there are humans in front of the bus.
+    *
+    * @return true whether the are humans in front of the bus, false if not
+    */
+    virtual bool Detect(FrameDetectionData detected_objects) override;
+
 private:
-    
 
-    
 };
 
 

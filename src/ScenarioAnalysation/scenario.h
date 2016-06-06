@@ -25,17 +25,44 @@
 #ifndef SCENARIO_H
 #define SCENARIO_H
 
+#include "../ObjectDetection/frame_detection_data.h"
+#include "../ObjectDetection/element.h"
 
 class Scenario {
     
 public:
-    
-   
-    
-private:
-    
 
+    /**
+    * Detects a certain scenario. Must be overriden in subclasses.
+    *
+    * @param detected_objects The frame data with detected objects
+    *
+    * @return true whether the circumstances for a certain scenario are met, false if not
+    */
+    virtual bool Detect(FrameDetectionData detected_objects) = 0;
     
+    /**
+    * Computes the distance between two objects. Uses the distance between the position of the objects as default. Can be overriden in subclasses.
+    *
+    * @param first The first object
+    * @param second The second object
+    *
+    * @return The distance between the objects
+    */
+    virtual float Distance(Element first, Element second);
+
+    /**
+    * Computes whether the two objects overlap. As default, overlapping of one pixel is enough to return true. Can be overriden in subclasses.
+    *
+    * @param first The first object
+    * @param second The second object
+    *
+    * @return true whether there is an overlapping, false if not
+    */
+    virtual bool Overlap(Element first, Element second);
+
+private:
+
 };
 
 
