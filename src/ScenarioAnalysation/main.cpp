@@ -22,9 +22,13 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+//std
 #include <iostream>
 #include <sstream>
+
 #include "analyser.h"
+#include "humans_in_front_of_bus_scenario.h"
+#include "scenario.h"
 
 using namespace std;
 
@@ -33,11 +37,13 @@ int main(int argc, const char* argv[]) {
 
     if (argc > 1 ){
 
-        cerr << "Usage:  " << " no parameters " << endl;
+        cerr << "Usage:  " << argv[0] << " no parameters " << endl;
         return -1;
 
     }
 
+    std::vector<Scenario*> possible_scenarios;
+    possible_scenarios.push_back(new HumansInFrontOfBusScenario());
 
 
 

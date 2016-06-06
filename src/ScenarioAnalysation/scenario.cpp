@@ -22,15 +22,37 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+#include <math.h>
+
 #include "scenario.h"
 
 float Scenario::Distance(Element first, Element second){
 
-    return 0.0;
+    //compute distance with pythagorean theorem
+
+    std::vector<int> first_position = first.GetPosition();
+    std::vector<int> second_position = second.GetPosition();
+
+    float first_sum = pow( (static_cast<float>(second_position.at(0)) - static_cast<float>(first_position.at(0))), 2.0);
+    float second_sum = pow( (static_cast<float>(second_position.at(1)) - static_cast<float>(first_position.at(1))), 2.0);
+
+    float distance = sqrt(first_sum + second_sum);
+
+    return distance;
 
 }
 
 bool Scenario::Overlap(Element first, Element second){
 
-    return false;
+    //determine whether the bounding box of the first element overlaps with the second one
+
+    int first_min_x = first.GetPosition().at(0);
+    int first_min_y = first.GetPosition().at(1);
+
+    int first_max_x = first_min_x + first.GetBoxSize().at(0);
+    int first_max_y = first_min_y + first.GetBoxSize().at(1);
+
+    // TODO
+
+
 }

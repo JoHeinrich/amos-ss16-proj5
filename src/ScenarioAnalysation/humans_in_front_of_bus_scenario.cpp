@@ -28,11 +28,39 @@ bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
 
     // first: check whether there are humans detected
 
-    // yes: check whether there are buses detected
+    std::list<Element> humans = detected_objects.GetElementsOfType(OBJECT_HUMAN);
+    std::list<Element> vehicles = detected_objects.GetElementsOfType(OBJECT_VEHICLE);
 
-    // do the objects overlap?
+    if(humans.size() != 0){
 
-    // yes -> true, no -> false
+        if(vehicles.size() != 0){
+
+            // check whether there are human objects which overlap with vehicle objects
+            std::list <Element>::const_iterator humans_iterator;
+
+            for(humans_iterator = humans.begin(); humans_iterator != humans.end(); ++humans_iterator){
+
+                Element current_human = *humans_iterator;
+
+                 std::list <Element>::const_iterator vehicles_iterator;
+
+                 for(vehicles_iterator = vehicles.begin(); vehicles_iterator != vehicles.end(); ++vehicles_iterator){
+
+                     bool overlapping = Overlap(current_human, *vehicles_iterator);
+
+                     if(overlapping){
+
+                         return true;
+
+                     }
+
+                 }
+            }
+
+        }
+
+        return false;
+    }
 
     return false;
 }

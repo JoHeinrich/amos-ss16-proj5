@@ -34,8 +34,8 @@ public:
     /**
      * Constructor
      *
-     * @param  position     The vector with position of the element
-     * @param  box_size     The vector with the size of the bounding box of the element
+     * @param  position     The vector with position of the element (x, y)
+     * @param  box_size     The vector with the size of the bounding box of the element (width, height)
      */
     Element(std::vector<int> position, std::vector<int> box_size);
 
