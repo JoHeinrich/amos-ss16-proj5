@@ -1,8 +1,9 @@
+
 //
-// vehicle_detector.cpp
+// detector.h
 // Projectname: amos-ss16-proj5
 //
-// Created on 03.06.2016.
+// Created on 02.06.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -22,3 +23,29 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 //
+
+#ifndef DETECTOR_H
+#define DETECTOR_H
+
+#include <opencv2/opencv.hpp>
+#include <vector>
+
+class Detector {
+
+public:
+
+  /**
+   * Detects objects in the given frame (cv::Mat)
+   *
+   * @param frame The current frame
+   *
+   * @return The vector of all detected objects in the current Frame
+   **/
+  virtual std::vector<cv::Rect> detect(cv::Mat *frame);
+
+private:
+
+};
+
+
+#endif // DETECTOR_H

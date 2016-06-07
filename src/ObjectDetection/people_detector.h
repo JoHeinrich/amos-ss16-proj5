@@ -1,5 +1,5 @@
 //
-// vehicle_detector.cpp
+// people_detector.h
 // Projectname: amos-ss16-proj5
 //
 // Created on 03.06.2016.
@@ -22,3 +22,28 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 //
+
+#ifndef PEOPLE_DETECTOR_H
+#define PEOPLE_DETECTOR_H
+
+#include "detector.h"
+
+class PeopleDetector : public Detector {
+
+public:
+
+  /**
+   * Detects people in the given frame (cv::Mat)
+   *
+   * @param frame The current frame
+   *
+   * @return The vector of all detected people in the current Frame
+   **/
+  std::vector<cv::Rect> detect(cv::Mat *frame);
+
+private:
+
+};
+
+
+#endif // PEOPLE_DETECTOR_H

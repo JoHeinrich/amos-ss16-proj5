@@ -1,5 +1,5 @@
 //
-// vehicle_detector.cpp
+// people_detector.cpp
 // Projectname: amos-ss16-proj5
 //
 // Created on 03.06.2016.

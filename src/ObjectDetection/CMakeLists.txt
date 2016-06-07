@@ -11,14 +11,17 @@ else(OpenCV_FOUND)
 endif(OpenCV_FOUND)
 
 set(sources
+	detectionMain.cpp
+	detection.cpp
 	element.cpp
 	frame_detection_data.cpp
 	humandetector.cpp
-	detectionMain.cpp
 	vehicle_detector.cpp
 )
 
 set(headers
+	detection.h
+	detector.h
 	element.h
 	frame_detection_data.h
 )
