@@ -21,3 +21,44 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 //
+
+#include "protofiles/CameraImage.pb.h"
+
+class ProtobufImageWrapper {
+
+public:
+    /**
+     * Parses the protobuf files from an unsigned char*
+     *
+     *  @param file The file as char*
+     *  @param protobuf_file_size the size of the file
+     */
+    bool ParseFromArray (unsigned char* file, int protobuf_file_size);
+    
+    /**
+     * Gets the image payload as string
+     *
+     *  @return the payload as string
+     */
+    const ::std::string& GetImagePayload();
+    
+    /**
+     * Gets the image width
+     *
+     *  @return the image width as int
+     */
+    int GetImageWidth();
+    
+    /**
+     * Gets the image height
+     *
+     *  @return the image height as int
+     */
+    int GetImageHeight();
+    
+    pb::SensorNearData::MFC::CameraImage protobuf_image;
+    
+private:
+
+
+}
