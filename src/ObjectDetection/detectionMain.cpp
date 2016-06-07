@@ -24,9 +24,8 @@
 //
 
 #include <opencv2/opencv.hpp>
-// using namespace std;
+using namespace std;
 using namespace cv;
-//#include "imageprocessing/humandetector.h"
 
 Mat resizeFrame(Mat *image);
 std::vector<Rect> detectPeople(Mat *image);
@@ -35,6 +34,8 @@ void displayDetectedObjects(std::vector<Rect> firstDetection, std::vector<Rect> 
 
 const int KEY_ESC = 27;
 const int KEY_SPACE = 32;
+
+const string WindowName = "Camera Stream";
 
 int main(int argc, const char * argv[]) {
 
@@ -121,5 +122,5 @@ void displayDetectedObjects(std::vector<Rect> firstDetection, std::vector<Rect> 
       rectangle(*frame, r.tl(), r.br(), Scalar(255,150,0), 2);
   }
 
-  imshow("CameraStream", *frame);
+  imshow(WindowName, *frame);
 }
