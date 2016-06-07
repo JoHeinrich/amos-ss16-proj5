@@ -25,9 +25,16 @@
 
 #include "people_detector.h"
 
-std::vector<cv::Rect> detect(cv::Mat *frame) {
+std::vector<cv::Rect> PeopleDetector::detect(cv::Mat *frame) {
 
-  std::vector<Rect> detectedPeople;
-  // To do: detection
+  //set hog detector
+  // TO DO: test the daimler detector again with proper settings
+  cv::HOGDescriptor hog;
+  hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
+
+  //detect people in the frame
+  std::vector<cv::Rect> detectedPeople;
+  hog.detectMultiScale(*frame, detectedPeople, 0.35, cv::Size(4,4), cv::Size(16,16), 1.04, 1);
+
   return detectedPeople;
 }
