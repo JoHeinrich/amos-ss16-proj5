@@ -29,7 +29,7 @@ using namespace cv;
 //#include "imageprocessing/humandetector.h"
 
 Mat resizeFrame(Mat *image);
-std::vector<Rect> detectHumans(Mat *image);
+std::vector<Rect> detectPeople(Mat *image);
 void diplayDetectedObjects(std::vector<Rect> detectedObjects, Mat *image);
 
 const int KEY_ESC = 27;
@@ -57,8 +57,8 @@ int main(int argc, const char * argv[]) {
            break;
 
        Mat resizedFrame = resizeFrame(&frame);
-       std::vector<Rect> foundHumans = detectHumans(&resizedFrame);
-       diplayDetectedObjects(foundHumans, &resizedFrame);
+       std::vector<Rect> foundPeople = detectPeople(&resizedFrame);
+       diplayDetectedObjects(foundPeople, &resizedFrame);
        char key = cvWaitKey(10);
 
        if (key == KEY_SPACE)
@@ -80,17 +80,17 @@ Mat resizeFrame(Mat *frame) {
   return resizedFrame;
 }
 
-std::vector<Rect> detectHumans(Mat *frame){
+std::vector<Rect> detectPeople(Mat *frame){
     //set hog detector
     // TO DO: test the daimler detector again with proper settings
     HOGDescriptor hog;
     hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
 
     //detect people in the frame
-    std::vector<Rect> detectedHumans;
-    hog.detectMultiScale(*frame, detectedHumans, 0.35, Size(4,4), Size(16,16), 1.04, 1);
+    std::vector<Rect> detectedPeople;
+    hog.detectMultiScale(*frame, detectedPeople, 0.35, Size(4,4), Size(16,16), 1.04, 1);
 
-    return detectedHumans;
+    return detectedPeople;
 }
 
 void diplayDetectedObjects(std::vector<Rect> detectedObjects, Mat *frame){
