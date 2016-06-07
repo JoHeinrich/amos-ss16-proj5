@@ -30,21 +30,22 @@ using namespace cv;
 
 Mat resizeFrame(Mat *image);
 std::vector<Rect> detectPeople(Mat *image);
-void diplayDetectedObjects(std::vector<Rect> detectedObjects, Mat *image);
+std::vector<Rect> detectVehicles(Mat *image);
+void displayDetectedObjects(std::vector<Rect> firstDetection, std::vector<Rect> secondDetection, Mat *image);
 
 const int KEY_ESC = 27;
 const int KEY_SPACE = 32;
 
 int main(int argc, const char * argv[]) {
 
-  if(argc < 3)
+  if(argc < 2)
   {
-    std::cout << "Usage " << argv[0] << " classifier.xml video.mp4" << std::endl;
+    std::cout << "Usage " << argv[0] << " video.mp4" << std::endl;
     return 0;
   }
 
   //open video
-  cv::VideoCapture capture(argv[2]);
+  cv::VideoCapture capture(argv[1]);
   if (!capture.isOpened()){
       std::cout << "Failed to open video" << std::endl;
       return -1;
@@ -57,10 +58,11 @@ int main(int argc, const char * argv[]) {
            break;
 
        Mat resizedFrame = resizeFrame(&frame);
-       std::vector<Rect> foundPeople = detectPeople(&resizedFrame);
-       diplayDetectedObjects(foundPeople, &resizedFrame);
-       char key = cvWaitKey(10);
+       std::vector<Rect> detectedPeople = detectPeople(&resizedFrame);
+       std::vector<Rect> detectedVehicles = detectVehicles(&resizedFrame);
+       displayDetectedObjects(detectedPeople, detectedVehicles, &resizedFrame);
 
+       char key = cvWaitKey(10);
        if (key == KEY_SPACE)
            key = cvWaitKey(0);
 
@@ -80,24 +82,44 @@ Mat resizeFrame(Mat *frame) {
   return resizedFrame;
 }
 
-std::vector<Rect> detectPeople(Mat *frame){
-    //set hog detector
-    // TO DO: test the daimler detector again with proper settings
-    HOGDescriptor hog;
-    hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
+std::vector<Rect> detectPeople(Mat *frame) {
+  //set hog detector
+  // TO DO: test the daimler detector again with proper settings
+  HOGDescriptor hog;
+  hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
 
-    //detect people in the frame
-    std::vector<Rect> detectedPeople;
-    hog.detectMultiScale(*frame, detectedPeople, 0.35, Size(4,4), Size(16,16), 1.04, 1);
+  //detect people in the frame
+  std::vector<Rect> detectedPeople;
+  hog.detectMultiScale(*frame, detectedPeople, 0.35, Size(4,4), Size(16,16), 1.04, 1);
 
-    return detectedPeople;
+  return detectedPeople;
 }
 
-void diplayDetectedObjects(std::vector<Rect> detectedObjects, Mat *frame){
-    //add retangle for each Object, that was detected
-    for (int i=0; i<detectedObjects.size(); i++){
-        Rect r = detectedObjects[i];
-        rectangle(*frame, r.tl(), r.br(), Scalar(0,255,0), 2);
-    }
-    imshow("CameraStream", *frame);
+std::vector<Rect> detectVehicles(Mat *frame) {
+
+  CascadeClassifier vehicle_classifier;
+  vehicle_classifier.load("../vehicle_classifier.xml");
+  if (vehicle_classifier.empty() == true) {
+    std::cout << "Failed to lead vehicle classifier" << std::endl;
+  }
+
+  std::vector<Rect> detectedVehicles;
+  vehicle_classifier.detectMultiScale(*frame, detectedVehicles, 1.1, 2, 0, cvSize(70,70), cvSize(400,400));
+  return detectedVehicles;
+}
+
+void displayDetectedObjects(std::vector<Rect> firstDetection, std::vector<Rect> secondDetection, Mat *frame) {
+  //add retangle for each Object in firstDetection
+  for (int i=0; i<firstDetection.size(); i++){
+      Rect r = firstDetection[i];
+      rectangle(*frame, r.tl(), r.br(), Scalar(0,255,0), 2);
+  }
+
+  //add retangle for each Object in secondDetection
+  for (int i=0; i<secondDetection.size(); i++){
+      Rect r = secondDetection[i];
+      rectangle(*frame, r.tl(), r.br(), Scalar(255,150,0), 2);
+  }
+
+  imshow("CameraStream", *frame);
 }
