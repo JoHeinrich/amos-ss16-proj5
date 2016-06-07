@@ -25,7 +25,7 @@
 
 using namespace cv;
 
-void detectAndDisplay(cv::Mat *image);
+void detectAndDisplay(Mat *image);
 
 const int KEY_ESC = 27;
 const int KEY_SPACE = 32;
@@ -50,7 +50,7 @@ int main (int argc, const char * argv[])
     }
 
     //run video
-    cv::Mat frame;
+    Mat frame;
     do{
         if (!capture.read(frame))
             break;
@@ -67,11 +67,11 @@ int main (int argc, const char * argv[])
     return 0;
 }
 
-void detectAndDisplay(cv::Mat *frame){
+void detectAndDisplay(Mat *frame){
     //resize the image to width of 400px to reduce detection time and improve detection accuracy
     //0.3125 is used because the test video is 1280 x 720, so the width resized images is 400px this has to be changed to our image size (best would be no hard coded scaling so other images sizes work too!)
 
-    cv::Mat resizedImage;
+    Mat resizedImage;
     resize(*frame, resizedImage, Size(0, 0), 0.3125, 0.3125, CV_INTER_AREA);
 
     //detect people in the resizedImage
