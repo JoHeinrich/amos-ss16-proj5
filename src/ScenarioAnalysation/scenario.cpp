@@ -52,7 +52,25 @@ bool Scenario::Overlap(Element first, Element second){
     int first_max_x = first_min_x + first.GetBoxSize().at(0);
     int first_max_y = first_min_y + first.GetBoxSize().at(1);
 
-    // TODO
 
+    int second_min_x = second.GetPosition().at(0);
+    int second_min_y = second.GetPosition().at(1);
+
+    int second_max_x = second_min_x + second.GetBoxSize().at(0);
+    int second_max_y = second_min_y + second.GetBoxSize().at(1);
+
+
+    if( (first_min_x <= second_min_x) || (first_max_x >= second_max_x) ){
+
+        if( ( (second_min_y >= first_min_y) && (second_min_y <= first_max_y) )
+                ||  ( (second_max_y <= first_max_y) && (second_max_y >= first_min_y) ) ){
+
+            return true;
+        }
+
+        return false;
+    }
+
+    return false;
 
 }
