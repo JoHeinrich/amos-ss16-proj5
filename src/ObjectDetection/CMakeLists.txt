@@ -14,6 +14,7 @@ set(sources
 	element.cpp
 	frame_detection_data.cpp
 	humandetector.cpp
+	detectionMain.cpp
 	vehicle_detector.cpp
 )
 
