@@ -21,3 +21,22 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 //
+
+
+#include "protobuf_image_wrapper.h"
+
+bool ProtobufImageWrapper::ParseFromArray (unsigned char* file, int protobuf_file_size){
+    return protobuf_image.ParseFromArray(file, protobuf_file_size);
+}
+
+const ::std::string& ProtobufImageWrapper::GetImagePayload(){
+    return protobuf_image.image_payload();
+}
+
+int ProtobufImageWrapper::GetImageWidth(){
+    return protobuf_image.image_width();
+}
+
+int ProtobufImageWrapper::GetImageHeight(){
+    return protobuf_image.image_height();
+}
