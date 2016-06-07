@@ -1,7 +1,7 @@
 
 // Projectname: amos-ss16-proj5
 //
-// Created on 02.06.2016.
+// Created on 03.06.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -22,23 +22,27 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "element.h"
+#ifndef HUMANS_IN_FRONT_OF_BUS_SCENARIO_H
+#define HUMANS_IN_FRONT_OF_BUS_SCENARIO_H
 
-Element::Element(std::vector<int> position, std::vector<int> box_size){
 
-    position_ = position;
-    box_size_ = box_size;
+#include "scenario.h"
 
-}
 
-std::vector<int> Element::GetPosition(){
+class HumansInFrontOfBusScenario : public Scenario {
+    
+public:
 
-    return position_;
+    /**
+    * Overrides the Detect function from Scenario. Deetects whether there are humans in front of the bus.
+    *
+    * @return true whether the are humans in front of the bus, false if not
+    */
+    virtual bool Detect(FrameDetectionData detected_objects) override;
 
-}
+private:
 
-std::vector<int> Element::GetBoxSize(){
+};
 
-    return box_size_;
 
-}
+#endif // HUMANS_IN_FRONT_OF_SCENARIO_H
