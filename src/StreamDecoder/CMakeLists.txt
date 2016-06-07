@@ -27,12 +27,12 @@ endif(OpenCV_FOUND)
 
 set(protobufheaders	
 	protofiles/header.pb.h
-	protofiles/camera_image.pb.h
+	protofiles/CameraImage.pb.h
 )
 
 set(protobufsources
-	protofiles/header.pb.cpp
-	protofiles/camera_image.pb.cpp
+	protofiles/header.pb.cc
+	protofiles/CameraImage.pb.cc
 )
 
 set(hdfheader
