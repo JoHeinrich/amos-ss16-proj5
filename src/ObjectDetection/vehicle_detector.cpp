@@ -22,3 +22,12 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 //
+
+#include "vehicle_detector.h"
+
+std::vector<cv::Rect> detect(cv::Mat *frame) {
+
+  std::vector<Rect> detectedVehicles;
+  // To do: detection
+  return detectedVehicles;
+}
