@@ -22,6 +22,9 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+//std
+#include <iostream>
+
 #include "humans_in_front_of_bus_scenario.h"
 
 bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
@@ -31,6 +34,7 @@ bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
     std::list<Element> humans = detected_objects.GetElementsOfType(OBJECT_HUMAN);
     std::list<Element> vehicles = detected_objects.GetElementsOfType(OBJECT_VEHICLE);
 
+    std:: cout << "Humans in Front of Bus Scenario: Number of humans = " << humans.size() << " Number of vehicles = " << vehicles.size() << std::endl;
     if(humans.size() != 0){
 
         if(vehicles.size() != 0){
@@ -47,7 +51,7 @@ bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
                  for(vehicles_iterator = vehicles.begin(); vehicles_iterator != vehicles.end(); ++vehicles_iterator){
 
                      bool overlapping = Overlap(current_human, *vehicles_iterator);
-
+                     // std::cout << "Humans in front of bus OVERLAPPING: " << overlapping << std::endl;
                      if(overlapping){
 
                          return true;

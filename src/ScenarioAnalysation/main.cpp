@@ -24,11 +24,15 @@
 
 //std
 #include <iostream>
-#include <sstream>
+#include <vector>
+#include <list>
 
 #include "analyser.h"
 #include "humans_in_front_of_bus_scenario.h"
 #include "scenario.h"
+#include "../ObjectDetection/frame_detection_data.h"
+#include "../ObjectDetection/element.h"
+
 
 using namespace std;
 
@@ -45,8 +49,52 @@ int main(int argc, const char* argv[]) {
     std::vector<Scenario*> possible_scenarios;
     possible_scenarios.push_back(new HumansInFrontOfBusScenario());
 
+    Analyser analyser(possible_scenarios);
+
+    // create fake detected elements for test issues
+    std::vector<int> human_position;
+    std::vector<int> human_size;
+
+    human_position.push_back(10);
+    human_position.push_back(10);
+
+    human_size.push_back(10);
+    human_size.push_back(50);
+
+    Element human(human_position, human_size);
 
 
+    std::vector<int> vehicle_position;
+    std::vector<int> vehicle_size;
+
+    vehicle_position.push_back(5);
+    vehicle_position.push_back(5);
+
+    vehicle_size.push_back(20);
+    vehicle_size.push_back(15);
+
+    Element vehicle(vehicle_position, vehicle_size);
+
+
+    FrameDetectionData frame_detection;
+
+    std::list<Element> all_humans;
+    all_humans.push_back(human);
+
+    std::list<Element> all_vehicles;
+    all_vehicles.push_back(vehicle);
+
+    frame_detection.AddElementsOfType(OBJECT_HUMAN, all_humans);
+    frame_detection.AddElementsOfType(OBJECT_VEHICLE, all_vehicles);
+
+
+    // analyse the fake frame detection data
+    Scenario* result_scenario = analyser.Analyse(frame_detection);
+
+    if( HumansInFrontOfBusScenario* result = dynamic_cast<HumansInFrontOfBusScenario*>(result_scenario) ){
+
+        std::cout << "Main: Humans in front of bus scenario detected! " << std::endl;
+    }
 
     return 0;
 }

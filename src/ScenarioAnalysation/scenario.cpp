@@ -22,6 +22,8 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+//std
+#include <iostream>
 #include <math.h>
 
 #include "scenario.h"
@@ -59,12 +61,19 @@ bool Scenario::Overlap(Element first, Element second){
     int second_max_x = second_min_x + second.GetBoxSize().at(0);
     int second_max_y = second_min_y + second.GetBoxSize().at(1);
 
+   // std::cout << "SCENARIO::OVERLAP: first min, max x;y : " << first_min_x << " " << first_max_x << " " << first_min_y << " " << first_max_y <<std::endl;
+   // std::cout << "SCENARIO::OVERLAP: second min, max x;y : " << second_min_x << " " << second_max_x << " " << second_min_y << " " << second_max_y <<std::endl;
 
-    if( (first_min_x <= second_min_x) || (first_max_x >= second_max_x) ){
+
+    if( (first_min_x <= second_min_x) || (first_max_x >= second_max_x) || ( (first_min_x >= second_min_x) && (first_max_x <= second_max_x) ) ){
+
+        // std::cout << " SCENARIO::OVERLAP erstes if " <<std::endl;
 
         if( ( (second_min_y >= first_min_y) && (second_min_y <= first_max_y) )
                 ||  ( (second_max_y <= first_max_y) && (second_max_y >= first_min_y) ) ){
 
+
+            std::cout << "Scenario: There are overlapping elements in the frame! " << std::endl;
             return true;
         }
 

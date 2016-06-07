@@ -23,6 +23,8 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+//std
+#include <iostream>
 
 #include "analyser.h"
 
@@ -55,6 +57,7 @@ Scenario* Analyser::Analyse(FrameDetectionData detected_objects){
         bool detected = current_scenario->Detect(detected_objects);
 
         if(detected){
+            std::cout << "Analyser: A scenario was detected! " <<std::endl;
             return current_scenario;
         }
     }
