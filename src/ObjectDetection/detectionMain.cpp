@@ -23,16 +23,81 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-using namespace std;
+#include <opencv2/opencv.hpp>
+// using namespace std;
+using namespace cv;
 //#include "imageprocessing/humandetector.h"
 
-int main(int argc, const char* argv[]) {
+Mat resizeFrame(Mat *image);
+std::vector<Rect> detectHumans(Mat *image);
+void diplayDetectedObjects(std::vector<Rect> detectedObjects, Mat *image);
 
-    //humandetector det;
+const int KEY_ESC = 27;
+const int KEY_SPACE = 32;
 
-    //int retValue = det.mainHumanDetector(argc, argv);
+int main(int argc, const char * argv[]) {
 
-    //return retValue;
+  if(argc < 3)
+  {
+    std::cout << "Usage " << argv[0] << " classifier.xml video.mp4" << std::endl;
+    return 0;
+  }
+
+  //open video
+  cv::VideoCapture capture(argv[2]);
+  if (!capture.isOpened()){
+      std::cout << "Failed to open video" << std::endl;
+      return -1;
+  }
+
+  // run video
+   Mat frame;
+   do{
+       if (!capture.read(frame))
+           break;
+
+       Mat resizedFrame = resizeFrame(&frame);
+       std::vector<Rect> foundHumans = detectHumans(&resizedFrame);
+       diplayDetectedObjects(foundHumans, &resizedFrame);
+       char key = cvWaitKey(10);
+
+       if (key == KEY_SPACE)
+           key = cvWaitKey(0);
+
+       if (key == KEY_ESC)
+           break;
+   } while(1);
 
     return 0;
+}
+
+Mat resizeFrame(Mat *frame) {
+  //resize the image to width of 400px to reduce detection time and improve detection accuracy
+  //0.3125 is used because the test video is 1280 x 720, so the width resized images is 400px this has to be changed to our image size (best would be no hard coded scaling so other images sizes work too!)
+
+  Mat resizedFrame;
+  resize(*frame, resizedFrame, Size(0, 0), 0.3125, 0.3125, CV_INTER_AREA);
+  return resizedFrame;
+}
+
+std::vector<Rect> detectHumans(Mat *frame){
+    //set hog detector
+    // TO DO: test the daimler detector again with proper settings
+    HOGDescriptor hog;
+    hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
+
+    //detect people in the frame
+    std::vector<Rect> detectedHumans;
+    hog.detectMultiScale(*frame, detectedHumans, 0.35, Size(4,4), Size(16,16), 1.04, 1);
+
+    return detectedHumans;
+}
+
+void diplayDetectedObjects(std::vector<Rect> detectedObjects, Mat *frame){
+    //add retangle for each Object, that was detected
+    for (int i=0; i<detectedObjects.size(); i++){
+        Rect r = detectedObjects[i];
+        rectangle(*frame, r.tl(), r.br(), Scalar(0,255,0), 2);
+    }
+    imshow("CameraStream", *frame);
 }
