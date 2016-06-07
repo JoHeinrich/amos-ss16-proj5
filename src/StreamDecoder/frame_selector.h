@@ -31,7 +31,7 @@
 #include "hdf_reader.h"
 
 //Protobuf Deserializer
-#include "protobuf_wrapper.h"
+#include "protobuf_image_wrapper.h"
 
 // Image
 #include "image.h"
