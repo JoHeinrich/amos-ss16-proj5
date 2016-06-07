@@ -1,7 +1,8 @@
-
+//
+// hdf_reader.cpp
 // Projectname: amos-ss16-proj5
 //
-// Created on 02.06.2016.
+// Created on 10.05.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -22,23 +23,45 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "element.h"
+//std
+#include <iostream>
 
-Element::Element(std::vector<int> position, std::vector<int> box_size){
+#include "analyser.h"
 
-    position_ = position;
-    box_size_ = box_size;
+//object detection
+#include "../ObjectDetection/element.h"
+
+
+//std
+#include <list>
+
+Analyser::Analyser(std::vector<Scenario *> scenarios){
+
+    all_scenarios_ = scenarios;
 
 }
 
-std::vector<int> Element::GetPosition(){
+void Analyser::AddScenario(Scenario* scenario){
 
-    return position_;
+    all_scenarios_.push_back(scenario);
 
 }
 
-std::vector<int> Element::GetBoxSize(){
+Scenario* Analyser::Analyse(FrameDetectionData detected_objects){
 
-    return box_size_;
+    // iterate over all scenarios and return the first detected scenario
+    for(int i = 0; i < all_scenarios_.size(); i++){
+
+        Scenario* current_scenario = all_scenarios_.at(i);
+
+        bool detected = current_scenario->Detect(detected_objects);
+
+        if(detected){
+            std::cout << "Analyser: A scenario was detected! " <<std::endl;
+            return current_scenario;
+        }
+    }
+
+    return NULL;
 
 }

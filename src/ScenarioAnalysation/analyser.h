@@ -1,7 +1,9 @@
 
+//
+// analyser.h
 // Projectname: amos-ss16-proj5
 //
-// Created on 02.06.2016.
+// Created on 03.06.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -22,45 +24,47 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef ELEMENT_H
-#define ELEMENT_H
+#ifndef ANALYSER_H
+#define ANALYSER_H
 
+//std
 #include <vector>
 
-class Element {
+#include "../ObjectDetection/frame_detection_data.h"
+#include "scenario.h"
+#include "humans_in_front_of_bus_scenario.h"
+
+class Analyser {
     
 public:
     
     /**
-     * Constructor
-     *
-     * @param  position     The vector with position of the element (x, y)
-     * @param  box_size     The vector with the size of the bounding box of the element (width, height)
-     */
-    Element(std::vector<int> position, std::vector<int> box_size);
-
+    * Constructor.
+    *
+    * @param scenarios    The vector with the possible scenarios
+    */
+    Analyser(std::vector<Scenario*> scenarios);
 
     /**
-     *  Gets the position of the element
-     *
-     *  @return The vector with the position of the element
-     */
-    std::vector<int> GetPosition();
+    * Adds a scenario to the vector with analysed scenarios.
+    *
+    * @param scenario   The scenario to add.
+    */
+    void AddScenario(Scenario* scenario);
 
     /**
-     *  Gets the size of the bounding box of the element
+     * Analyses the frame detection data and detetermines which scenario is there
      *
-     *  @return The vector with the size of the bounding box of the element
+     * @param detected_objects    The frame data with detected objects
+     * @return The detected scenario
      */
-    std::vector<int> GetBoxSize();
-
+    Scenario* Analyse(FrameDetectionData detected_objects);
     
 private:
     
-   std::vector<int> position_;  ///< The vector containing the position of the element
-   std::vector<int> box_size_;  ///< The vector contatining the width and height of the bounding box of the element
+    std::vector<Scenario*> all_scenarios_;  ///< Vector with all possible scenarios
     
 };
 
 
-#endif // ELEMENT_H
+#endif // ANALYSER_H
