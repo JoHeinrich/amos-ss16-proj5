@@ -33,10 +33,22 @@ const ::std::string& ProtobufImageWrapper::GetImagePayload(){
     return protobuf_image.image_payload();
 }
 
+bool ProtobufImageWrapper::HasImagePayload(){
+    return protobuf_image.has_image_payload();
+}
+
 int ProtobufImageWrapper::GetImageWidth(){
     return protobuf_image.image_width();
 }
 
+bool ProtobufImageWrapper::HasImageWidth(){
+    return protobuf_image.has_image_width();
+}
+
 int ProtobufImageWrapper::GetImageHeight(){
     return protobuf_image.image_height();
+}
+
+bool ProtobufImageWrapper::HasImageHeight(){
+    return protobuf_image.has_image_width();
 }

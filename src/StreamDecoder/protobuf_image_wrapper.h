@@ -43,11 +43,26 @@ public:
     const ::std::string& GetImagePayload();
     
     /**
+     * Queries if the protobuf-iamge has a payload-value included
+     *
+     *  @return bool
+     */
+    bool HasImagePayload();
+    
+    
+    /**
      * Gets the image width
      *
      *  @return the image width as int
      */
     int GetImageWidth();
+    
+    /**
+     * Queries if the protobuf-image has a width-value included
+     *
+     *  @return bool
+     */
+    bool HasImageWidth();
     
     /**
      * Gets the image height
@@ -56,9 +71,15 @@ public:
      */
     int GetImageHeight();
     
-    pb::SensorNearData::MFC::CameraImage protobuf_image;
+    /**
+     * Queries if the protobuf-image has a height-value included
+     *
+     *  @return bool
+     */
+    bool HasImageHeight();
     
 private:
-
+    
+    pb::SensorNearData::MFC::CameraImage protobuf_image;
 
 };
