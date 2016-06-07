@@ -22,3 +22,12 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 //
+
+#include "people_detector.h"
+
+std::vector<cv::Rect> detect(cv::Mat *frame) {
+
+  std::vector<Rect> detectedPeople;
+  // To do: detection
+  return detectedPeople;
+}
