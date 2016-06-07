@@ -47,6 +47,7 @@ set(header
 	frame_selector.h
 	image.h
 	image_view.h
+	protobuf_image_wrapper.h
 )
 
 set(sources
@@ -54,6 +55,7 @@ set(sources
 	main.cpp
 	image.cpp
 	image_view.cpp
+	protobuf_image_wrapper.cpp
 )
 
 add_executable(${OUTPUT_NAME} ${sources} ${header} ${protobufsources} ${protobufheaders} ${hdfsource} ${hdfheader})
