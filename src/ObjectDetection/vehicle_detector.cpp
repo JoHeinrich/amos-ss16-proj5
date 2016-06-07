@@ -25,9 +25,18 @@
 
 #include "vehicle_detector.h"
 
-std::vector<cv::Rect> detect(cv::Mat *frame) {
+std::vector<cv::Rect> VehicleDetector::detect(cv::Mat *frame) {
 
-  std::vector<Rect> detectedVehicles;
-  // To do: detection
+  cv::CascadeClassifier vehicle_classifier;
+  vehicle_classifier.load("../vehicle_classifier.xml");
+  // check if classifier was loaded
+  if (vehicle_classifier.empty() == true) {
+    std::cout << "Failed to lead vehicle classifier" << std::endl;
+  }
+
+  //detect vehicles in the frame
+  std::vector<cv::Rect> detectedVehicles;
+  vehicle_classifier.detectMultiScale(*frame, detectedVehicles, 1.1, 2, 0, cv::Size(70,70), cv::Size(400,400));
+
   return detectedVehicles;
 }
