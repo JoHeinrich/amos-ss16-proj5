@@ -16,6 +16,8 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
+namespace pb {
+
 namespace {
 
 const ::google::protobuf::Descriptor* Header_descriptor_ = NULL;
@@ -76,8 +78,8 @@ void protobuf_AddDesc_header_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\014header.proto\"\033\n\006Header\022\021\n\ttimestamp\030\001 "
-    "\001(\022", 43);
+    "\n\014header.proto\022\002pb\"\033\n\006Header\022\021\n\ttimestam"
+    "p\030\001 \001(\003", 47);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "header.proto", &protobuf_RegisterTypes);
   Header::default_instance_ = new Header();
@@ -101,7 +103,7 @@ const int Header::kTimestampFieldNumber;
 Header::Header()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:Header)
+  // @@protoc_insertion_point(constructor:pb.Header)
 }
 
 void Header::InitAsDefaultInstance() {
@@ -111,7 +113,7 @@ Header::Header(const Header& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Header)
+  // @@protoc_insertion_point(copy_constructor:pb.Header)
 }
 
 void Header::SharedCtor() {
@@ -121,7 +123,7 @@ void Header::SharedCtor() {
 }
 
 Header::~Header() {
-  // @@protoc_insertion_point(destructor:Header)
+  // @@protoc_insertion_point(destructor:pb.Header)
   SharedDtor();
 }
 
@@ -161,17 +163,17 @@ bool Header::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Header)
+  // @@protoc_insertion_point(parse_start:pb.Header)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional sint64 timestamp = 1;
+      // optional int64 timestamp = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_SINT64>(
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &timestamp_)));
           set_has_timestamp();
         } else {
@@ -195,42 +197,42 @@ bool Header::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:Header)
+  // @@protoc_insertion_point(parse_success:pb.Header)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:Header)
+  // @@protoc_insertion_point(parse_failure:pb.Header)
   return false;
 #undef DO_
 }
 
 void Header::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Header)
-  // optional sint64 timestamp = 1;
+  // @@protoc_insertion_point(serialize_start:pb.Header)
+  // optional int64 timestamp = 1;
   if (has_timestamp()) {
-    ::google::protobuf::internal::WireFormatLite::WriteSInt64(1, this->timestamp(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->timestamp(), output);
   }
 
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:Header)
+  // @@protoc_insertion_point(serialize_end:pb.Header)
 }
 
 ::google::protobuf::uint8* Header::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Header)
-  // optional sint64 timestamp = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb.Header)
+  // optional int64 timestamp = 1;
   if (has_timestamp()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteSInt64ToArray(1, this->timestamp(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->timestamp(), target);
   }
 
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Header)
+  // @@protoc_insertion_point(serialize_to_array_end:pb.Header)
   return target;
 }
 
@@ -238,10 +240,10 @@ int Header::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional sint64 timestamp = 1;
+    // optional int64 timestamp = 1;
     if (has_timestamp()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::SInt64Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->timestamp());
     }
 
@@ -315,5 +317,7 @@ void Header::Swap(Header* other) {
 
 
 // @@protoc_insertion_point(namespace_scope)
+
+}  // namespace pb
 
 // @@protoc_insertion_point(global_scope)

@@ -31,7 +31,7 @@
 #include "hdf_reader.h"
 
 //Protobuf Deserializer
-#include "protofiles/camera_image.pb.h"
+#include "protofiles/CameraImage.pb.h"
 
 // Image
 #include "image.h"
