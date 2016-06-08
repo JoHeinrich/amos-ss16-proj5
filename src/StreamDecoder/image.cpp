@@ -97,11 +97,11 @@ Mat Image::GetBGRImage(){
 void Image::ConvertToArray(){
 
     // convert image payload to unsigned char array
-    unsigned int image_buffer_size = this->GetImagePayload().size();
+    unsigned long image_buffer_size = this->GetImagePayload().size();
     image_payload_array_ = new unsigned char[image_buffer_size];
     const char* image = this->GetImagePayload().c_str();
 
-    for(int i = 0; i < image_buffer_size; i++){
+    for(long i = 0; i < image_buffer_size; i++){
 
         image_payload_array_[i] = static_cast<unsigned char>(image[i]);
     }
