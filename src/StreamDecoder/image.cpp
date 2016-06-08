@@ -94,6 +94,32 @@ Mat Image::GetBGRImage(){
     return rgb_8bit_image;
 }
 
+Mat Image::GetRGBImage(){
+    
+    uint16_t decompressed_payload [GetImageWidth() * GetImageHeight()];
+    std::vector<char> writable(GetImagePayload().begin(), GetImagePayload().end());
+    char *temp_dest_buffer = reinterpret_cast<char *>(&decompressed_payload);
+    char *buffer = &writable[0];
+    
+    // (1176 * 640) / 2 bytes => 376320
+    int image_pixel_count = (GetImageWidth() * GetImageHeight()/2);
+    for (int i = 0; i < image_pixel_count; i++)
+    {
+        temp_dest_buffer[0] = buffer[0];
+        temp_dest_buffer[1] = ((unsigned char) buffer[1]) >> 4;
+        *((unsigned short*)&temp_dest_buffer[2]) = (((unsigned char)buffer[2]) << 4) | (buffer[1] & 0x0F);
+        temp_dest_buffer += 4;
+        buffer += 3;
+    }
+    cv::Mat rgb_image;
+    cv::Mat bayer_16bit_image(GetImageHeight(), GetImageWidth(), CV_16UC1, reinterpret_cast<uint8_t *>(&decompressed_payload));
+    cv::Mat bayer_8bit_image = bayer_16bit_image.clone();
+    bayer_8bit_image.convertTo(bayer_8bit_image, CV_8UC3, 0.0625);
+
+    cv::cvtColor(bayer_8bit_image, rgb_image, CV_BayerGR2RGB);
+    return rgb_image;
+}
+
 void Image::ConvertToArray(){
 
     // convert image payload to unsigned char array
