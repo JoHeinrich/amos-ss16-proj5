@@ -22,7 +22,8 @@ A bus stops at a bus stop vis-à-vis to a school. A car that drives behind the b
 
 #### Docker image:
 Try our Docker image and run this project without installing all dependencies. <br>
-Find out more in our [wiki](https://github.com/JoHeinrich/amos-ss16-proj5/wiki/Dockerhub-HowTo).
+For installing Docker and pulling the image take a look at our  [wiki](https://github.com/JoHeinrich/amos-ss16-proj5/wiki/Dockerhub-HowTo).<br>
+Use our [scripts](https://github.com/JoHeinrich/amos-ss16-proj5/tree/master/script) to start the programs.
 
 #### Project dependencies:
 - Min. CMake 2.8:  [Download](https://cmake.org/download/), [Install](https://cmake.org/install)
