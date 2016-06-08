@@ -20,7 +20,11 @@ A bus stops at a bus stop vis-à-vis to a school. A car that drives behind the b
 - Library for detection: OpenCV
 - Messaging format: HDF5, Google Protobuf
 
-#### Download and install dependencies:
+#### Docker image:
+Try our Docker image and run this project without installing all dependencies. <br>
+Find out more in our [wiki](https://github.com/JoHeinrich/amos-ss16-proj5/wiki/Dockerhub-HowTo).
+
+#### Project dependencies:
 - Min. CMake 2.8:  [Download](https://cmake.org/download/), [Install](https://cmake.org/install)
 - HDF5: [Download & Install](https://www.hdfgroup.org/HDF5/release/cmakebuild.html#build)
 - Google Protobuf 2.6.1: [Download](https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz), [Install]( https://github.com/google/protobuf/blob/master/src/README.md)
