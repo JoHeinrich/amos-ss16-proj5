@@ -1,5 +1,4 @@
-//
-// frame_detection_data.cpp
+
 // Projectname: amos-ss16-proj5
 //
 // Created on 03.06.2016.
@@ -25,7 +24,7 @@
 
 #include "frame_detection_data.h"
 
-std::list<Element> FrameDetectionData::GetElementsOfType(std::string type){
+std::list<Element> FrameDetectionData::GetElementsOfType(ObjectType type){
 
     std::list<Element> result = all_elements_.at(type);
 
@@ -33,15 +32,15 @@ std::list<Element> FrameDetectionData::GetElementsOfType(std::string type){
 
 }
 
-void FrameDetectionData::AddElementsOfType(std::string type, std::list<Element> elements){
+void FrameDetectionData::AddElementsOfType(ObjectType type, std::list<Element> elements){
 
-    std::map<std::string, std::list<Element> >::iterator map_iterator;
+    std::map<ObjectType, std::list<Element> >::iterator map_iterator;
 
     map_iterator = all_elements_.find(type);
 
     if(map_iterator == all_elements_.end()){
 
-        all_elements_.insert(std::pair<std::string, std::list<Element> > (type, elements));
+        all_elements_.insert(std::pair<ObjectType, std::list<Element> > (type, elements));
 
     }
 
