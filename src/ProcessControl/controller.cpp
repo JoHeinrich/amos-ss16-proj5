@@ -26,13 +26,13 @@
 #include "image_view.h"
 #include <opencv2/opencv.hpp>
 
-void Controler::PlayHDFVideo(std::string videofile){
+void Controller::PlayHDFVideo(std::string videofile){
 }
 
-void Controler::AnalyseHDF5Video(std::string videofile){
+void Controller::AnalyseHDF5Video(std::string videofile){
 }
 
-void Controler::SaveAllImagesAsJPEG(std::string videofile){
+void Controller::SaveAllImagesAsJPEG(std::string videofile){
     FrameSelector pipeline(videofile);
     int protobuf_counts = pipeline.GetImageCount();
     std:String filename = videofile.substr(videofile.find_last_of("/\\")+1);
