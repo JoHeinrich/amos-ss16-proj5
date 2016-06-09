@@ -335,6 +335,10 @@ std::string HDFReader::GetProtobufFilesDescription(){
     
 }
 
+std::vector<int> HDFReader::GetAllProtobufIds(){
+    return protobuf_file_ids_;
+}
+
 /*std::vector<std::vector<int64_t> > GetZValues(){
  
     return z_values_;
