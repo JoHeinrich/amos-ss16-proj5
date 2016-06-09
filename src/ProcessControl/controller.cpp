@@ -25,12 +25,12 @@
 #include "controller.h"
 #include <opencv2/opencv.hpp>
 
-void Controller::PlayHDFAsVideoVideo(std::string videofile){
+void Controller::PlayHDFAsVideo(std::string videofile){
     FrameSelector pipeline(videofile);
     int protobuf_counts = pipeline.GetImageCount();
     for (int i=0; i<protobuf_counts; i++){
         cv::imshow("name", pipeline.ReadImage(i).GetRGBImage());
-        cv::waitKey(30);
+        cv::waitKey(5);
     }
 }
 

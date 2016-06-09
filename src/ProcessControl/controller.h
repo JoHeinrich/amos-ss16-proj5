@@ -40,7 +40,7 @@ public:
      *
      *@param videofile path to the video file
      */
-    void AnalyseHDF5(std::string videofile);
+    void AnalyseHDF5Video(std::string videofile);
 
     /**
      * Saves all images as jepg to disc
