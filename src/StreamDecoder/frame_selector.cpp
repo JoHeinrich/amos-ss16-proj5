@@ -83,6 +83,10 @@ int FrameSelector::GetImageCount(){
     return hdf_reader_->GetNumberOfProtobufFiles();
 }
 
+std::vector<int> FrameSelector::GetAllProtobufIds(){
+    return hdf_reader_->GetAllProtobufIds();
+}
+
 std::vector<Image> FrameSelector::ReadAllImages(){
     
     std::vector<std::vector<int64_t> > all_protobuf_files = hdf_reader_->ReadAllProtobufFiles();
