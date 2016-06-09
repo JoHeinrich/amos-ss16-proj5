@@ -22,7 +22,13 @@ RUN wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.
   && make check \
   && sudo make install \ 
   && sudo ldconfig
-
+# Install CAF
+RUN git clone https://github.com/actor-framework/actor-framework.git
+  && cd actor-framework
+  && ./configure
+  && make
+  && make test
+  && sudo make install
 # Install nginx and patch
 COPY assets /assets
 RUN echo "deb http://nginx.org/packages/mainline/ubuntu/ trusty nginx" > /etc/apt/sources.list.d/nginx.list \
