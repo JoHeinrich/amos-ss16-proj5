@@ -64,6 +64,15 @@ public:
      */
      Image ReadImage(unsigned int frame_index);
 
+    
+     /**
+      * Returns number of containing images
+      *
+      * @return Count of images
+      */
+     int GetImageCount();
+    
+    
      /**
       * Reads all images 
       *

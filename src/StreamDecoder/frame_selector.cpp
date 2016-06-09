@@ -37,7 +37,6 @@ namespace patch{
         return stm.str() ;
         
     }
-    
 }
 
 FrameSelector::FrameSelector(std::string file){
@@ -78,6 +77,10 @@ Image FrameSelector::ReadImage(unsigned int frame_index){
 
     return result_image;
 
+}
+
+int FrameSelector::GetImageCount(){
+    return hdf_reader_->GetNumberOfProtobufFiles();
 }
 
 std::vector<Image> FrameSelector::ReadAllImages(){

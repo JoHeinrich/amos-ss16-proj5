@@ -28,6 +28,7 @@
 #include "frame_selector.h"
 #include "image_view.h"
 #include <vector>
+#include "../ProcessControl/controller.h"
 
 using namespace std;
 
@@ -40,21 +41,17 @@ int main(int argc, const char* argv[]) {
         return -1;
 
     }
-
-
-    FrameSelector pipeline(argv[1]);
-
+    
     if(argc == 2){
 
-        // read all images
-        std::vector<Image> result_images = pipeline.ReadAllImages();
-
-        // TODO give images to image viewer and let show them
-
+        // saves all images to disc
+        Controller controller;
+        controller.SaveAllImagesAsJPEG(argv[1]);
 
 
     } else if(argc == 3){
 
+        FrameSelector pipeline(argv[1]);
         // read one image
         unsigned int index = 0;
         stringstream string_index(argv[2]);
