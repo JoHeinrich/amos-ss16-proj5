@@ -23,7 +23,6 @@
 //
 
 #include "controller.h"
-#include "image_view.h"
 #include <opencv2/opencv.hpp>
 
 void Controller::PlayHDFVideo(std::string videofile){
