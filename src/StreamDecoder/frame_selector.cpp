@@ -74,6 +74,7 @@ Image FrameSelector::ReadImage(unsigned int frame_index){
 
     std::cout << "Protobuf file: WIDTH: " << result_image.GetImageWidth() << " HEIGHT: " << result_image.GetImageHeight() << std::endl;
     std::cout << " Size of payload: " << result_image.GetImagePayload().size() << std::endl;
+    std::cout << " Hash of payload: " << std::hash<std::string>()(result_image.GetImagePayload()) << std::endl;
 
     return result_image;
 
