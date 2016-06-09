@@ -21,3 +21,22 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 //
+
+#include "controller.h"
+#include "image_view.h"
+#include <opencv2/opencv.hpp>
+
+void Controler::PlayHDFVideo(std::string videofile){
+}
+
+void Controler::AnalyseHDF5Video(std::string videofile){
+}
+
+void Controler::SaveAllImagesAsJPEG(std::string videofile){
+    FrameSelector pipeline(videofile);
+    int protobuf_counts = pipeline.GetImageCount();
+    std:String filename = videofile.substr(videofile.find_last_of("/\\")+1);
+    for (int i=0; i<protobuf_counts; i++){
+        cv::imwrite(filename+"_"+std::to_string(i)+".jpeg", pipeline.ReadImage(i).GetRGBImage());
+    }
+}
