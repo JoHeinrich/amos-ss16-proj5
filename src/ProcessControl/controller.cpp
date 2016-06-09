@@ -25,7 +25,13 @@
 #include "controller.h"
 #include <opencv2/opencv.hpp>
 
-void Controller::PlayHDFVideo(std::string videofile){
+void Controller::PlayHDFAsVideoVideo(std::string videofile){
+    FrameSelector pipeline(videofile);
+    int protobuf_counts = pipeline.GetImageCount();
+    for (int i=0; i<protobuf_counts; i++){
+        cv::imshow("name", pipeline.ReadImage(i).GetRGBImage());
+        cv::waitKey(30);
+    }
 }
 
 void Controller::AnalyseHDF5Video(std::string videofile){
@@ -35,7 +41,7 @@ void Controller::SaveAllImagesAsJPEG(std::string videofile){
     FrameSelector pipeline(videofile);
     int protobuf_counts = pipeline.GetImageCount();
     std:String filename = videofile.substr(videofile.find_last_of("/\\")+1);
-    std::ostringstream os;    
+    std::ostringstream os;
     for (int i=0; i<protobuf_counts; i++){
         os << i;
         cv::imwrite(filename+"_"+os.str()+".jpeg", pipeline.ReadImage(i).GetRGBImage());
