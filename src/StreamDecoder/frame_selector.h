@@ -72,13 +72,6 @@ public:
       */
      int GetImageCount();
     
-    /**
-     * Returns ids of all containing images
-     *
-     * @return all ids of containing images
-     */
-     std::vector<int> GetAllProtobufIds();
-    
     
      /**
       * Reads all images 

@@ -103,14 +103,7 @@ public:
      */
     //std::vector<std::vector<int64_t> > GetZValues();
     
-    
-    /**
-     *  Returns all containing image ids
-     *
-     *  @return all containing image ids
-     */
-    std::vector<int> GetAllProtobufIds();
-    
+
     /**
      *  Gets an z values buffer at the specialized index position
      *
