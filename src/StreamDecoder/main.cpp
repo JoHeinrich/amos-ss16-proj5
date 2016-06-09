@@ -45,7 +45,7 @@ int main(int argc, const char* argv[]) {
     if(argc == 2){
 
         // saves all images to disc
-        Controler controller;
+        Controller controller;
         controller.SaveAllImagesAsJPEG(argv[1]);
 
 
