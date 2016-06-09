@@ -43,7 +43,7 @@ public:
      * @param width  The width of the image
      * @param height  The height of the image
      */
-     Image(const std::string & payload, int width, int height);
+     Image(const std::string payload, int width, int height);
 
     /**
      * Destructor
