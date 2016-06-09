@@ -33,14 +33,14 @@ public:
      *
      *@param videofile path to the video file
      */
-    void PlayHDFVideo(std::string videofile);
+    void PlayHDFAsVideo(std::string videofile);
     
     /**
      * Opens a HDF5Videofile, calls the Analyser and displays the video and the Analyser-results
      *
      *@param videofile path to the video file
      */
-    void AnalyseHDF5Video(std::string videofile);
+    void AnalyseHDF5(std::string videofile);
 
     /**
      * Saves all images as jepg to disc

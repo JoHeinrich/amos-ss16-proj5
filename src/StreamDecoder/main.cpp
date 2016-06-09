@@ -46,7 +46,7 @@ int main(int argc, const char* argv[]) {
 
         // saves all images to disc
         Controller controller;
-        controller.SaveAllImagesAsJPEG(argv[1]);
+        controller.PlayHDFAsVideo(argv[1]);
 
 
     } else if(argc == 3){
