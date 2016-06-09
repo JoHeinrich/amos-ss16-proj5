@@ -41,7 +41,7 @@ namespace patch{
 
 }
 
-Image::Image(const std::string & payload, int width, int height){
+Image::Image(const std::string payload, int width, int height){
 
    image_payload_ = payload;
    image_width_ = width;
