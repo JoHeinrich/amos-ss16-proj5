@@ -34,6 +34,7 @@ before_install:
   - cd actor-framework
   - ./configure
   - make
+  - make test
   - sudo make install
   - cd ..
 before_script:
