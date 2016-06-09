@@ -26,7 +26,7 @@
 #include "../StreamDecoder/frame_selector.h"
 #include "image_view.h"
 
-class Controler{
+class Controller{
 
 public:
     /**
