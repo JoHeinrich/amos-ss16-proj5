@@ -44,6 +44,7 @@ set(hdfsource
 )
 
 set(header
+	../ProcessControl/controller.h
 	frame_selector.h
 	image.h
 	image_view.h
@@ -51,6 +52,7 @@ set(header
 )
 
 set(sources
+	../ProcessControl/controller.cpp
 	frame_selector.cpp
 	main.cpp
 	image.cpp
