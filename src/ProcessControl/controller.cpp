@@ -25,12 +25,15 @@
 #include "controller.h"
 #include <opencv2/opencv.hpp>
 
+//define keys
+const char ESC = 27;
+
 void Controller::PlayHDFAsVideo(std::string videofile){
     FrameSelector pipeline(videofile);
     int protobuf_counts = pipeline.GetImageCount();
     for (int i=0; i<protobuf_counts; i++){
         cv::imshow("name", pipeline.ReadImage(i).GetRGBImage());
-        cv::waitKey(5);
+        if( cvWaitKey(5) == ESC ) break;
     }
 }
 
