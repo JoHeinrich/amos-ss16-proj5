@@ -33,7 +33,7 @@ public:
      *
      *@param videofile path to the video file
      */
-    void PlayHDFVideo(std::string videofile);
+    void PlayHDFAsVideo(std::string videofile);
     
     /**
      * Opens a HDF5Videofile, calls the Analyser and displays the video and the Analyser-results
