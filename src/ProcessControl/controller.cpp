@@ -35,7 +35,9 @@ void Controller::SaveAllImagesAsJPEG(std::string videofile){
     FrameSelector pipeline(videofile);
     int protobuf_counts = pipeline.GetImageCount();
     std:String filename = videofile.substr(videofile.find_last_of("/\\")+1);
+    std::ostringstream os;    
     for (int i=0; i<protobuf_counts; i++){
-        cv::imwrite(filename+"_"+std::to_string(i)+".jpeg", pipeline.ReadImage(i).GetRGBImage());
+        os << i;
+        cv::imwrite(filename+"_"+os.str()+".jpeg", pipeline.ReadImage(i).GetRGBImage());
     }
 }
