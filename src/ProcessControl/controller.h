@@ -21,3 +21,32 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 //
+
+#include <string>
+#include "../StreamDecoder/frame_selector.h"
+#include "image_view.h"
+
+class Controler{
+
+public:
+    /**
+     * Opens a HDF5Videofile and displays it
+     *
+     *@param videofile path to the video file
+     */
+    void PlayHDFVideo(std::string videofile);
+    
+    /**
+     * Opens a HDF5Videofile, calls the Analyser and displays the video and the Analyser-results
+     *
+     *@param videofile path to the video file
+     */
+    void AnalyseHDF5Video(std::string videofile);
+
+    /**
+     * Saves all images as jepg to disc
+     *
+     *@param videofile path to the video file
+     */
+    void SaveAllImagesAsJPEG(std::string videofile);
+};
