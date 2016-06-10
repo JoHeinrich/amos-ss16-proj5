@@ -118,12 +118,9 @@ unsigned char* FrameSelector::ConvertProtobufFileToArray(std::vector<int64_t> fi
         file_array[i] = static_cast<unsigned char>(file.at(i));
         
     }
-
     return file_array;
-    
 }
 
-bool HasSuffix(std::string &filename, std::string &suffix)
-{
+bool HasSuffix(std::string &filename, std::string &suffix){
     return filename.compare(filename.size() - suffix.size(), suffix.size(), suffix) == 0;
 }
