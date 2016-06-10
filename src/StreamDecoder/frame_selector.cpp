@@ -41,6 +41,7 @@ namespace patch{
 
 FrameSelector::FrameSelector(std::string file){
     
+    
     file_name_ = file;
 
     hdf_reader_ = new HDFReader(file);
@@ -120,4 +121,9 @@ unsigned char* FrameSelector::ConvertProtobufFileToArray(std::vector<int64_t> fi
 
     return file_array;
     
+}
+
+bool HasSuffix(std::string &filename, std::string &suffix)
+{
+    return filename.compare(filename.size() - suffix.size(), suffix.size(), suffix) == 0;
 }
