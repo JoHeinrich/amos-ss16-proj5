@@ -41,6 +41,7 @@ namespace patch{
 
 FrameSelector::FrameSelector(std::string file){
     
+    
     file_name_ = file;
 
     hdf_reader_ = new HDFReader(file);
@@ -60,7 +61,7 @@ Image FrameSelector::ReadImage(unsigned int frame_index){
     
     // get the protobuf payload from hdf5 reader
     std::vector<int64_t> protobuf_file_buffer = hdf_reader_->ReadOneProtobufFile(frame_index);
-    int protobuf_file_size = protobuf_file_buffer.size();
+    int protobuf_file_size = static_cast<int>(protobuf_file_buffer.size());
 
     // convert to char array
     unsigned char* file = ConvertProtobufFileToArray(protobuf_file_buffer);
@@ -96,7 +97,7 @@ std::vector<Image> FrameSelector::ReadAllImages(){
         unsigned char* file = ConvertProtobufFileToArray(all_protobuf_files.at(i));
         
         ProtobufImageWrapper protobuf_image;
-        protobuf_image.ParseFromArray(file, all_protobuf_files.at(i).size());
+        protobuf_image.ParseFromArray(file, static_cast<int>(all_protobuf_files.at(i).size()));
 
         Image current_image(protobuf_image.GetImagePayload(), protobuf_image.GetImageWidth(), protobuf_image.GetImageHeight());
 
@@ -105,20 +106,21 @@ std::vector<Image> FrameSelector::ReadAllImages(){
     }
 
     return result_images;
-
 }
 
 unsigned char* FrameSelector::ConvertProtobufFileToArray(std::vector<int64_t> file){
 
-    int size = file.size();
+    long size = file.size();
     unsigned char *file_array = new unsigned char[size];
 
-    for(int i = 0; i < size; i++){
+    for(long i = 0; i < size; i++){
         
         file_array[i] = static_cast<unsigned char>(file.at(i));
         
     }
-
     return file_array;
-    
+}
+
+bool HasSuffix(std::string &filename, std::string &suffix){
+    return filename.compare(filename.size() - suffix.size(), suffix.size(), suffix) == 0;
 }
