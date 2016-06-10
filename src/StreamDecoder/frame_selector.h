@@ -93,7 +93,13 @@ private:
        * @return The array with the protobuf file buffer
        */
       unsigned char* ConvertProtobufFileToArray(std::vector<int64_t> file);
-       
+    
+    /**
+     * Checks if a filename ends wirh a given suffix
+     *
+     *@return true if filename ends with suffix, false if not
+     */
+    bool HasSuffix(std::string &filename, std::string &suffix);
 };
 
 #endif // FRAME_SELECTOR_H
