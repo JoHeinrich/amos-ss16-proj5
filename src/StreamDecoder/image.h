@@ -27,4 +27,37 @@
 
 #include <stdio.h>
 
+#include <opencv2/opencv.hpp>
+
+class BayerImage{
+    
+public:
+
+    /**
+     * Gets the image width
+     *
+     * @return The image width
+     */
+    virtual int GetImageWidth()=0;
+    
+    /**
+     * Gets the image height
+     *
+     * @return The image height
+     */
+    virtual int GetImageHeight()=0;
+    
+    /**
+     * Gets the bgr image
+     *
+     * @return The bgr image as opencv::Mat object
+     */
+    virtual cv::Mat GetRGBImage()=0;
+    
+    
+private:
+    
+    
+};
+
 #endif /* defined(__amos_ss16_proj5__image__) */
