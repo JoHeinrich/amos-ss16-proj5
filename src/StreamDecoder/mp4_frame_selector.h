@@ -26,5 +26,48 @@
 #define __amos_ss16_proj5__mp4_frame_selector__
 
 #include <stdio.h>
+#include <string>
+#include "frame_selector.h"
+
+class MP4FrameSelector : public FrameSelector{
+    
+public:
+    
+    /**
+     * Constructor
+     *
+     * @param file  The filename of the mp4 file to read
+     */
+    MP4FrameSelector(std::string file);
+    
+    /**
+     * Destructor
+     */
+    ~MP4FrameSelector();
+    
+    /**
+     * Reads one image at the given index from mp4 file
+     *
+     * @param frame_index The frame index of the image
+     *
+     * @return The image object at the given frame index
+     */
+    Image ReadImage(unsigned int frame_index);
+    
+    
+    /**
+     * Returns number of containing images
+     *
+     * @return Count of images
+     */
+    int GetImageCount();
+    
+    
+private:
+    
+    std::string file_name_;   ///< The full path file name of the mp4 file
+    cv::VideoCapture cap; // The Video capture fore the video
+};
+
 
 #endif /* defined(__amos_ss16_proj5__mp4_frame_selector__) */

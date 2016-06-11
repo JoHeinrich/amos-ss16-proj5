@@ -23,3 +23,29 @@
 //
 
 #include "mp4_frame_selector.h"
+
+MP4FrameSelector::MP4FrameSelector(std::string file){
+    file_name_=file;
+    cap.open(file);
+    if( !cap.isOpened()){
+        std::cout << "could not open mp4 video" << std::endl;
+    }
+}
+
+MP4FrameSelector::~MP4FrameSelector(){
+}
+
+Image MP4FrameSelector::ReadImage(unsigned int frame_index){
+    Mat current_frame;
+    cap.set (CV_CAP_PROP_POS_FRAMES , frame_index );
+    bool success = cap.read(current_frame);
+    if ( ! success ) {
+        std::cout << "could not read frame " << frame_index << std::endl;
+    }
+    Image img (current_frame, current_frame.rows, current_frame.cols);
+    return img;
+}
+
+int MP4FrameSelector::GetImageCount(){
+    return cap.get(CV_CAP_PROP_FRAME_COUNT);
+}
