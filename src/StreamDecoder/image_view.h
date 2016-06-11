@@ -27,7 +27,7 @@
 #ifndef IMAGE_VIEW_H
 #define IMAGE_VIEW_H
 
-#include "image.h"
+#include "bayer_image.h"
 class ImageView{
 	
 public:
@@ -38,7 +38,7 @@ public:
      * @param image The image object that will be shown
      *
      */
-	void ShowImage(Image image);
+	void ShowImage(BayerImage image);
 	
   
 };

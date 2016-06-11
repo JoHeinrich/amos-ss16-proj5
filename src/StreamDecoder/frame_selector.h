@@ -27,7 +27,7 @@
 
 #include <stdio.h>
 
-#include "image.h"
+#include "bayer_image.h"
 
 
 class FrameSelector {
@@ -40,7 +40,7 @@ public:
      *
      * @return The image object at the given frame index
      */
-    virtual Image ReadImage(unsigned int frame_index)=0;
+    virtual BayerImage ReadImage(unsigned int frame_index)=0;
     /**
      * Returns number of containing images
      *

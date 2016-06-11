@@ -26,7 +26,7 @@
 
 #include <sstream>
 
-#include "image.h"
+#include "bayer_image.h"
 
 
 namespace patch{
@@ -41,7 +41,7 @@ namespace patch{
 
 }
 
-Image::Image(const std::string payload, int width, int height){
+BayerImage::BayerImage(const std::string payload, int width, int height){
 
    image_payload_ = payload;
    image_width_ = width;
@@ -52,26 +52,26 @@ Image::Image(const std::string payload, int width, int height){
 
 }
 
-Image::~Image(){
+BayerImage::~BayerImage(){
 
 }
 
-std::string Image::GetImagePayload(){
+std::string BayerImage::GetImagePayload(){
 
     return image_payload_;
 }
 
-int Image::GetImageWidth(){
+int BayerImage::GetImageWidth(){
 
     return image_width_;
 }
 
-int Image::GetImageHeight(){
+int BayerImage::GetImageHeight(){
 
     return image_height_;
 }
 
-Mat Image::GetBGGRImage(){
+Mat BayerImage::GetBGGRImage(){
 
     // create a Mat object from data
     // TODO is CV_16UC1 the correct type?
@@ -80,7 +80,7 @@ Mat Image::GetBGGRImage(){
     return result_image;
 }
 
-Mat Image::GetBGRImage(){
+Mat BayerImage::GetBGRImage(){
 
     Mat bggr_image = this->GetBGGRImage();
 
@@ -94,7 +94,7 @@ Mat Image::GetBGRImage(){
     return rgb_8bit_image;
 }
 
-Mat Image::GetRGBImage(){
+Mat BayerImage::GetRGBImage(){
     
     uint16_t decompressed_payload [GetImageWidth() * GetImageHeight()];
     std::vector<char> writable(GetImagePayload().begin(), GetImagePayload().end());
@@ -120,7 +120,7 @@ Mat Image::GetRGBImage(){
     return rgb_image;
 }
 
-void Image::ConvertToArray(){
+void BayerImage::ConvertToArray(){
 
     // convert image payload to unsigned char array
     unsigned long image_buffer_size = this->GetImagePayload().size();

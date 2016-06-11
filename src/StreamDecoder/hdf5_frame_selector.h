@@ -34,7 +34,7 @@
 #include "protobuf_image_wrapper.h"
 
 // Image
-#include "image.h"
+#include "bayer_image.h"
 
 #include "frame_selector.h"
 
@@ -64,7 +64,7 @@ public:
      *
      * @return The image object at the given frame index
      */
-     Image ReadImage(unsigned int frame_index);
+     BayerImage ReadImage(unsigned int frame_index);
 
     
      /**
@@ -80,7 +80,7 @@ public:
       *
       * @return A vector with all image objects
       */
-      std::vector<Image> ReadAllImages();
+      std::vector<BayerImage> ReadAllImages();
 
 private:
 
