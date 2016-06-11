@@ -29,7 +29,7 @@
 
 #include <opencv2/opencv.hpp>
 
-class BayerImage{
+class Image{
     
 public:
 
