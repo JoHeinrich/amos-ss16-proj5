@@ -27,4 +27,19 @@
 
 #include <stdio.h>
 
+#include "image.h"
+
+
+class FrameSelector {
+    
+public:
+    FrameSelector(std::string file);
+    virtual Image ReadImage(int index) = 0;
+    virtual int GetImageCount() = 0;
+    
+private:
+    
+};
+
+
 #endif /* defined(__amos_ss16_proj5__frame_selector__) */
