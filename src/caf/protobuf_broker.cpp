@@ -23,6 +23,12 @@ void print_on_exit(const actor& hdl, const std::string& name) {
   });
 }
 
+/*
+  **************************
+  Client's behavior -- sends a warning after kickoff and quits
+  after the warning has been acknowledged by the server
+  **************************
+*/
 behavior sendWarning(event_based_actor* self) {
   auto count = make_shared<size_t>(0);
   return {
@@ -40,6 +46,12 @@ behavior sendWarning(event_based_actor* self) {
   };
 }
 
+/*
+  **************************
+  Server's behavior -- gets the client's warning from the protobuf broker
+  and responds with an "ack" message
+  **************************
+*/
 behavior ackMessage() {
   return {
     on(atom("warning"), arg_match) >> [](int value) {
