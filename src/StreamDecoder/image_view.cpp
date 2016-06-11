@@ -1,5 +1,4 @@
 //
-// image_view.cpp
 // Projectname: amos-ss16-proj5
 //
 // Created on 28.05.2016.

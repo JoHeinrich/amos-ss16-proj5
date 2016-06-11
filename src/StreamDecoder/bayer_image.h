@@ -1,6 +1,4 @@
-
 //
-// image.h
 // Projectname: amos-ss16-proj5
 //
 // Created on 21.05.2016.
