@@ -23,7 +23,7 @@ void print_on_exit(const actor& hdl, const std::string& name) {
   });
 }
 
-behavior sendWarning(event_based_actor* self, size_t num_pings) {
+behavior sendWarning(event_based_actor* self) {
   auto count = make_shared<size_t>(0);
   return {
     on(atom("kickoff"), arg_match) >> [=](const actor& pong) {
@@ -65,6 +65,7 @@ void protobuf_io(broker* self, connection_handle hdl, const actor& buddy) {
     self->write(hdl, buf.size(), buf.data());
     self->flush(hdl);
   };
+  // message handler 
   message_handler default_bhvr = {
     [=](const connection_closed_msg&) {
       aout(self) << "connection closed" << endl;
@@ -72,13 +73,13 @@ void protobuf_io(broker* self, connection_handle hdl, const actor& buddy) {
       self->quit(exit_reason::remote_link_unreachable);
     },
     on(atom("warning"), arg_match) >> [=](int i) {
-      aout(self) << "'warning' " << i << endl;
+      aout(self) << "Send: warning " << i << endl;
       org::libcppa::WarnOrAck p;
       p.mutable_warn()->set_id(i);
       write(p);
     },
     on(atom("ack"), arg_match) >> [=](int i) {
-      aout(self) << "'ack' " << i << endl;
+      aout(self) << "Send: ack " << i << endl;
       org::libcppa::WarnOrAck p;
       p.mutable_ack()->set_id(i);
       write(p);
@@ -98,9 +99,11 @@ void protobuf_io(broker* self, connection_handle hdl, const actor& buddy) {
       org::libcppa::WarnOrAck p;
       p.ParseFromArray(msg.buf.data(), static_cast<int>(msg.buf.size()));
       if (p.has_warn()) {
+        aout(self) << "Received: warning " << p.warn().id() << endl;
         self->send(buddy, atom("warning"), p.warn().id());
       }
       else if (p.has_ack()) {
+        aout(self) << "Received: ack " << p.ack().id() << endl;
         self->send(buddy, atom("ack"), p.ack().id());
       }
       else {
@@ -174,7 +177,7 @@ int main(int argc, char** argv) {
     },
     on("-c", val<string>, as_u16) >> [&](const string& host, uint16_t port) {
       // spawn the actor that sends warnings
-      auto client_actor = spawn(sendWarning, 20);
+      auto client_actor = spawn(sendWarning);
       // spawn a broker to serialize and recognize messages
       auto io_actor = spawn_io_client(protobuf_io, host, port, client_actor);
       print_on_exit(io_actor, "protobuf_io");
