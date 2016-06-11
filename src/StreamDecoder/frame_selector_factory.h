@@ -27,5 +27,29 @@
 #define __amos_ss16_proj5__frame_selector_factory__
 
 #include <stdio.h>
+#include "frame_selector.h"
+class FrameSelectorFactory {
+    
+public:
+    
+    /**
+     * Constructor
+     *
+     * @param file  The filename of the file to read
+     */
+    FrameSelectorFactory(std::string file);
+    
+    /**
+     * Creates and returns the FrameSelector
+     *
+     *  @return the FrameSelector
+     */
+    FrameSelector getFrameSelector();
+    
+    
+private:
+    
+    
+};
 
 #endif /* defined(__amos_ss16_proj5__frame_selector_factory__) */
