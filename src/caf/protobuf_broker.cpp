@@ -33,13 +33,11 @@ behavior sendWarning(event_based_actor* self) {
   auto count = make_shared<size_t>(0);
   return {
     on(atom("kickoff"), arg_match) >> [=](const actor& pong) {
-//	  aout(self) << "client: send {" << to_string(atom("warning")::value) << ", " <<  1 << "}" << endl;    
       self->send(pong, atom("warning"), 1);
       self->become (
         on(atom("ack"), arg_match) >> [=](int value) -> void {
           self->quit();
           return;
-//          return make_message(atom("ping"), value + 1);
         }
       );
     }
