@@ -54,6 +54,13 @@ public:
      */
     virtual cv::Mat GetRGBImage()=0;
     
+    /**
+     * Returns the image payload
+     *
+     * @return the image payload
+     */
+    virtual std::string GetImagePayload()=0;
+    
     
 private:
     
