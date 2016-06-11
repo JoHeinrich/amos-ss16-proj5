@@ -44,9 +44,8 @@ int main(int argc, const char* argv[]) {
     
     if(argc == 2){
 
-        // saves all images to disc
         Controller controller;
-        controller.PlayHDFAsVideo(argv[1]);
+        controller.PlayAsVideo(argv[1]);
 
 
     } else if(argc == 3){

@@ -29,7 +29,7 @@
 //define keys
 const char ESC = 27;
 
-void Controller::PlayHDFAsVideo(std::string videofile){
+void Controller::PlayAsVideo(std::string videofile){
     FrameSelectorFactory frame_selector_factory(videofile);
     FrameSelector* pipeline = frame_selector_factory.getFrameSelector();
     ImageView image_view;
@@ -40,7 +40,7 @@ void Controller::PlayHDFAsVideo(std::string videofile){
     }
 }
 
-void Controller::AnalyseHDF5Video(std::string videofile){
+void Controller::AnalyseVideo(std::string videofile){
 }
 
 void Controller::SaveAllImagesAsJPEG(std::string videofile){
