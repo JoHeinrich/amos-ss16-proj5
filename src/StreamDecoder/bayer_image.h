@@ -27,10 +27,11 @@
 
 
 #include <opencv2/opencv.hpp>
+#include "image.h"
 
 using namespace cv;
 
-class BayerImage{
+class BayerImage : public Image {
     
 public:
     
