@@ -1,7 +1,9 @@
+
 //
+// frame_selector.h
 // Projectname: amos-ss16-proj5
 //
-// Created on 28.05.2016.
+// Created on 21.05.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -22,9 +24,82 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __amos_ss16_proj5__hdf5_frame_selector__
-#define __amos_ss16_proj5__hdf5_frame_selector__
+#ifndef HDF5FRAME_SELECTOR_H
+#define HDF5FRAME_SELECTOR_H
 
-#include <stdio.h>
+// HDFReader
+#include "hdf_reader.h"
 
-#endif /* defined(__amos_ss16_proj5__hdf5_frame_selector__) */
+//Protobuf Deserializer
+#include "protobuf_image_wrapper.h"
+
+// Image
+#include "image.h"
+
+#include <vector>
+
+
+class HDF5FrameSelector{
+    
+public:
+    
+    /**
+     * Constructor
+     *
+     * @param file  The filename of the hdf5 file to read
+     */
+    HDF5FrameSelector(std::string file);
+
+    /**
+     * Destructor
+     */
+    ~HDF5FrameSelector();
+    
+    /**
+     * Reads one image at the given index from hdf5 file
+     *
+     * @param frame_index The frame index of the image
+     *
+     * @return The image object at the given frame index
+     */
+     Image ReadImage(unsigned int frame_index);
+
+    
+     /**
+      * Returns number of containing images
+      *
+      * @return Count of images
+      */
+     int GetImageCount();
+    
+    
+     /**
+      * Reads all images 
+      *
+      * @return A vector with all image objects
+      */
+      std::vector<Image> ReadAllImages();
+
+private:
+
+      std::string file_name_;   ///< The full path file name of the hdf5 file
+      HDFReader  *hdf_reader_;    ///< The dhf5 file reader
+
+      /**
+       * Converts a protobuf file from hdf reader to an array (needed for parsing it and for creating a msgCameraImage object)
+       *
+       * @param image The vector with the protobuf file buffer
+       *
+       * @return The array with the protobuf file buffer
+       */
+      unsigned char* ConvertProtobufFileToArray(std::vector<int64_t> file);
+    
+    /**
+     * Checks if a filename ends wirh a given suffix
+     *
+     *@return true if filename ends with suffix, false if not
+     */
+    bool HasSuffix(std::string &filename, std::string &suffix);
+};
+
+#endif // HDF5FRAME_SELECTOR_H

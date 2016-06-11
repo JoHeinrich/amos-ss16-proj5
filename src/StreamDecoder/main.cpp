@@ -25,7 +25,7 @@
 
 #include <iostream>
 #include <sstream>
-#include "frame_selector.h"
+#include "hdf5_frame_selector.h"
 #include "image_view.h"
 #include <vector>
 #include "../ProcessControl/controller.h"
@@ -51,7 +51,7 @@ int main(int argc, const char* argv[]) {
 
     } else if(argc == 3){
 
-        FrameSelector pipeline(argv[1]);
+        HDF5FrameSelector pipeline(argv[1]);
         // read one image
         unsigned int index = 0;
         stringstream string_index(argv[2]);
