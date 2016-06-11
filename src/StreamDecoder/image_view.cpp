@@ -28,7 +28,7 @@
 
 using namespace cv;
 
-void ImageView::ShowImage(BayerImage image){
+void ImageView::ShowImage(Image image){
     cv::imshow("name", image.GetRGBImage());
     waitKey(5);
 }

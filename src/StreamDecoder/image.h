@@ -1,7 +1,7 @@
 //
 // Projectname: amos-ss16-proj5
 //
-// Created on 21-05-2016.
+// Created on 21.05.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -22,42 +22,86 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __amos_ss16_proj5__image__
-#define __amos_ss16_proj5__image__
+#ifndef IMAGE_H
+#define IMAGE_H
 
-#include <stdio.h>
 
 #include <opencv2/opencv.hpp>
 
-class Image{
+using namespace cv;
+
+class Image {
     
 public:
+    
+    /**
+     * Constructor
+     *
+     * @param payload  The payload of the image
+     * @param width  The width of the image
+     * @param height  The height of the image
+     */
+     Image(const std::string payload, int width, int height);
 
     /**
-     * Gets the image width
-     *
-     * @return The image width
+     * Destructor
      */
-    virtual int GetImageWidth()=0;
+    ~Image();
     
-    /**
-     * Gets the image height
-     *
-     * @return The image height
-     */
-    virtual int GetImageHeight()=0;
+     /**
+      * Gets the payload
+      *
+      * @return The image payload
+      */
+      std::string GetImagePayload();
+
+     /**
+      * Gets the image width
+      *
+      * @return The image width
+      */
+      int GetImageWidth();
+
+     /**
+      * Gets the image height
+      *
+      * @return The image height
+      */
+      int GetImageHeight();
+
+     /**
+      * Gets the bayer image
+      *
+      * @return The bayer image as opencv::Mat object
+      */
+      Mat GetBGGRImage();
+
+      /**
+      * Gets the bgr image 
+      *
+      * @return The bgr image as opencv::Mat object
+      */
+      Mat GetBGRImage();
+
+     /**
+      * Returns the payload as RGB image
+      *
+      */
+      Mat GetRGBImage();
     
-    /**
-     * Gets the bgr image
-     *
-     * @return The bgr image as opencv::Mat object
-     */
-    virtual cv::Mat GetRGBImage()=0;
-    
-    
+
 private:
+      std::string image_payload_;   ///< The string containing the payload of the image
+      unsigned char* image_payload_array_;  ///< The image payload as char array
+      int image_width_;		///< The image width
+      int image_height_;	///< The image height
     
-    
+      /**
+      * Converts the image payload to a char array (needed for conversion to Mat objects).
+      */
+      void ConvertToArray();
+
+  
 };
 
-#endif /* defined(__amos_ss16_proj5__image__) */
+#endif //IMAGE_H

@@ -54,7 +54,7 @@ HDF5FrameSelector::~HDF5FrameSelector(){
 
 }
 
-BayerImage HDF5FrameSelector::ReadImage(unsigned int frame_index){
+Image HDF5FrameSelector::ReadImage(unsigned int frame_index){
     
     // get the protobuf payload from hdf5 reader
     std::vector<int64_t> protobuf_file_buffer = hdf_reader_->ReadOneProtobufFile(frame_index);
@@ -68,7 +68,7 @@ BayerImage HDF5FrameSelector::ReadImage(unsigned int frame_index){
     protobuf_image.ParseFromArray(file, protobuf_file_size);
 
     // create an Image from msgCameraImage
-    BayerImage result_image(protobuf_image.GetImagePayload(), protobuf_image.GetImageWidth(), protobuf_image.GetImageHeight());
+    Image result_image(protobuf_image.GetImagePayload(), protobuf_image.GetImageWidth(), protobuf_image.GetImageHeight());
 
     std::cout << "Protobuf file: WIDTH: " << result_image.GetImageWidth() << " HEIGHT: " << result_image.GetImageHeight() << std::endl;
     std::cout << " Size of payload: " << result_image.GetImagePayload().size() << std::endl;
@@ -81,12 +81,12 @@ int HDF5FrameSelector::GetImageCount(){
     return hdf_reader_->GetNumberOfProtobufFiles();
 }
 
-std::vector<BayerImage> HDF5FrameSelector::ReadAllImages(){
+std::vector<Image> HDF5FrameSelector::ReadAllImages(){
     
     std::vector<std::vector<int64_t> > all_protobuf_files = hdf_reader_->ReadAllProtobufFiles();
 
     //all result images
-    std::vector<BayerImage> result_images;
+    std::vector<Image> result_images;
 
     for(int i = 0; i < all_protobuf_files.size(); i++){
         
@@ -96,7 +96,7 @@ std::vector<BayerImage> HDF5FrameSelector::ReadAllImages(){
         ProtobufImageWrapper protobuf_image;
         protobuf_image.ParseFromArray(file, static_cast<int>(all_protobuf_files.at(i).size()));
 
-        BayerImage current_image(protobuf_image.GetImagePayload(), protobuf_image.GetImageWidth(), protobuf_image.GetImageHeight());
+        Image current_image(protobuf_image.GetImagePayload(), protobuf_image.GetImageWidth(), protobuf_image.GetImageHeight());
 
         result_images.push_back(current_image);
         
