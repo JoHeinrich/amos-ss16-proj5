@@ -23,7 +23,7 @@ void print_on_exit(const actor& hdl, const std::string& name) {
   });
 }
 
-behavior ping(event_based_actor* self, size_t num_pings) {
+behavior sendWarning(event_based_actor* self, size_t num_pings) {
   auto count = make_shared<size_t>(0);
   return {
     on(atom("kickoff"), arg_match) >> [=](const actor& pong) {
@@ -40,7 +40,7 @@ behavior ping(event_based_actor* self, size_t num_pings) {
   };
 }
 
-behavior pong() {
+behavior ackMessage() {
   return {
     on(atom("warning"), arg_match) >> [](int value) {
       return make_message(atom("ack"), value);
@@ -48,9 +48,15 @@ behavior pong() {
   };
 }
 
-
-
+/*
+  **************************
+  Protobuf broker implementation
+  Works as a communication handling middleman for the server/client actors above
+  Deserizalizes/serializes messages 
+  **************************
+*/
 void protobuf_io(broker* self, connection_handle hdl, const actor& buddy) {
+  // monitor buddy to quit broker if buddy is done
   self->monitor(buddy);
   auto write = [=](const org::libcppa::WarnOrAck& p) {
     string buf = p.SerializeAsString();
@@ -127,6 +133,12 @@ void protobuf_io(broker* self, connection_handle hdl, const actor& buddy) {
   self->become(await_length_prefix);
 }
 
+/*
+ **************************
+ Helper method for the server to handle connections;
+ Starts the server broker with the received message handle if a client connects
+ **************************
+*/
 behavior server(broker* self, actor buddy) {
   aout(self) << "server is running" << endl;
   return {
@@ -148,20 +160,27 @@ optional<uint16_t> as_u16(const std::string& str) {
 }
 
 int main(int argc, char** argv) {
+// Parsing arguments
   message_builder{argv + 1, argv + argc}.apply({
     on("-s", as_u16) >> [&](uint16_t port) {
+    // We are a server
       cout << "run in server mode" << endl;
-      auto pong_actor = spawn(pong);
-      auto sever_actor = spawn_io_server(server, port, pong_actor);
+      // spawn the actor that acks messages
+      auto serv_actor = spawn(ackMessage);
+      // spawn an IO server to handle communication and work with the broker later (uses the behavior server helper)
+      auto sever_actor = spawn_io_server(server, port, serv_actor);
       print_on_exit(sever_actor, "server");
-      print_on_exit(pong_actor, "pong");
+      print_on_exit(serv_actor, "exit ack");
     },
     on("-c", val<string>, as_u16) >> [&](const string& host, uint16_t port) {
-      auto ping_actor = spawn(ping, 20);
-      auto io_actor = spawn_io_client(protobuf_io, host, port, ping_actor);
+      // spawn the actor that sends warnings
+      auto client_actor = spawn(sendWarning, 20);
+      // spawn a broker to serialize and recognize messages
+      auto io_actor = spawn_io_client(protobuf_io, host, port, client_actor);
       print_on_exit(io_actor, "protobuf_io");
-      print_on_exit(ping_actor, "ping");
-      send_as(io_actor, ping_actor, atom("kickoff"), io_actor);
+      print_on_exit(client_actor, "exit warning");
+      // Start the warning message actor by using a kickoff message event sent directly from main
+      send_as(io_actor, client_actor, atom("kickoff"), io_actor);
     },
     others >> [] {
       cerr << "use with eihter '-s PORT' as server or "
