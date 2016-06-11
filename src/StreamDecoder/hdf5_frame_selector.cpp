@@ -66,12 +66,15 @@ Image HDF5FrameSelector::ReadImage(unsigned int frame_index){
     //convert protobuf file buffer to msgCameraImage and read image from protobuf file
     ProtobufImageWrapper protobuf_image;
     protobuf_image.ParseFromArray(file, protobuf_file_size);
+    
+    //convert bayer image to rgb image
+    cv:Mat rgb_image = ConvertBayerImageToRGBMat(protobuf_image.GetImagePayload(), protobuf_image.GetImageWidth(),protobuf_image.GetImageHeight());
 
     // create an Image from msgCameraImage
-    Image result_image(protobuf_image.GetImagePayload(), protobuf_image.GetImageWidth(), protobuf_image.GetImageHeight());
+    Image result_image(rgb_image, protobuf_image.GetImageWidth(), protobuf_image.GetImageHeight());
 
     std::cout << "Protobuf file: WIDTH: " << result_image.GetImageWidth() << " HEIGHT: " << result_image.GetImageHeight() << std::endl;
-    std::cout << " Size of payload: " << result_image.GetImagePayload().size() << std::endl;
+    std::cout << " Size of payload: " << result_image.GetRGBImage().size<< std::endl;
 
     return result_image;
 
@@ -96,7 +99,8 @@ std::vector<Image> HDF5FrameSelector::ReadAllImages(){
         ProtobufImageWrapper protobuf_image;
         protobuf_image.ParseFromArray(file, static_cast<int>(all_protobuf_files.at(i).size()));
 
-        Image current_image(protobuf_image.GetImagePayload(), protobuf_image.GetImageWidth(), protobuf_image.GetImageHeight());
+        cv:Mat rgb_image = ConvertBayerImageToRGBMat(protobuf_image.GetImagePayload(), protobuf_image.GetImageWidth(),protobuf_image.GetImageHeight());
+        Image current_image(rgb_image, protobuf_image.GetImageWidth(), protobuf_image.GetImageHeight());
 
         result_images.push_back(current_image);
         
@@ -116,4 +120,29 @@ unsigned char* HDF5FrameSelector::ConvertProtobufFileToArray(std::vector<int64_t
         
     }
     return file_array;
+}
+
+cv::Mat HDF5FrameSelector::ConvertBayerImageToRGBMat (std::string payload, int width, int height){
+    uint16_t decompressed_payload [width * height];
+    std::vector<char> writable(payload.begin(), payload.end());
+    char *temp_dest_buffer = reinterpret_cast<char *>(&decompressed_payload);
+    char *buffer = &writable[0];
+    
+    // (1176 * 640) / 2 bytes => 376320
+    int image_pixel_count = (width * height/2);
+    for (int i = 0; i < image_pixel_count; i++)
+    {
+        temp_dest_buffer[0] = buffer[0];
+        temp_dest_buffer[1] = ((unsigned char) buffer[1]) >> 4;
+        *((unsigned short*)&temp_dest_buffer[2]) = (((unsigned char)buffer[2]) << 4) | (buffer[1] & 0x0F);
+        temp_dest_buffer += 4;
+        buffer += 3;
+    }
+    cv::Mat rgb_image;
+    cv::Mat bayer_16bit_image(height, width, CV_16UC1, reinterpret_cast<uint8_t *>(&decompressed_payload));
+    cv::Mat bayer_8bit_image = bayer_16bit_image.clone();
+    bayer_8bit_image.convertTo(bayer_8bit_image, CV_8UC3, 0.0625);
+    
+    cv::cvtColor(bayer_8bit_image, rgb_image, CV_BayerGR2RGB);
+    return rgb_image;
 }

@@ -41,20 +41,13 @@ public:
      * @param width  The width of the image
      * @param height  The height of the image
      */
-     Image(const std::string payload, int width, int height);
+    Image(const cv::Mat rgb_image, int width, int height);
 
     /**
      * Destructor
      */
     ~Image();
     
-     /**
-      * Gets the payload
-      *
-      * @return The image payload
-      */
-      std::string GetImagePayload();
-
      /**
       * Gets the image width
       *
@@ -68,13 +61,6 @@ public:
       * @return The image height
       */
       int GetImageHeight();
-
-     /**
-      * Gets the bayer image
-      *
-      * @return The bayer image as opencv::Mat object
-      */
-      Mat GetBGGRImage();
 
       /**
       * Gets the bgr image 
@@ -91,16 +77,10 @@ public:
     
 
 private:
-      std::string image_payload_;   ///< The string containing the payload of the image
+      cv::Mat rgb_image_;   ///< The string containing the payload of the image
       unsigned char* image_payload_array_;  ///< The image payload as char array
       int image_width_;		///< The image width
       int image_height_;	///< The image height
-    
-      /**
-      * Converts the image payload to a char array (needed for conversion to Mat objects).
-      */
-      void ConvertToArray();
-
   
 };
 

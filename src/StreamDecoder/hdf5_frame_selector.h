@@ -34,6 +34,9 @@
 // Image
 #include "image.h"
 
+//opencv
+#include <opencv2/opencv.hpp>
+
 #include "frame_selector.h"
 
 #include <vector>
@@ -93,6 +96,17 @@ private:
        * @return The array with the protobuf file buffer
        */
       unsigned char* ConvertProtobufFileToArray(std::vector<int64_t> file);
+    
+      /**
+       * Converts the given payload to a opencv mat in rgb format
+       *
+       * @param payload the bayer - payload from the protobuf file
+       * @param width - the width of the image
+       * @param height - the height of the image
+       *
+       * @return The image as cv::Mat in RGB
+       */
+       cv::Mat ConvertBayerImageToRGBMat (std::string payload, int width, int height);
 };
 
 #endif // HDF5FRAME_SELECTOR_H
