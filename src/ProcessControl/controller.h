@@ -24,7 +24,8 @@
 
 #include <string>
 #include "../StreamDecoder/hdf5_frame_selector.h"
-
+#include "../StreamDecoder/frame_selector.h"
+#include "../StreamDecoder/frame_selector_factory.h"
 class Controller{
 
 public:

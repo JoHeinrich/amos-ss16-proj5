@@ -24,7 +24,22 @@
 
 
 #include "frame_selector_factory.h"
+#include "hdf5_frame_selector.h"
+#include "frame_selector.h"
 
-bool FrameSelectorFactory::HasSuffix(std::string &filename, std::string &suffix){
+FrameSelectorFactory::FrameSelectorFactory(std::string file){
+    file_name_= file;
+}
+
+
+FrameSelector* FrameSelectorFactory::getFrameSelector(){
+    if (HasSuffix(file_name_, ".HDF5")||HasSuffix(file_name_, ".hdf5")){
+        return new HDF5FrameSelector(file_name_);
+    }
+    else return NULL;
+}
+
+
+bool FrameSelectorFactory::HasSuffix(const std::string &filename, const std::string &suffix){
     return filename.compare(filename.size() - suffix.size(), suffix.size(), suffix) == 0;
 }

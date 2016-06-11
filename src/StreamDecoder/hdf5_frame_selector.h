@@ -41,7 +41,7 @@
 #include <vector>
 
 
-class HDF5FrameSelector : FrameSelector{
+class HDF5FrameSelector : public FrameSelector{
     
 public:
     

@@ -40,8 +40,7 @@ namespace patch{
 }
 HDF5FrameSelector::HDF5FrameSelector(std::string file){
     
-    
-    file_name_ = file;
+    //file_name_ = file;
 
     hdf_reader_ = new HDFReader(file);
 

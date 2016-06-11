@@ -44,11 +44,17 @@ public:
      *
      *  @return the FrameSelector
      */
-    FrameSelector getFrameSelector();
+    FrameSelector* getFrameSelector();
     
     
 private:
-    
+    /**
+     * Checks if a filename ends wirh a given suffix
+     *
+     *@return true if filename ends with suffix, false if not
+     */
+    bool HasSuffix(const std::string &filename, const std::string &suffix);
+    std::string file_name_;   ///< The full path file of the video file
     
 };
 
