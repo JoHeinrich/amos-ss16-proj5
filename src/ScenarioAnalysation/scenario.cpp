@@ -34,13 +34,8 @@ float Scenario::Distance(Element first, Element second){
 
     std::vector<int> first_position = first.GetPosition();
     std::vector<int> second_position = second.GetPosition();
-
-    float first_sum = pow( (static_cast<float>(second_position.at(0)) - static_cast<float>(first_position.at(0))), 2.0);
-    float second_sum = pow( (static_cast<float>(second_position.at(1)) - static_cast<float>(first_position.at(1))), 2.0);
-
-    float distance = sqrt(first_sum + second_sum);
-
-    return distance;
+    
+    return PointDistance(first_position, second_position);
 
 }
 
@@ -81,5 +76,16 @@ bool Scenario::Overlap(Element first, Element second){
     }
 
     return false;
+
+}
+
+float Scenario::PointDistance(std::vector<int> first, std::vector<int> second){
+    
+    float first_sum = pow( (static_cast<float>(second.at(0)) - static_cast<float>(first.at(0))), 2.0);
+    float second_sum = pow( (static_cast<float>(second.at(1)) - static_cast<float>(first.at(1))), 2.0);
+    
+    float distance = sqrt(first_sum + second_sum);
+    
+    return distance;
 
 }
