@@ -26,7 +26,7 @@
 std::vector<cv::Rect> VehicleDetector::Detect(cv::Mat *frame) {
 
   cv::CascadeClassifier vehicle_classifier;
-  vehicle_classifier.load("../vehicle_classifier.xml"); // TODO: path to .xml in the asstes folder
+  vehicle_classifier.load("../../assets/vehicle_classifier.xml"); // TODO: path to .xml in the asstes folder
   // check if classifier was loaded
   if (vehicle_classifier.empty() == true) {
     std::cout << "Failed to lead vehicle classifier" << std::endl;
