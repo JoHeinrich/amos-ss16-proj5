@@ -76,8 +76,8 @@ private:
     /**
      * Computes the distance between two points. Helper function for all distance functions. Can be overriden in subclasses.
      *
-     * @param first The first point
-     * @param second The second point
+     * @param first The first point vector
+     * @param second The second point vector
      *
      * @return The distance between the two points.
      */
