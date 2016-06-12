@@ -25,6 +25,8 @@
 #include "controller.h"
 #include <opencv2/opencv.hpp>
 #include "../StreamDecoder/image_view.h"
+#include "../ObjectDetection/detection.h"
+
 
 //define keys
 const char ESC = 27;
@@ -33,13 +35,21 @@ void Controller::PlayHDFAsVideo(std::string videofile){
     FrameSelector pipeline(videofile);
     ImageView image_view;
     int protobuf_counts = pipeline.GetImageCount();
+
+    Detection detection;
+    cv::Mat current_frame;
+
     for (int i=0; i<protobuf_counts; i++){
-        image_view.ShowImage(pipeline.ReadImage(i));
+
+        current_frame = pipeline.ReadImage(i).GetRGBImage();
+        detection.ProcessFrame(&current_frame);
         if( cvWaitKey(5) == ESC ) break;
     }
 }
 
 void Controller::AnalyseHDF5Video(std::string videofile){
+
+  // TODO: implementaion 
 }
 
 void Controller::SaveAllImagesAsJPEG(std::string videofile){
