@@ -1,8 +1,6 @@
 //
-// main2.cpp
 // Projectname: amos-ss16-proj5
 //
-// Created by Elisabeth Hoppe on 10-05-2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -21,18 +19,54 @@
 // You should have received a copy of the GNU Affero General Public
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
-//
+
+#include <opencv2/opencv.hpp>
+#include "detection.h"
 
 using namespace std;
-//#include "imageprocessing/humandetector.h"
+using namespace cv;
 
-int main(int argc, const char* argv[]) {
+const int KEY_ESC = 27;
+const int KEY_SPACE = 32;
+const std::string WindowName = "Camera Stream";
 
-    //humandetector det;
+int main(int argc, const char * argv[]) {
 
-    //int retValue = det.mainHumanDetector(argc, argv);
+  if(argc < 2)
+  {
+    std::cout << "Usage " << argv[0] << " video.mp4" << std::endl;
+    return 0;
+  }
 
-    //return retValue;
+  //open video
+  cv::VideoCapture capture(argv[1]);
+  if (!capture.isOpened()){
+      std::cout << "Failed to open video" << std::endl;
+      return -1;
+  }
+
+  Detection detection;
+
+  // run video
+   Mat frame;
+   do{
+       if (!capture.read(frame))
+           break;
+
+        // To do
+        detection.processFrame(&frame);
+        // Mat resizedFrame = resizeFrame(&frame);
+        // std::vector<Rect> detectedPeople = detectPeople(&resizedFrame);
+        // std::vector<Rect> detectedVehicles = detectVehicles(&resizedFrame);
+        // displayDetectedObjects(detectedPeople, detectedVehicles, &resizedFrame);
+
+       char key = cvWaitKey(10);
+       if (key == KEY_SPACE)
+           key = cvWaitKey(0);
+
+       if (key == KEY_ESC)
+           break;
+   } while(1);
 
     return 0;
 }
