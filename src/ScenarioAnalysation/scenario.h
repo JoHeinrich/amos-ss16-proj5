@@ -59,7 +59,7 @@ public:
      *
      * @return The distance between the center of the objects.
      */
-   // virtual float CenterDistance(Element first, Element second);
+    virtual float CenterDistance(Element first, Element second);
 
     /**
     * Computes whether the two objects overlap. As default, overlapping of one pixel in the bounding boxes of the elements is enough to return true. Can be overriden in subclasses.
