@@ -62,26 +62,26 @@ public:
     virtual float CenterDistance(Element first, Element second);
 
     /**
-    * Computes whether the two objects overlap. As default, overlapping of one pixel in the bounding boxes of the elements is enough to return true. Can be overriden in subclasses.
-    *
-    * @param first The first object
-    * @param second The second object
-    *
-    * @return true whether there is an overlapping, false if not
-    */
+     * Computes whether the two objects overlap. As default, overlapping of one pixel in the bounding boxes of the elements is enough to return true. Can be overriden in subclasses.
+     *
+     * @param first The first object
+     * @param second The second object
+     *
+     * @return true whether there is an overlapping, false if not
+     */
     virtual bool Overlap(Element first, Element second);
 
 private:
     
     /**
-     * Computes the distance between two points. Helper function for all distance functions.
+     * Computes the distance between two points. Helper function for all distance functions. Can be overriden in subclasses.
      *
      * @param first The first point
      * @param second The second point
      *
      * @return The distance between the two points.
      */
-    float PointDistance(std::vector<int> first, std::vector<int> second);
+    virtual float PointDistance(std::vector<int> first, std::vector<int> second);
     
 
 };
