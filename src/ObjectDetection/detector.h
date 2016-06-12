@@ -38,7 +38,7 @@ public:
    *
    * @return The vector of all detected objects in the current Frame
    **/
-  virtual std::vector<cv::Rect> detect(cv::Mat *frame) = 0;
+  virtual std::vector<cv::Rect> Detect(cv::Mat *frame) = 0;
 
 private:
 

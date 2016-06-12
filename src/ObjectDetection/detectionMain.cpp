@@ -53,12 +53,8 @@ int main(int argc, const char * argv[]) {
        if (!capture.read(frame))
            break;
 
-        // To do
-        detection.processFrame(&frame);
-        // Mat resizedFrame = resizeFrame(&frame);
-        // std::vector<Rect> detectedPeople = detectPeople(&resizedFrame);
-        // std::vector<Rect> detectedVehicles = detectVehicles(&resizedFrame);
-        // displayDetectedObjects(detectedPeople, detectedVehicles, &resizedFrame);
+        // TODO: move this in the controller
+        detection.ProcessFrame(&frame);
 
        char key = cvWaitKey(10);
        if (key == KEY_SPACE)

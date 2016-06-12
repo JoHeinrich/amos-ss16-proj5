@@ -41,7 +41,7 @@ public:
    * @param frame The current image of the stream
    *
    **/
-  void processFrame(cv::Mat *frame);
+  void ProcessFrame(cv::Mat *frame);
 
 private:
 
@@ -52,7 +52,7 @@ private:
    *
    * @return The resized image
    **/
-  cv::Mat resizeFrame(cv::Mat *frame);
+  cv::Mat ResizeFrame(cv::Mat *frame);
 
   /**
    * Resizes an image for better accuracy and better detection
@@ -62,7 +62,7 @@ private:
    * @param frame The resized image of the stream
    *
    **/
-  void displayDetectedObjects(std::vector<cv::Rect> firstDetection, std::vector<cv::Rect> secondDetection, cv::Mat *frame);
+  void DisplayDetectedObjects(std::vector<cv::Rect> firstDetection, std::vector<cv::Rect> secondDetection, cv::Mat *frame);
 
 };
 
