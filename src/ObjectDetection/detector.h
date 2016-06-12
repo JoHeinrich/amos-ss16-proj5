@@ -32,7 +32,7 @@ class Detector {
 public:
 
   /**
-   * Detects objects in the given frame (cv::Mat)
+   * Detects objects in the given frame (cv::Mat). Must be overwritten in subclass.
    *
    * @param frame The current frame
    *
