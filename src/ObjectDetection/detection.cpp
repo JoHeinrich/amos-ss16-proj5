@@ -1,8 +1,6 @@
 //
-// detection.cpp
 // Projectname: amos-ss16-proj5
 //
-// Created on 03.06.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -53,11 +51,11 @@ int main(int argc, const char * argv[]) {
        if (!capture.read(frame))
            break;
 
-           //To do 
-      //  Mat resizedFrame = resizeFrame(&frame);
-      //  std::vector<Rect> detectedPeople = detectPeople(&resizedFrame);
-      //  std::vector<Rect> detectedVehicles = detectVehicles(&resizedFrame);
-      //  displayDetectedObjects(detectedPeople, detectedVehicles, &resizedFrame);
+        // To do
+        Mat resizedFrame = resizeFrame(&frame);
+        // std::vector<Rect> detectedPeople = detectPeople(&resizedFrame);
+        // std::vector<Rect> detectedVehicles = detectVehicles(&resizedFrame);
+        // displayDetectedObjects(detectedPeople, detectedVehicles, &resizedFrame);
 
        char key = cvWaitKey(10);
        if (key == KEY_SPACE)
