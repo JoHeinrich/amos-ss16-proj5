@@ -29,26 +29,28 @@
 //define keys
 const char ESC = 27;
 
-void Controller::PlayHDFAsVideo(std::string videofile){
-    FrameSelector pipeline(videofile);
+void Controller::PlayAsVideo(std::string videofile){
+    FrameSelectorFactory frame_selector_factory(videofile);
+    FrameSelector* pipeline = frame_selector_factory.getFrameSelector();
     ImageView image_view;
-    int protobuf_counts = pipeline.GetImageCount();
+    int protobuf_counts = pipeline->GetImageCount();
     for (int i=0; i<protobuf_counts; i++){
-        image_view.ShowImage(pipeline.ReadImage(i));
+        image_view.ShowImage(pipeline->ReadImage(i));
         if( cvWaitKey(5) == ESC ) break;
     }
 }
 
-void Controller::AnalyseHDF5Video(std::string videofile){
+void Controller::AnalyseVideo(std::string videofile){
 }
 
 void Controller::SaveAllImagesAsJPEG(std::string videofile){
-    FrameSelector pipeline(videofile);
-    int protobuf_counts = pipeline.GetImageCount();
+    FrameSelectorFactory frame_selector_factory(videofile);
+    FrameSelector* pipeline = frame_selector_factory.getFrameSelector();
+    int protobuf_counts = pipeline->GetImageCount();
     std:String filename = videofile.substr(videofile.find_last_of("/\\")+1);
     std::ostringstream os;
     for (int i=0; i<protobuf_counts; i++){
         os << i;
-        cv::imwrite(filename+"_"+os.str()+".jpeg", pipeline.ReadImage(i).GetRGBImage());
+        cv::imwrite(filename+"_"+os.str()+".jpeg", pipeline->ReadImage(i).GetRGBImage());
     }
 }

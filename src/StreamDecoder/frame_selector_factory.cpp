@@ -1,7 +1,7 @@
 //
 // Projectname: amos-ss16-proj5
 //
-// Created on 28.05.2016.
+// Created on 21-05-2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -22,13 +22,27 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "image_view.h"
-#include <opencv2/opencv.hpp>
+
+#include "frame_selector_factory.h"
+#include "hdf5_frame_selector.h"
+#include "mp4_frame_selector.h"
+#include "frame_selector.h"
+
+FrameSelectorFactory::FrameSelectorFactory(std::string file){
+    file_name_= file;
+}
+
+FrameSelector* FrameSelectorFactory::getFrameSelector(){
+    if (HasSuffix(file_name_, ".HDF5")||HasSuffix(file_name_, ".hdf5")){
+        return new HDF5FrameSelector(file_name_);
+    }
+    if (HasSuffix(file_name_, ".mp4")||HasSuffix(file_name_, ".MP4")){
+        return new MP4FrameSelector(file_name_);
+    }
+    else return NULL;
+}
 
 
-using namespace cv;
-
-void ImageView::ShowImage(Image image){
-    cv::imshow("name", image.GetRGBImage());
-    waitKey(5);
+bool FrameSelectorFactory::HasSuffix(const std::string &filename, const std::string &suffix){
+    return filename.compare(filename.size() - suffix.size(), suffix.size(), suffix) == 0;
 }

@@ -1,7 +1,7 @@
 //
 // Projectname: amos-ss16-proj5
 //
-// Created on 28.05.2016.
+// Created on 21-05-2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -22,23 +22,40 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef IMAGE_VIEW_H
-#define IMAGE_VIEW_H
 
-#include "image.h"
-class ImageView{
-	
+#ifndef __amos_ss16_proj5__frame_selector_factory__
+#define __amos_ss16_proj5__frame_selector_factory__
+
+#include <stdio.h>
+#include "frame_selector.h"
+class FrameSelectorFactory {
+    
 public:
-
+    
     /**
-     * Shows the image with help of OpenCV.
+     * Constructor
      *
-     * @param image The image object that will be shown
-     *
+     * @param file  The filename of the file to read
      */
-	void ShowImage(Image image);
-	
-  
+    FrameSelectorFactory(std::string file);
+    
+    /**
+     * Creates and returns the FrameSelector
+     *
+     *  @return the FrameSelector
+     */
+    FrameSelector* getFrameSelector();
+    
+    
+private:
+    /**
+     * Checks if a filename ends wirh a given suffix
+     *
+     *@return true if filename ends with suffix, false if not
+     */
+    bool HasSuffix(const std::string &filename, const std::string &suffix);
+    std::string file_name_;   ///< The full path file of the video file
+    
 };
 
-#endif // IMAGE_VIEW_H
+#endif /* defined(__amos_ss16_proj5__frame_selector_factory__) */

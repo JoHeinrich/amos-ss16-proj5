@@ -1,7 +1,7 @@
 //
 // Projectname: amos-ss16-proj5
 //
-// Created on 21-05-2016.
+// Created on 21.05.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -22,36 +22,52 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __amos_ss16_proj5__frame_selector__
-#define __amos_ss16_proj5__frame_selector__
+#ifndef __amos_ss16_proj5__mp4_frame_selector__
+#define __amos_ss16_proj5__mp4_frame_selector__
 
 #include <stdio.h>
+#include <string>
+#include "frame_selector.h"
 
-#include "image.h"
-
-
-class FrameSelector {
+class MP4FrameSelector : public FrameSelector{
     
 public:
+    
     /**
-     * Reads one image at the given index from hdf5 file
+     * Constructor
+     *
+     * @param file  The filename of the mp4 file to read
+     */
+    MP4FrameSelector(std::string file);
+    
+    /**
+     * Destructor
+     */
+    ~MP4FrameSelector();
+    
+    /**
+     * Reads one image at the given index from mp4 file
      *
      * @param frame_index The frame index of the image
      *
      * @return The image object at the given frame index
      */
-    virtual Image ReadImage(unsigned int frame_index)=0;
+    Image ReadImage(unsigned int frame_index);
+    
+    
     /**
      * Returns number of containing images
      *
      * @return Count of images
      */
-    virtual int GetImageCount()=0;
+    int GetImageCount();
+    
     
 private:
     
-    
+    std::string file_name_;   ///< The full path file name of the mp4 file
+    cv::VideoCapture cap; // The Video capture fore the video
 };
 
 
-#endif /* defined(__amos_ss16_proj5__frame_selector__) */
+#endif /* defined(__amos_ss16_proj5__mp4_frame_selector__) */

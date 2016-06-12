@@ -1,7 +1,7 @@
 //
 // Projectname: amos-ss16-proj5
 //
-// Created on 28.05.2016.
+// Created on 21.05.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -22,13 +22,30 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "image_view.h"
-#include <opencv2/opencv.hpp>
+#include "mp4_frame_selector.h"
 
+MP4FrameSelector::MP4FrameSelector(std::string file){
+    file_name_=file;
+    cap.open(file);
+    if( !cap.isOpened()){
+        std::cout << "could not open mp4 video" << std::endl;
+    }
+}
 
-using namespace cv;
+MP4FrameSelector::~MP4FrameSelector(){
+}
 
-void ImageView::ShowImage(Image image){
-    cv::imshow("name", image.GetRGBImage());
-    waitKey(5);
+Image MP4FrameSelector::ReadImage(unsigned int frame_index){
+    Mat current_frame;
+    cap.set (CV_CAP_PROP_POS_FRAMES , frame_index );
+    bool success = cap.read(current_frame);
+    if ( ! success ) {
+        std::cout << "could not read frame " << frame_index << std::endl;
+    }
+    Image img (current_frame, current_frame.rows, current_frame.cols);
+    return img;
+}
+
+int MP4FrameSelector::GetImageCount(){
+    return cap.get(CV_CAP_PROP_FRAME_COUNT);
 }

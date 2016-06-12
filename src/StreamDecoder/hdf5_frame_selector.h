@@ -1,0 +1,112 @@
+//
+// Projectname: amos-ss16-proj5
+//
+// Created on 21.05.2016.
+// Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
+//
+// This file is part of the AMOS Project 2016 @ FAU
+// (Friedrich-Alexander University Erlangen-Nürnberg)
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public
+// License along with this program. If not, see
+// <http://www.gnu.org/licenses/>.
+//
+
+#ifndef HDF5FRAME_SELECTOR_H
+#define HDF5FRAME_SELECTOR_H
+
+// HDFReader
+#include "hdf_reader.h"
+
+//Protobuf Deserializer
+#include "protobuf_image_wrapper.h"
+
+// Image
+#include "image.h"
+
+//opencv
+#include <opencv2/opencv.hpp>
+
+#include "frame_selector.h"
+
+#include <vector>
+
+
+class HDF5FrameSelector : public FrameSelector{
+    
+public:
+    
+    /**
+     * Constructor
+     *
+     * @param file  The filename of the hdf5 file to read
+     */
+    HDF5FrameSelector(std::string file);
+
+    /**
+     * Destructor
+     */
+    ~HDF5FrameSelector();
+    
+    /**
+     * Reads one image at the given index from hdf5 file
+     *
+     * @param frame_index The frame index of the image
+     *
+     * @return The image object at the given frame index
+     */
+     Image ReadImage(unsigned int frame_index);
+
+    
+     /**
+      * Returns number of containing images
+      *
+      * @return Count of images
+      */
+     int GetImageCount();
+    
+    
+     /**
+      * Reads all images 
+      *
+      * @return A vector with all image objects
+      */
+      std::vector<Image> ReadAllImages();
+
+private:
+
+      std::string file_name_;   ///< The full path file name of the hdf5 file
+      HDFReader  *hdf_reader_;    ///< The dhf5 file reader
+
+      /**
+       * Converts a protobuf file from hdf reader to an array (needed for parsing it and for creating a msgCameraImage object)
+       *
+       * @param image The vector with the protobuf file buffer
+       *
+       * @return The array with the protobuf file buffer
+       */
+      unsigned char* ConvertProtobufFileToArray(std::vector<int64_t> file);
+    
+      /**
+       * Converts the given payload to a opencv mat in rgb format
+       *
+       * @param payload the bayer - payload from the protobuf file
+       * @param width - the width of the image
+       * @param height - the height of the image
+       *
+       * @return The image as cv::Mat in RGB
+       */
+       cv::Mat ConvertBayerImageToRGBMat (std::string payload, int width, int height);
+};
+
+#endif // HDF5FRAME_SELECTOR_H
