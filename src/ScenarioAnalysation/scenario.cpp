@@ -30,17 +30,10 @@
 
 float Scenario::Distance(Element first, Element second){
 
-    //compute distance with pythagorean theorem
-
     std::vector<int> first_position = first.GetPosition();
     std::vector<int> second_position = second.GetPosition();
-
-    float first_sum = pow( (static_cast<float>(second_position.at(0)) - static_cast<float>(first_position.at(0))), 2.0);
-    float second_sum = pow( (static_cast<float>(second_position.at(1)) - static_cast<float>(first_position.at(1))), 2.0);
-
-    float distance = sqrt(first_sum + second_sum);
-
-    return distance;
+    
+    return PointDistance(first_position, second_position);
 
 }
 
@@ -81,5 +74,40 @@ bool Scenario::Overlap(Element first, Element second){
     }
 
     return false;
+
+}
+
+float Scenario::CenterDistance(Element first, Element second){
+    
+    // get the center points of the objects
+    
+    int first_half_width = first.GetBoxSize().at(0)/2.0;
+    int first_half_height = first.GetBoxSize().at(1)/2.0;
+    
+    std::vector<int> first_center;
+    first_center.push_back(first.GetPosition().at(0)+first_half_width);
+    first_center.push_back(first.GetPosition().at(1)+first_half_height);
+    
+    int second_half_width = second.GetBoxSize().at(0)/2.0;
+    int second_half_height = second.GetBoxSize().at(1)/2.0;
+    
+    std::vector<int> second_center;
+    second_center.push_back(second.GetPosition().at(0)+second_half_width);
+    second_center.push_back(second.GetPosition().at(1)+second_half_height);
+    
+    return PointDistance(first_center, second_center);
+    
+}
+
+float Scenario::PointDistance(std::vector<int> first, std::vector<int> second){
+    
+    //compute distance with pythagorean theorem
+
+    float first_sum = pow( (static_cast<float>(second.at(0)) - static_cast<float>(first.at(0))), 2.0);
+    float second_sum = pow( (static_cast<float>(second.at(1)) - static_cast<float>(first.at(1))), 2.0);
+    
+    float distance = sqrt(first_sum + second_sum);
+    
+    return distance;
 
 }
