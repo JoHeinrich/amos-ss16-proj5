@@ -25,7 +25,7 @@
 #ifndef DETECTION_H
 #define DETECTION_H
 
-
+#include <opencv2/opencv.hpp>
 // #include "image.h"
 #include "people_detector.h"
 #include "vehicle_detector.h"
@@ -34,7 +34,14 @@ class Detection {
 
 public:
 
-
+  /**
+   * Resizes one frame and than performs the detection
+   * (people and vehicle for now) on the resized frame.
+   *
+   * @param frame The current image of the stream
+   *
+   **/
+  void processFrame(cv::Mat *frame);
 
 private:
 
