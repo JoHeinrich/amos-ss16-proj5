@@ -23,7 +23,7 @@
 
 #include "people_detector.h"
 
-std::vector<cv::Rect> PeopleDetector::detect(cv::Mat *frame) {
+std::vector<cv::Rect> PeopleDetector::Detect(cv::Mat *frame) {
 
   //set hog detector
   // TO DO: test the daimler detector again with proper settings

@@ -37,7 +37,7 @@ public:
    *
    * @return The vector of all detected vehicles in the current Frame
    **/
-  std::vector<cv::Rect> detect(cv::Mat *frame);
+  std::vector<cv::Rect> Detect(cv::Mat *frame);
 
 private:
 
