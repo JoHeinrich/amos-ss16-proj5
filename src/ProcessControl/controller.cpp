@@ -43,6 +43,26 @@ void Controller::PlayHDFAsVideo(std::string videofile){
 }
 
 void Controller::AnalyseHDF5Video(std::string videofile){
+
+  FrameSelector pipeline(videofile);
+  ImageView image_view;
+  int protobuf_counts = pipeline.GetImageCount();
+
+  Detection detection;
+  cv::Mat current_frame;
+
+  for (int i=0; i<protobuf_counts; i++) {
+
+      current_frame = pipeline.ReadImage(i).GetRGBImage();
+      detection.ProcessFrame(&current_frame);
+
+      char key = cvWaitKey(10);
+      if(key == KEY_ESC)
+        break;
+
+      if (key == KEY_SPACE)
+        key = cvWaitKey(0);
+  }
 }
 
 void Controller::SaveAllImagesAsJPEG(std::string videofile){
