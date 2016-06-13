@@ -8,6 +8,7 @@ language: cpp
 cache:
   directories:
   - /home/travis/build/JoHeinrich/amos-ss16-proj5/protobuf-2.6.1
+  - /home/travis/build/JoHeinrich/amos-ss16-proj5/actor-framework
 # Compiler selection
 compiler:
   - gcc
@@ -27,6 +28,14 @@ before_install:
 #  - make check
   - sudo make install
   - sudo ldconfig
+  - cd ..
+# Install CAF
+#  - git clone https://github.com/actor-framework/actor-framework.git
+  - cd actor-framework
+#  - ./configure
+#  - make
+#  - make test
+  - sudo make install
   - cd ..
 before_script:
   - export OpenCV_DIR=/home/travis/build/JoHeinrich/amos-ss16-proj5/docker/assets/openCV/share/OpenCV/
