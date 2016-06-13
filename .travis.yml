@@ -30,11 +30,11 @@ before_install:
   - sudo ldconfig
   - cd ..
 # Install CAF
-#  - git clone https://github.com/actor-framework/actor-framework.git
+  - git clone https://github.com/actor-framework/actor-framework.git
   - cd actor-framework
-#  - ./configure
-#  - make
-#  - make test
+  - ./configure
+  - make
+  - make test
   - sudo make install
   - cd ..
 before_script:
