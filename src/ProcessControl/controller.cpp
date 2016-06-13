@@ -29,27 +29,20 @@
 
 
 //define keys
-const char ESC = 27;
+const char KEY_ESC = 27;
+const int KEY_SPACE = 32;
 
 void Controller::PlayHDFAsVideo(std::string videofile){
-    FrameSelector pipeline(videofile);
-    ImageView image_view;
-    int protobuf_counts = pipeline.GetImageCount();
-
-    Detection detection;
-    cv::Mat current_frame;
-
-    for (int i=0; i<protobuf_counts; i++){
-
-        current_frame = pipeline.ReadImage(i).GetRGBImage();
-        detection.ProcessFrame(&current_frame);
-        if( cvWaitKey(5) == ESC ) break;
-    }
+  FrameSelector pipeline(videofile);
+  ImageView image_view;
+  int protobuf_counts = pipeline.GetImageCount();
+  for (int i=0; i<protobuf_counts; i++){
+      image_view.ShowImage(pipeline.ReadImage(i));
+      if( cvWaitKey(5) == KEY_ESC ) break;
+}
 }
 
 void Controller::AnalyseHDF5Video(std::string videofile){
-
-  // TODO: implementaion 
 }
 
 void Controller::SaveAllImagesAsJPEG(std::string videofile){
