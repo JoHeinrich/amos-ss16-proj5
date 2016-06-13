@@ -1,0 +1,13 @@
+package org.libcppa;
+
+message warning {
+  required int32 id = 1;
+}
+message ack {
+  required int32 id = 1;
+}
+
+message WarnOrAck {
+  optional warning warn = 1;
+  optional ack ack = 2;
+}
