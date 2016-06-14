@@ -30,6 +30,10 @@
 using namespace cv;
 
 void ImageView::ShowImage(Image image){
+    ShowImage(image, 5);
+}
+
+void ImageView::ShowImage(Image image, int sleep_time){
     cv::imshow("name", image.GetRGBImage());
-    waitKey(5);
+    waitKey(sleep_time);
 }

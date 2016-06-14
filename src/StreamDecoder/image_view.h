@@ -40,6 +40,13 @@ public:
      */
 	void ShowImage(Image image);
 	
+    /**
+     * Shows the image with help of OpenCV a given time
+     *
+     * @param image The image object that will be shown
+     * @param sleep_time in ms. the view sleeps for this miliseconds and waits for any key to be pressed.  0 is for waiting infinitely
+     */
+    void ShowImage(Image image, int sleep_time);
   
 };
 
