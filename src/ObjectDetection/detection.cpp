@@ -28,12 +28,13 @@
 using namespace std;
 using namespace cv;
 
-void Detection::ProcessFrame(Mat *frame) {
+void Detection::ProcessFrame(Image image) {
 
   PeopleDetector peopleDetector;
   VehicleDetector vehicleDetector;
 
-  Mat resizedFrame = ResizeFrame(frame);
+  Mat frame = image.GetRGBImage();
+  Mat resizedFrame = ResizeFrame(&frame);
 
   std::vector<Rect> detectedPeople = peopleDetector.Detect(&resizedFrame);
   std::vector<Rect> detectedVehicles = vehicleDetector.Detect(&resizedFrame);
@@ -44,6 +45,7 @@ void Detection::ProcessFrame(Mat *frame) {
 Mat Detection::ResizeFrame(Mat *frame) {
   //resize the image to width of 400px to reduce detection time and improve detection accuracy
   //0.3125 is used because the test video is 1280 x 720, so the width resized images is 400px this has to be changed to our image size (best would be no hard coded scaling so other images sizes work too!)
+  // TODO: dynamic risizeing depending on input (min width 400px)
 
   Mat resizedFrame;
   resize(*frame, resizedFrame, Size(0, 0), 0.3125, 0.3125, CV_INTER_AREA);
@@ -52,16 +54,16 @@ Mat Detection::ResizeFrame(Mat *frame) {
 
 void Detection::DisplayDetectedObjects(std::vector<Rect> firstDetection, std::vector<Rect> secondDetection, Mat *frame) {
   //add retangle for each Object in firstDetection
-  for (int i=0; i<firstDetection.size(); i++){
+  for (int i=0; i<firstDetection.size(); i++) {
       Rect r = firstDetection[i];
       rectangle(*frame, r.tl(), r.br(), Scalar(0,255,0), 2);
   }
 
-  //add retangle for each Object in secondDetection
-  for (int i=0; i<secondDetection.size(); i++){
+  //add rectangle for each Object in secondDetection
+  for (int i=0; i<secondDetection.size(); i++) {
       Rect r = secondDetection[i];
       rectangle(*frame, r.tl(), r.br(), Scalar(255,150,0), 2);
   }
 
-  imshow("Camera stream", *frame);
+  imshow("Camera stream", *frame); // TODO: Use image_view class
 }

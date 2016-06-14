@@ -24,6 +24,7 @@
 
 #include <string>
 #include "../StreamDecoder/frame_selector.h"
+#include "../StreamDecoder/image.h"
 
 class Controller{
 
