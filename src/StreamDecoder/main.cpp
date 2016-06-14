@@ -41,12 +41,12 @@ int main(int argc, const char* argv[]) {
         return -1;
 
     }
-    
+
     if(argc == 2){
 
         // saves all images to disc
         Controller controller;
-        controller.PlayHDFAsVideo(argv[1]);
+        controller.AnalyseHDF5Video(argv[1]);
 
 
     } else if(argc == 3){
