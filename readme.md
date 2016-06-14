@@ -33,8 +33,11 @@ Use our [scripts](https://github.com/JoHeinrich/amos-ss16-proj5/tree/master/scri
 - OpenCV 3.1: [Download](http://opencv.org/downloads.html), [Install](http://docs.opencv.org/3.1.0/d7/d9f/tutorial_linux_install.html)
 
 
-#### Build Command: 
+#### Build command: 
     $ mkdir build
     $ cd build
     $ cmake ..
     $ make
+
+#### Source code documentation:
+See our [Doxygen site](http://joheinrich.github.io/amos-ss16-proj5-gh-pages/index.html)
