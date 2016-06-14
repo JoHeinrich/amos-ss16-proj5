@@ -27,6 +27,7 @@
 
 
 #include "scenario.h"
+#include <string>
 
 
 class HumansInFrontOfBusScenario : public Scenario {
@@ -40,6 +41,16 @@ public:
     */
     virtual bool Detect(FrameDetectionData detected_objects) override;
 
+
+    /**
+    * Returns the detected Information
+    *
+    * @return A string that describes the situation
+    */
+    std::string Information()
+    {
+        return "Humans in front of bus scenario detected!";
+    }
 private:
 
 };
