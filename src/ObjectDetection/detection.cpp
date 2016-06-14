@@ -28,12 +28,12 @@
 using namespace std;
 using namespace cv;
 
-void Detection::ProcessFrame(Mat *frame) {
+void Detection::ProcessFrame(Image image) {
 
   PeopleDetector peopleDetector;
   VehicleDetector vehicleDetector;
 
-  Mat resizedFrame = ResizeFrame(frame);
+  Mat resizedFrame = ResizeFrame(image.GetRGBImage());
 
   std::vector<Rect> detectedPeople = peopleDetector.Detect(&resizedFrame);
   std::vector<Rect> detectedVehicles = vehicleDetector.Detect(&resizedFrame);
