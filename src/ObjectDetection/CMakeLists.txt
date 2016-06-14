@@ -11,12 +11,13 @@ else(OpenCV_FOUND)
 endif(OpenCV_FOUND)
 
 set(sources
-	detectionMain.cpp
+	main.cpp
 	detection.cpp
 	element.cpp
 	frame_detection_data.cpp
 	people_detector.cpp
 	vehicle_detector.cpp
+	../StreamDecoder/image.cpp
 )
 
 set(headers
@@ -26,6 +27,7 @@ set(headers
 	frame_detection_data.h
 	people_detector.h
 	vehicle_detector.h
+	../StreamDecoder/image.h
 )
 
 add_executable( ${OUTPUT_NAME} ${sources} ${header} )
