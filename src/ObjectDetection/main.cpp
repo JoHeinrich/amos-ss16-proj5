@@ -20,49 +20,7 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-#include <opencv2/opencv.hpp>
-#include "detection.h"
-
-using namespace std;
-using namespace cv;
-
-const int KEY_ESC = 27;
-const int KEY_SPACE = 32;
-const std::string WindowName = "Camera Stream";
-
 int main(int argc, const char * argv[]) {
-
-  if(argc < 2)
-  {
-    std::cout << "Usage " << argv[0] << " video.mp4" << std::endl;
-    return 0;
-  }
-
-  //open video
-  cv::VideoCapture capture(argv[1]);
-  if (!capture.isOpened()){
-      std::cout << "Failed to open video" << std::endl;
-      return -1;
-  }
-
-  Detection detection;
-
-  // run video
-   Mat frame;
-   do{
-       if (!capture.read(frame))
-           break;
-
-        // TODO: move this in the controller
-        detection.ProcessFrame(&frame);
-
-       char key = cvWaitKey(10);
-       if (key == KEY_SPACE)
-           key = cvWaitKey(0);
-
-       if (key == KEY_ESC)
-           break;
-   } while(1);
 
     return 0;
 }

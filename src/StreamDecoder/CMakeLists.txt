@@ -45,6 +45,9 @@ set(hdfsource
 
 set(header
 	../ProcessControl/controller.h
+	../ObjectDetection/detection.h
+	../ObjectDetection/people_detector.h
+	../ObjectDetection/vehicle_detector.h
 	frame_selector.h
 	image.h
 	image_view.h
@@ -53,6 +56,9 @@ set(header
 
 set(sources
 	../ProcessControl/controller.cpp
+	../ObjectDetection/detection.cpp
+	../ObjectDetection/people_detector.cpp
+	../ObjectDetection/vehicle_detector.cpp
 	frame_selector.cpp
 	main.cpp
 	image.cpp

@@ -22,27 +22,46 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "controller.h"
 #include <opencv2/opencv.hpp>
+#include "../ObjectDetection/detection.h"
 #include "../StreamDecoder/image_view.h"
+#include "controller.h"
+
 
 //define keys
-const char ESC = 27;
+const int KEY_ESC = 27;
+const int KEY_SPACE = 32;
 
-void Controller::PlayHDFAsVideo(std::string videofile){
-    FrameSelector pipeline(videofile);
-    ImageView image_view;
-    int protobuf_counts = pipeline.GetImageCount();
-    for (int i=0; i<protobuf_counts; i++){
-        image_view.ShowImage(pipeline.ReadImage(i));
-        if( cvWaitKey(5) == ESC ) break;
-    }
+void Controller::PlayHDFAsVideo(std::string videofile) {
+  FrameSelector pipeline(videofile);
+  ImageView image_view;
+  int protobuf_counts = pipeline.GetImageCount();
+  for (int i=0; i<protobuf_counts; i++) {
+      image_view.ShowImage(pipeline.ReadImage(i));
+      if( cvWaitKey(5) == KEY_ESC ) break;
+  }
 }
 
-void Controller::AnalyseHDF5Video(std::string videofile){
+void Controller::AnalyseHDF5Video(std::string videofile) {
+  ImageView image_view;
+  FrameSelector pipeline(videofile);
+  int protobuf_counts = pipeline.GetImageCount();
+
+  Detection detection;
+
+  for (int i=0; i<protobuf_counts; i++) {
+    detection.ProcessFrame(pipeline.ReadImage(i));
+
+    int key = cvWaitKey(10);
+    if(key == KEY_ESC)
+      break;
+
+    if (key == KEY_SPACE)
+      key = cvWaitKey(0);
+  }
 }
 
-void Controller::SaveAllImagesAsJPEG(std::string videofile){
+void Controller::SaveAllImagesAsJPEG(std::string videofile) {
     FrameSelector pipeline(videofile);
     int protobuf_counts = pipeline.GetImageCount();
     std:String filename = videofile.substr(videofile.find_last_of("/\\")+1);
