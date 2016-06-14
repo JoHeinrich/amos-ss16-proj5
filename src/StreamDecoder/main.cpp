@@ -59,7 +59,7 @@ int main(int argc, const char* argv[]) {
         Image result_image = pipeline.ReadImage(index);
 
         ImageView image_viewer;
-        image_viewer.ShowImage(result_image);
+        image_viewer.ShowImage(result_image, 0);
     }
 
 
