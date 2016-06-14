@@ -74,7 +74,6 @@ int Image::GetImageHeight(){
 Mat Image::GetBGGRImage(){
 
     // create a Mat object from data
-    // TODO is CV_16UC1 the correct type?
     Mat result_image(this->GetImageHeight(), this->GetImageWidth(), CV_16UC1, image_payload_array_);
 
     return result_image;
@@ -83,11 +82,6 @@ Mat Image::GetBGGRImage(){
 Mat Image::GetBGRImage(){
 
     Mat bggr_image = this->GetBGGRImage();
-
-   //convert BGGR image to BGR
-   // Mat bggr_8bit_image = bggr_image.clone();
-   // bggr_8bit_image.convertTo(bggr_8bit_image, CV_8UC1);
-
     Mat rgb_8bit_image(this->GetImageHeight(), this->GetImageWidth(), CV_8UC3);
     cvtColor(bggr_image, rgb_8bit_image, CV_BayerGR2BGR);
 
@@ -95,13 +89,13 @@ Mat Image::GetBGRImage(){
 }
 
 Mat Image::GetRGBImage(){
-    
+
     uint16_t decompressed_payload [GetImageWidth() * GetImageHeight()];
     std::string payload =GetImagePayload();
     std::vector<char> writable(payload.c_str(), payload.c_str() + payload.length() + 1);
     char *temp_dest_buffer = reinterpret_cast<char *>(&decompressed_payload);
     char *buffer = &writable[0];
-    
+
     // (1176 * 640) / 2 bytes => 376320
     int image_pixel_count = (GetImageWidth() * GetImageHeight()/2);
     for (int i = 0; i < image_pixel_count; i++)
