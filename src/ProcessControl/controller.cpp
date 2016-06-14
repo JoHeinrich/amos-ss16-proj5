@@ -50,7 +50,7 @@ void Controller::AnalyseHDF5Video(std::string videofile) {
   Detection detection;
 
   for (int i=0; i<protobuf_counts; i++) {
-    detection.ProcessFrame(pipeline.ReadImage(i)); // FIXME: linker error
+    detection.ProcessFrame(pipeline.ReadImage(i));
 
     int key = cvWaitKey(10);
     if(key == KEY_ESC)
