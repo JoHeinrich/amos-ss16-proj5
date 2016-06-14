@@ -26,15 +26,15 @@
 std::vector<cv::Rect> VehicleDetector::Detect(cv::Mat *frame) {
 
   cv::CascadeClassifier vehicle_classifier;
-  vehicle_classifier.load("../../assets/vehicle_classifier.xml"); // TODO: path to .xml in the asstes folder
+  vehicle_classifier.load("../../assets/vehicle_classifier.xml");
   // check if classifier was loaded
   if (vehicle_classifier.empty() == true) {
-    std::cout << "Failed to lead vehicle classifier" << std::endl;
+    std::cout << "Failed to load vehicle classifier" << std::endl;
   }
 
   //detect vehicles in the frame
   std::vector<cv::Rect> detectedVehicles;
-  vehicle_classifier.detectMultiScale(*frame, detectedVehicles, 1.1, 2, 0, cv::Size(70,70), cv::Size(400,400));
+  vehicle_classifier.detectMultiScale(*frame, detectedVehicles, 1.1, 2, 0, cv::Size(70,70), cv::Size(400,400)); // TODO: adjust settings to HDF5 data
 
   return detectedVehicles;
 }

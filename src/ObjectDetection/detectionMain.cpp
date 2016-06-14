@@ -53,7 +53,7 @@ int main(int argc, const char * argv[]) {
        if (!capture.read(frame))
            break;
 
-        // TODO: move this in the controller
+        // TODO: move this in the controller Controller::AnalyseHDF5Video
         detection.ProcessFrame(&frame);
 
        char key = cvWaitKey(10);

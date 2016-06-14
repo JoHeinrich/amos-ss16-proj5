@@ -22,10 +22,10 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "controller.h"
 #include <opencv2/opencv.hpp>
-#include "../StreamDecoder/image_view.h"
 #include "../ObjectDetection/detection.h"
+#include "../StreamDecoder/image_view.h"
+#include "controller.h"
 
 
 //define keys
@@ -43,17 +43,13 @@ void Controller::PlayHDFAsVideo(std::string videofile) {
 }
 
 void Controller::AnalyseHDF5Video(std::string videofile) {
-
   ImageView image_view;
   FrameSelector pipeline(videofile);
   int protobuf_counts = pipeline.GetImageCount();
 
   Detection detection;
-  // cv::Mat current_frame;
 
   for (int i=0; i<protobuf_counts; i++) {
-
-    // detection.ProcessFrame(&current_frame);
     detection.ProcessFrame(pipeline.ReadImage(i));
 
     int key = cvWaitKey(10);
