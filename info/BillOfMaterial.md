@@ -51,9 +51,9 @@ License:
 ```
 ###### Communication
 ```sh
-Name:
-Version:
-License:
+Name: CAF: C++ Actor Framework
+Version: 0.14
+License: Boost Software License - Version 1.0
 ```
 ### Build process
 ##### What we have done
