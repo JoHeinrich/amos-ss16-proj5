@@ -152,6 +152,10 @@ int HDFReader::ReadFile(){
 
         //close file
         file->close();
+        
+        //delete file
+        delete file;
+        file = NULL;
 
         std::cout << "Number of protobuf files  " << protobuf_file_ids_.size() << std::endl;
 
@@ -264,6 +268,10 @@ std::vector<int64_t> HDFReader::ReadOneProtobufFile(unsigned int index){
 
         //close file
         file->close();
+        
+        //delete file
+        delete file;
+        file = NULL;
 
 
     }  // end of try block

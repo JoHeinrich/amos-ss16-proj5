@@ -76,6 +76,9 @@ Image FrameSelector::ReadImage(unsigned int frame_index){
     std::cout << "Protobuf file: WIDTH: " << result_image.GetImageWidth() << " HEIGHT: " << result_image.GetImageHeight() << std::endl;
     std::cout << " Size of payload: " << result_image.GetImagePayload().size() << std::endl;
 
+    delete file;
+    file = NULL;
+    
     return result_image;
 
 }
@@ -101,6 +104,9 @@ std::vector<Image> FrameSelector::ReadAllImages(){
 
         Image current_image(protobuf_image.GetImagePayload(), protobuf_image.GetImageWidth(), protobuf_image.GetImageHeight());
 
+        delete file;
+        file = NULL;
+        
         result_images.push_back(current_image);
         
     }
