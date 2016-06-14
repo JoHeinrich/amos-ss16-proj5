@@ -11,7 +11,6 @@ else(OpenCV_FOUND)
 endif(OpenCV_FOUND)
 
 set(sources
-	detectionMain.cpp
 	detection.cpp
 	element.cpp
 	frame_detection_data.cpp
