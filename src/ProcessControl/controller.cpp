@@ -40,7 +40,6 @@ void Controller::PlayHDFAsVideo(std::string videofile){
       image_view.ShowImage(pipeline.ReadImage(i));
       if( cvWaitKey(5) == KEY_ESC ) break;
 }
-}
 
 void Controller::AnalyseHDF5Video(std::string videofile){
 

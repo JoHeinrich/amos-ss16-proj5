@@ -57,11 +57,11 @@ void Detection::DisplayDetectedObjects(std::vector<Rect> firstDetection, std::ve
       rectangle(*frame, r.tl(), r.br(), Scalar(0,255,0), 2);
   }
 
-  //add retangle for each Object in secondDetection
-  for (int i=0; i<secondDetection.size(); i++){
+  //add rectangle for each Object in secondDetection
+  for (int i=0; i<secondDetection.size(); i++) {
       Rect r = secondDetection[i];
       rectangle(*frame, r.tl(), r.br(), Scalar(255,150,0), 2);
   }
 
-  imshow("Camera stream", *frame);
+  imshow("Camera stream", *frame); // TODO: Use image_view class
 }
