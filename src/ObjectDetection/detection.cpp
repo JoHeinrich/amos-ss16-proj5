@@ -33,7 +33,8 @@ void Detection::ProcessFrame(Image image) {
   PeopleDetector peopleDetector;
   VehicleDetector vehicleDetector;
 
-  Mat resizedFrame = ResizeFrame(image.GetRGBImage());
+  Mat frame = image.GetRGBImage();
+  Mat resizedFrame = ResizeFrame(&frame);
 
   std::vector<Rect> detectedPeople = peopleDetector.Detect(&resizedFrame);
   std::vector<Rect> detectedVehicles = vehicleDetector.Detect(&resizedFrame);
