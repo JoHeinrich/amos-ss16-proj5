@@ -37,33 +37,23 @@ float Scenario::Distance(Element first, Element second){
 
 }
 
+
+
 bool Scenario::Overlap(Element first, Element second){
 
     //determine whether the bounding box of the first element overlaps with the second one
 
-    int first_min_x = first.GetPosition().at(0);
-    int first_min_y = first.GetPosition().at(1);
-
-    int first_max_x = first_min_x + first.GetBoxSize().at(0);
-    int first_max_y = first_min_y + first.GetBoxSize().at(1);
-
-
-    int second_min_x = second.GetPosition().at(0);
-    int second_min_y = second.GetPosition().at(1);
-
-    int second_max_x = second_min_x + second.GetBoxSize().at(0);
-    int second_max_y = second_min_y + second.GetBoxSize().at(1);
 
    // std::cout << "SCENARIO::OVERLAP: first min, max x;y : " << first_min_x << " " << first_max_x << " " << first_min_y << " " << first_max_y <<std::endl;
    // std::cout << "SCENARIO::OVERLAP: second min, max x;y : " << second_min_x << " " << second_max_x << " " << second_min_y << " " << second_max_y <<std::endl;
 
 
-    if( (first_min_x <= second_min_x) || (first_max_x >= second_max_x) || ( (first_min_x >= second_min_x) && (first_max_x <= second_max_x) ) ){
+    if( (first.MinX() <= second.MinX()) || (first.MaxX() >= second.MaxX()) || ( (first.MinX() >= second.MinX()) && (first.MaxX() <= second.MaxX()) ) ){
 
         // std::cout << " SCENARIO::OVERLAP erstes if " <<std::endl;
 
-        if( ( (second_min_y >= first_min_y) && (second_min_y <= first_max_y) )
-                ||  ( (second_max_y <= first_max_y) && (second_max_y >= first_min_y) ) ){
+        if( ( (second.MinY() >= first.MinY()) && (second.MinY() <= first.MaxY()) )
+                ||  ( (second.MaxY() <= first.MaxY()) && (second.MaxY() >= first.MinY()) ) ){
 
 
             std::cout << "Scenario: There are overlapping elements in the frame! " << std::endl;
@@ -77,24 +67,25 @@ bool Scenario::Overlap(Element first, Element second){
 
 }
 
+bool Scenario::Contains(Element big, Element small)
+{
+    // checks if the small one is within the big one
+    return big.MinX()<=small.MinX() && big.MinY()<=small.MinY() && big.MaxX()>=small.MaxX() && big.MaxY()>=small.MaxY();
+}
+
 float Scenario::CenterDistance(Element first, Element second){
     
     // get the center points of the objects
     
-    int first_half_width = first.GetBoxSize().at(0)/2.0;
-    int first_half_height = first.GetBoxSize().at(1)/2.0;
     
     std::vector<int> first_center;
-    first_center.push_back(first.GetPosition().at(0)+first_half_width);
-    first_center.push_back(first.GetPosition().at(1)+first_half_height);
+    first_center.push_back(first.CenterX());
+    first_center.push_back(first.CenterY());
     
-    int second_half_width = second.GetBoxSize().at(0)/2.0;
-    int second_half_height = second.GetBoxSize().at(1)/2.0;
-    
+
     std::vector<int> second_center;
-    second_center.push_back(second.GetPosition().at(0)+second_half_width);
-    second_center.push_back(second.GetPosition().at(1)+second_half_height);
-    
+    second_center.push_back(second.CenterX());
+    second_center.push_back(second.CenterY());
     return PointDistance(first_center, second_center);
     
 }

@@ -87,14 +87,21 @@ int main(int argc, const char* argv[]) {
     frame_detection.AddElementsOfType(OBJECT_HUMAN, all_humans);
     frame_detection.AddElementsOfType(OBJECT_VEHICLE, all_vehicles);
 
-
+    std::cout << "vehicle MinX: " << vehicle.MinX() << " MinY: " << vehicle.MinY() << " MaxX: " << vehicle.MaxX() << " MaxY: " << vehicle.MaxY() << std::endl;
+    std::cout << "human   MinX: " << human.MinX() << " MinY: " << human.MinY() << " MaxX: " << human.MaxX() << " MaxY: " << human.MaxY() << std::endl;
     // analyse the fake frame detection data
     Scenario* result_scenario = analyser.Analyse(frame_detection);
 
-    if( HumansInFrontOfBusScenario* result = dynamic_cast<HumansInFrontOfBusScenario*>(result_scenario) ){
-
-        std::cout << "Main: Humans in front of bus scenario detected! " << std::endl;
+    std::cout<< "distance: " << Scenario::CenterDistance(vehicle,human) << std::endl;
+    if(result_scenario != NULL)
+    {
+        std::cout << "Main: " << result_scenario->Information() << std::endl;
     }
+    
+    //if( HumansInFrontOfBusScenario* result = dynamic_cast<HumansInFrontOfBusScenario*>(result_scenario) ){
+
+    //    std::cout << "Main: Humans in front of bus scenario detected! " << std::endl;
+    //}
 
     return 0;
 }
