@@ -97,7 +97,8 @@ Mat Image::GetBGRImage(){
 Mat Image::GetRGBImage(){
     
     uint16_t decompressed_payload [GetImageWidth() * GetImageHeight()];
-    std::vector<char> writable(GetImagePayload().begin(), GetImagePayload().end());
+    std::string payload =GetImagePayload();
+    std::vector<char> writable(payload.c_str(), payload.c_str() + payload.length() + 1);
     char *temp_dest_buffer = reinterpret_cast<char *>(&decompressed_payload);
     char *buffer = &writable[0];
     
