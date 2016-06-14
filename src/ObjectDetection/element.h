@@ -34,7 +34,7 @@ public:
     /**
      * Constructor
      *
-     * @param  position     The vector with position of the element (x, y)
+     * @param  position     The vector with position of the topleft corner of the element (x, y)
      * @param  box_size     The vector with the size of the bounding box of the element (width, height)
      */
     Element(std::vector<int> position, std::vector<int> box_size);
@@ -54,7 +54,37 @@ public:
      */
     std::vector<int> GetBoxSize();
 
-    
+    /**
+    * Returns the minimum x value that is contained in the Boundingbox
+    */
+    int MinX();
+
+    /**
+    * Returns the minimum y value that is contained in the Boundingbox
+    */
+    int MinY();
+
+    /**
+    * Returns the maximum x value that is contained in the Boundingbox
+    */
+    int MaxX();
+
+    /**
+    * Returns the maximum value that is contained in the Boundingbox
+    */
+    int MaxY();
+
+    /**
+    * Returns the x value of center of the Boundingbox
+    */
+    int CenterX();
+
+    /**
+    * Returns the y value of center of the Boundingbox
+    */
+    int CenterY();
+
+
 private:
     
    std::vector<int> position_;  ///< The vector containing the position of the element
