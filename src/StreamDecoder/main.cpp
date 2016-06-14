@@ -44,7 +44,6 @@ int main(int argc, const char* argv[]) {
 
     if(argc == 2){
 
-        // saves all images to disc
         Controller controller;
         controller.AnalyseHDF5Video(argv[1]);
 
