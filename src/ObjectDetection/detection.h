@@ -26,7 +26,7 @@
 #define DETECTION_H
 
 #include <opencv2/opencv.hpp>
-// #include "image.h"
+#include "../StreamDecoder/image.h"
 #include "people_detector.h"
 #include "vehicle_detector.h"
 
@@ -41,7 +41,7 @@ public:
    * @param frame The current image of the stream
    *
    **/
-  void ProcessFrame(cv::Mat *frame);
+  void ProcessFrame(Image image);
 
 private:
 
