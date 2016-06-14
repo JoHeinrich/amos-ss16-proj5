@@ -54,7 +54,7 @@ int main(int argc, const char * argv[]) {
            break;
 
         // TODO: move this in the controller Controller::AnalyseHDF5Video
-        detection.ProcessFrame(&frame);
+        // detection.ProcessFrame(&frame);
 
        char key = cvWaitKey(10);
        if (key == KEY_SPACE)
