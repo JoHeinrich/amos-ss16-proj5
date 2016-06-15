@@ -46,10 +46,6 @@ Image::Image(const std::string payload, int width, int height){
    image_payload_ = payload;
    image_width_ = width;
    image_height_ = height;
-
-   // create and fill the payload array buffer
-   ConvertToArray();
-
 }
 
 Image::~Image(){
@@ -113,17 +109,4 @@ Mat Image::GetRGBImage(){
 
     cv::cvtColor(bayer_8bit_image, rgb_image, CV_BayerGR2RGB);
     return rgb_image;
-}
-
-void Image::ConvertToArray(){
-
-    // convert image payload to unsigned char array
-    unsigned long image_buffer_size = this->GetImagePayload().size();
-    image_payload_array_ = new unsigned char[image_buffer_size];
-    const char* image = this->GetImagePayload().c_str();
-
-    for(long i = 0; i < image_buffer_size; i++){
-
-        image_payload_array_[i] = static_cast<unsigned char>(image[i]);
-    }
 }
