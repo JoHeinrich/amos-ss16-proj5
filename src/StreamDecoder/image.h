@@ -72,20 +72,6 @@ public:
       int GetImageHeight();
 
      /**
-      * Gets the bayer image
-      *
-      * @return The bayer image as opencv::Mat object
-      */
-      Mat GetBGGRImage();
-
-      /**
-      * Gets the bgr image 
-      *
-      * @return The bgr image as opencv::Mat object
-      */
-      Mat GetBGRImage();
-
-     /**
       * Returns the payload as RGB image
       *
       */
@@ -94,16 +80,8 @@ public:
 
 private:
       std::string image_payload_;   ///< The string containing the payload of the image
-      unsigned char* image_payload_array_;  ///< The image payload as char array
       int image_width_;		///< The image width
       int image_height_;	///< The image height
-    
-      /**
-      * Converts the image payload to a char array (needed for conversion to Mat objects).
-      */
-      void ConvertToArray();
-
-  
 };
 
 #endif //IMAGE_H
