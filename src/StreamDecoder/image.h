@@ -80,7 +80,6 @@ public:
 
 private:
       std::string image_payload_;   ///< The string containing the payload of the image
-      unsigned char* image_payload_array_;  ///< The image payload as char array
       int image_width_;		///< The image width
       int image_height_;	///< The image height
 };
