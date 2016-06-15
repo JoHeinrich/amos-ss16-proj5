@@ -67,23 +67,6 @@ int Image::GetImageHeight(){
     return image_height_;
 }
 
-Mat Image::GetBGGRImage(){
-
-    // create a Mat object from data
-    Mat result_image(this->GetImageHeight(), this->GetImageWidth(), CV_16UC1, image_payload_array_);
-
-    return result_image;
-}
-
-Mat Image::GetBGRImage(){
-
-    Mat bggr_image = this->GetBGGRImage();
-    Mat rgb_8bit_image(this->GetImageHeight(), this->GetImageWidth(), CV_8UC3);
-    cvtColor(bggr_image, rgb_8bit_image, CV_BayerGR2BGR);
-
-    return rgb_8bit_image;
-}
-
 Mat Image::GetRGBImage(){
 
     uint16_t decompressed_payload [GetImageWidth() * GetImageHeight()];

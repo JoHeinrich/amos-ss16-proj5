@@ -72,20 +72,6 @@ public:
       int GetImageHeight();
 
      /**
-      * Gets the bayer image
-      *
-      * @return The bayer image as opencv::Mat object
-      */
-      Mat GetBGGRImage();
-
-      /**
-      * Gets the bgr image 
-      *
-      * @return The bgr image as opencv::Mat object
-      */
-      Mat GetBGRImage();
-
-     /**
       * Returns the payload as RGB image
       *
       */
