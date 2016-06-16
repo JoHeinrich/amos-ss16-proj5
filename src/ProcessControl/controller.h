@@ -23,6 +23,7 @@
 
 #include <string>
 #include "../StreamDecoder/frame_selector.h"
+#include "../StreamDecoder/frame_selector_factory.h"
 #include "../StreamDecoder/image.h"
 
 class Controller{
