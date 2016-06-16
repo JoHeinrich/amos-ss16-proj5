@@ -24,8 +24,8 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef FRAME_SELECTOR_H
-#define FRAME_SELECTOR_H
+#ifndef HDF5FRAME_SELECTOR_H
+#define HDF5FRAME_SELECTOR_H
 
 // HDFReader
 #include "hdf_reader.h"
@@ -39,7 +39,7 @@
 #include <vector>
 
 
-class FrameSelector{
+class HDF5FrameSelector{
     
 public:
     
@@ -48,12 +48,12 @@ public:
      *
      * @param file  The filename of the hdf5 file to read
      */
-    FrameSelector(std::string file);
+    HDF5FrameSelector(std::string file);
 
     /**
      * Destructor
      */
-    ~FrameSelector();
+    ~HDF5FrameSelector();
     
     /**
      * Reads one image at the given index from hdf5 file
@@ -102,4 +102,4 @@ private:
     bool HasSuffix(std::string &filename, std::string &suffix);
 };
 
-#endif // FRAME_SELECTOR_H
+#endif // HDF5FRAME_SELECTOR_H
