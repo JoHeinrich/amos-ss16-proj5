@@ -26,7 +26,7 @@
 
 #include <sstream>
 
-#include "frame_selector.h"
+#include "hdf5_frame_selector.h"
 
 namespace patch{
     
@@ -39,7 +39,7 @@ namespace patch{
     }
 }
 
-FrameSelector::FrameSelector(std::string file){
+HDF5FrameSelector::HDF5FrameSelector(std::string file){
     
     
     file_name_ = file;
@@ -51,13 +51,13 @@ FrameSelector::FrameSelector(std::string file){
     
 }
 
-FrameSelector::~FrameSelector(){
+HDF5FrameSelector::~HDF5FrameSelector(){
     
     delete hdf_reader_;
 
 }
 
-Image FrameSelector::ReadImage(unsigned int frame_index){
+Image HDF5FrameSelector::ReadImage(unsigned int frame_index){
     
     // get the protobuf payload from hdf5 reader
     std::vector<int64_t> protobuf_file_buffer = hdf_reader_->ReadOneProtobufFile(frame_index);
@@ -83,11 +83,11 @@ Image FrameSelector::ReadImage(unsigned int frame_index){
 
 }
 
-int FrameSelector::GetImageCount(){
+int HDF5FrameSelector::GetImageCount(){
     return hdf_reader_->GetNumberOfProtobufFiles();
 }
 
-std::vector<Image> FrameSelector::ReadAllImages(){
+std::vector<Image> HDF5FrameSelector::ReadAllImages(){
     
     std::vector<std::vector<int64_t> > all_protobuf_files = hdf_reader_->ReadAllProtobufFiles();
 
@@ -114,7 +114,7 @@ std::vector<Image> FrameSelector::ReadAllImages(){
     return result_images;
 }
 
-unsigned char* FrameSelector::ConvertProtobufFileToArray(std::vector<int64_t> file){
+unsigned char* HDF5FrameSelector::ConvertProtobufFileToArray(std::vector<int64_t> file){
 
     long size = file.size();
     unsigned char *file_array = new unsigned char[size];
