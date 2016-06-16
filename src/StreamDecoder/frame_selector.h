@@ -1,9 +1,6 @@
-
 //
-// frame_selector.h
 // Projectname: amos-ss16-proj5
 //
-// Created on 21.05.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -24,37 +21,16 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef FRAME_SELECTOR_H
-#define FRAME_SELECTOR_H
+#ifndef __amos_ss16_proj5__frame_selector__
+#define __amos_ss16_proj5__frame_selector__
 
-// HDFReader
-#include "hdf_reader.h"
-
-//Protobuf Deserializer
-#include "protobuf_image_wrapper.h"
-
-// Image
+#include <stdio.h>
 #include "image.h"
 
-#include <vector>
 
-
-class FrameSelector{
+class FrameSelector {
     
 public:
-    
-    /**
-     * Constructor
-     *
-     * @param file  The filename of the hdf5 file to read
-     */
-    FrameSelector(std::string file);
-
-    /**
-     * Destructor
-     */
-    ~FrameSelector();
-    
     /**
      * Reads one image at the given index from hdf5 file
      *
@@ -62,44 +38,17 @@ public:
      *
      * @return The image object at the given frame index
      */
-     Image ReadImage(unsigned int frame_index);
-
-    
-     /**
-      * Returns number of containing images
-      *
-      * @return Count of images
-      */
-     int GetImageCount();
-    
-    
-     /**
-      * Reads all images 
-      *
-      * @return A vector with all image objects
-      */
-      std::vector<Image> ReadAllImages();
-
-private:
-
-      std::string file_name_;   ///< The full path file name of the hdf5 file
-      HDFReader  *hdf_reader_;    ///< The dhf5 file reader
-
-      /**
-       * Converts a protobuf file from hdf reader to an array (needed for parsing it and for creating a msgCameraImage object)
-       *
-       * @param image The vector with the protobuf file buffer
-       *
-       * @return The array with the protobuf file buffer
-       */
-      unsigned char* ConvertProtobufFileToArray(std::vector<int64_t> file);
+    virtual Image ReadImage(unsigned int frame_index) = 0;
     
     /**
-     * Checks if a filename ends wirh a given suffix
+     * Returns number of containing images
      *
-     *@return true if filename ends with suffix, false if not
+     * @return Count of images
      */
-    bool HasSuffix(std::string &filename, std::string &suffix);
+    virtual int GetImageCount() = 0;
+    
+private:
+    
 };
 
-#endif // FRAME_SELECTOR_H
+#endif /* defined(__amos_ss16_proj5__frame_selector__) */

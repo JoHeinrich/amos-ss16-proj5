@@ -21,30 +21,22 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef IMAGE_VIEW_H
-#define IMAGE_VIEW_H
+#include "frame_selector_factory.h"
+#include "hdf5_frame_selector.h"
+#include "frame_selector.h"
 
-#include "image.h"
-class ImageView{
-	
-public:
+FrameSelectorFactory::FrameSelectorFactory(std::string file){
+    file_name_= file;
+}
 
-    /**
-     * Shows the image with help of OpenCV.
-     *
-     * @param image The image object that will be shown
-     *
-     */
-	void ShowImage(Image image);
-	
-    /**
-     * Shows the image with help of OpenCV a given time
-     *
-     * @param image The image object that will be shown
-     * @param sleep_time in ms. the view sleeps for this miliseconds and waits for any key to be pressed.  0 is for waiting infinitely
-     */
-    void ShowImage(Image image, int sleep_time);
-  
-};
+FrameSelector * FrameSelectorFactory::GetFrameSelector(){
+    if (HasSuffix(file_name_, ".HDF5")||HasSuffix(file_name_, ".hdf5")){
+        return new HDF5FrameSelector(file_name_);
+    }
+    else return NULL;
+}
 
-#endif // IMAGE_VIEW_H
+
+bool FrameSelectorFactory::HasSuffix(const std::string &filename,const std::string &suffix){
+    return filename.compare(filename.size() - suffix.size(), suffix.size(), suffix) == 0;
+}

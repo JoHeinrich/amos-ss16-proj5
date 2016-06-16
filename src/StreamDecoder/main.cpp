@@ -1,8 +1,6 @@
 //
-// main.cpp
 // Projectname: amos-ss16-proj5
 //
-// Created on 21-05-2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -25,7 +23,8 @@
 
 #include <iostream>
 #include <sstream>
-#include "frame_selector.h"
+#include "hdf5_frame_selector.h"
+#include "frame_selector_factory.h"
 #include "image_view.h"
 #include <vector>
 #include "../ProcessControl/controller.h"
@@ -45,17 +44,18 @@ int main(int argc, const char* argv[]) {
     if(argc == 2){
 
         Controller controller;
-        controller.AnalyseHDF5Video(argv[1]);
+        controller.PlayHDFAsVideo(argv[1]);
 
 
     } else if(argc == 3){
 
-        FrameSelector pipeline(argv[1]);
+        FrameSelectorFactory frame_selector_factory(argv[1]);
+        FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
         // read one image
         unsigned int index = 0;
         stringstream string_index(argv[2]);
         string_index >> index;
-        Image result_image = pipeline.ReadImage(index);
+        Image result_image = pipeline->ReadImage(index);
 
         ImageView image_viewer;
         image_viewer.ShowImage(result_image, 0);
