@@ -31,8 +31,7 @@
 class FrameSelector {
     
 public:
-    FrameSelector(std::string file);
-    virtual Image ReadImage(int index) = 0;
+    virtual Image ReadImage(unsigned int frame_index) = 0;
     virtual int GetImageCount() = 0;
     
 private:
