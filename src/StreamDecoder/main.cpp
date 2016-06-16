@@ -45,7 +45,7 @@ int main(int argc, const char* argv[]) {
     if(argc == 2){
 
         Controller controller;
-        controller.AnalyseHDF5Video(argv[1]);
+        controller.PlayHDFAsVideo(argv[1]);
 
 
     } else if(argc == 3){
