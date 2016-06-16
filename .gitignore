@@ -1,6 +1,10 @@
-.DS_Store
-# build folder is for building and should not be added to git:
+# build folder
 build/
-.xcodeproj
+
+# mac files
+.DS_Store
+
+# xcode files
+*.xcodeproj
 .xcodeproj/
 amos-ss16-proj5.xcodeproj/
