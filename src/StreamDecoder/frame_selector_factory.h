@@ -21,30 +21,40 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef IMAGE_VIEW_H
-#define IMAGE_VIEW_H
+#ifndef __amos_ss16_proj5__frame_selector_factory__
+#define __amos_ss16_proj5__frame_selector_factory__
 
-#include "image.h"
-class ImageView{
-	
+#include <stdio.h>
+#include "frame_selector.h"
+class FrameSelectorFactory {
+    
 public:
-
+    
     /**
-     * Shows the image with help of OpenCV.
+     * Constructor
      *
-     * @param image The image object that will be shown
-     *
+     * @param file  The filename of the file to read
      */
-	void ShowImage(Image image);
-	
+    FrameSelectorFactory(std::string file);
+    
     /**
-     * Shows the image with help of OpenCV a given time
+     * Creates and returns the FrameSelector
      *
-     * @param image The image object that will be shown
-     * @param sleep_time in ms. the view sleeps for this miliseconds and waits for any key to be pressed.  0 is for waiting infinitely
+     *  @return the FrameSelector
      */
-    void ShowImage(Image image, int sleep_time);
-  
+    FrameSelector * GetFrameSelector();
+    
+    
+private:
+    
+    /**
+     * Checks if a filename ends wirh a given suffix
+     *
+     *@return true if filename ends with suffix, false if not
+     */
+    bool HasSuffix(const std::string &filename,const std::string &suffix);
+    std::string file_name_; ///< The full path file of the video file
+    
 };
 
-#endif // IMAGE_VIEW_H
+#endif /* defined(__amos_ss16_proj5__frame_selector_factory__) */

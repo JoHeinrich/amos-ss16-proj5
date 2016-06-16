@@ -1,7 +1,6 @@
 //
 // Projectname: amos-ss16-proj5
 //
-// Created on 21.05.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -33,24 +32,26 @@ const int KEY_ESC = 27;
 const int KEY_SPACE = 32;
 
 void Controller::PlayHDFAsVideo(std::string videofile) {
-  FrameSelector pipeline(videofile);
+  FrameSelectorFactory frame_selector_factory(videofile);
+  FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
   ImageView image_view;
-  int protobuf_counts = pipeline.GetImageCount();
+  int protobuf_counts = pipeline->GetImageCount();
   for (int i=0; i<protobuf_counts; i++) {
-      image_view.ShowImage(pipeline.ReadImage(i));
+      image_view.ShowImage(pipeline->ReadImage(i));
       if( cvWaitKey(5) == KEY_ESC ) break;
   }
 }
 
 void Controller::AnalyseHDF5Video(std::string videofile) {
   ImageView image_view;
-  FrameSelector pipeline(videofile);
-  int protobuf_counts = pipeline.GetImageCount();
+  FrameSelectorFactory frame_selector_factory(videofile);
+  FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
+  int protobuf_counts = pipeline->GetImageCount();
 
   Detection detection;
 
   for (int i=0; i<protobuf_counts; i++) {
-    detection.ProcessFrame(pipeline.ReadImage(i));
+    detection.ProcessFrame(pipeline->ReadImage(i));
 
     int key = cvWaitKey(10);
     if(key == KEY_ESC)
@@ -62,12 +63,13 @@ void Controller::AnalyseHDF5Video(std::string videofile) {
 }
 
 void Controller::SaveAllImagesAsJPEG(std::string videofile) {
-    FrameSelector pipeline(videofile);
-    int protobuf_counts = pipeline.GetImageCount();
+    FrameSelectorFactory frame_selector_factory(videofile);
+    FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
+    int protobuf_counts = pipeline->GetImageCount();
     std:String filename = videofile.substr(videofile.find_last_of("/\\")+1);
     std::ostringstream os;
     for (int i=0; i<protobuf_counts; i++){
         os << i;
-        cv::imwrite(filename+"_"+os.str()+".jpeg", pipeline.ReadImage(i).GetRGBImage());
+        cv::imwrite(filename+"_"+os.str()+".jpeg", pipeline->ReadImage(i).GetRGBImage());
     }
 }

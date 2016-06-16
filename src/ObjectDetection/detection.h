@@ -1,4 +1,3 @@
-
 //
 // Projectname: amos-ss16-proj5
 //
