@@ -125,6 +125,4 @@ unsigned char* HDF5FrameSelector::ConvertProtobufFileToArray(std::vector<int64_t
     return file_array;
 }
 
-bool HasSuffix(std::string &filename, std::string &suffix){
-    return filename.compare(filename.size() - suffix.size(), suffix.size(), suffix) == 0;
-}
+
