@@ -31,7 +31,20 @@
 class FrameSelector {
     
 public:
+    /**
+     * Reads one image at the given index from hdf5 file
+     *
+     * @param frame_index The frame index of the image
+     *
+     * @return The image object at the given frame index
+     */
     virtual Image ReadImage(unsigned int frame_index) = 0;
+    
+    /**
+     * Returns number of containing images
+     *
+     * @return Count of images
+     */
     virtual int GetImageCount() = 0;
     
 private:
