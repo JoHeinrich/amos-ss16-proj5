@@ -22,3 +22,7 @@
 //
 
 #include "frame_selector_factory.h"
+
+bool FrameSelectorFactory::HasSuffix(std::string &filename, std::string &suffix){
+    return filename.compare(filename.size() - suffix.size(), suffix.size(), suffix) == 0;
+}
