@@ -1,8 +1,6 @@
 //
-// image_view.cpp
 // Projectname: amos-ss16-proj5
 //
-// Created on 28.05.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
