@@ -42,7 +42,7 @@ public:
      *
      *  @return the FrameSelector
      */
-    FrameSelector getFrameSelector();
+    FrameSelector GetFrameSelector();
     
     
 private:
