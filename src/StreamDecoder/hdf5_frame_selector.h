@@ -33,10 +33,13 @@
 // Image
 #include "image.h"
 
+//Superclass FrameSelector
+#include "frame_selector.h"
+
 #include <vector>
 
 
-class HDF5FrameSelector{
+class HDF5FrameSelector: public FrameSelector{
     
 public:
     
