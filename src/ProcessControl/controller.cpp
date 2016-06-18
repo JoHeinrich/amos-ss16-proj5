@@ -54,7 +54,8 @@ void Controller::AnalyseVideo(std::string videofile) {
   Detection detection;
 
   for (int i=0; i<protobuf_counts; i++) {
-    detection.ProcessFrame(pipeline->ReadImage(i));
+    Image * current_image = pipeline->ReadImage(i);
+    detection.ProcessFrame(current_image);
 
     int key = cvWaitKey(10);
     if(key == KEY_ESC)
@@ -62,7 +63,10 @@ void Controller::AnalyseVideo(std::string videofile) {
 
     if (key == KEY_SPACE)
       key = cvWaitKey(0);
-  }
+      
+    delete current_image;
+    current_image = NULL;
+    }
 }
 
 void Controller::SaveAllImagesAsJPEG(std::string videofile) {
