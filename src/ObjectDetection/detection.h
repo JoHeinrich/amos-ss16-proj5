@@ -26,42 +26,52 @@
 
 #include <opencv2/opencv.hpp>
 #include "../StreamDecoder/image.h"
-#include "people_detector.h"
-#include "vehicle_detector.h"
+#include "detector.h"
 
 class Detection {
 
 public:
 
-  /**
-   * Resizes one frame and than performs the detection
-   * (people and vehicle for now) on the resized frame.
-   *
-   * @param frame The current image of the stream
-   *
-   **/
-  void ProcessFrame(Image * image);
+    /**
+    * Default constructor.
+    *
+    * @param *peopleDetector The people detector
+    * @param *vehicleDetector The vehicle detector
+    **/
+    Detection(Detector * peopleDetector, Detector * vehicleDetector);
+
+    /**
+    * Resizes one frame and than performs the detection
+    * (people and vehicle for now) on the resized frame.
+    *
+    * @param frame The current image of the stream
+    *
+    **/
+    void ProcessFrame(Image * image);
 
 private:
 
-  /**
-   * Resizes an image for better accuracy and better detection
-   *
-   * @param frame The current image of the stream
-   *
-   * @return The resized image
-   **/
-  cv::Mat ResizeFrame(cv::Mat *frame);
+    Detector * people_detector_; /// Detector for the pople on the street
+    Detector * vehicle_detector_; // Detector for the vehicles (Bus)
 
-  /**
-   * Resizes an image for better accuracy and better detection
-   *
-   * @param firstDetection Vector of detected objects
-   * @param secondDetection Vector of detected objects
-   * @param frame The resized image of the stream
-   *
-   **/
-  void DisplayDetectedObjects(std::vector<cv::Rect> firstDetection, std::vector<cv::Rect> secondDetection, cv::Mat *frame);
+    /**
+    * Resizes an image for better accuracy and better detection
+    *
+    * @param frame The current image of the stream
+    *
+    * @return The resized image
+    **/
+    cv::Mat ResizeFrame(cv::Mat *frame);
+
+    /**
+    * Resizes an image for better accuracy and better detection
+    *
+    * @param firstDetection Vector of detected objects
+    * @param secondDetection Vector of detected objects
+    * @param frame The resized image of the stream
+    *
+    **/
+    void DisplayDetectedObjects(std::vector<cv::Rect> firstDetection, std::vector<cv::Rect> secondDetection, cv::Mat *frame);
 
 };
 
