@@ -1,5 +1,0 @@
-package csCommunication;
-
-message Warning {
- required string mess = 1;
-}
