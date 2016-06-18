@@ -22,9 +22,9 @@
 //
 
 #include <opencv2/opencv.hpp>
+#include "../ObjectDetection/cascade_vehicle_detector.h"
 #include "../ObjectDetection/detection.h"
 #include "../ObjectDetection/hog_people_detector.h"
-#include "../ObjectDetection/vehicle_detector.h"
 #include "../StreamDecoder/image_view.h"
 #include "controller.h"
 
@@ -54,7 +54,7 @@ void Controller::AnalyseVideo(std::string videofile) {
   int protobuf_counts = pipeline->GetImageCount();
 
   HOGPeopleDetector peopleDetector;
-  VehicleDetector vehicleDetector;
+  CascadeVehicleDetector vehicleDetector;
   Detection detection(&peopleDetector, &vehicleDetector);
 
   for (int i=0; i<protobuf_counts; i++) {

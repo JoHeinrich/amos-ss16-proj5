@@ -47,7 +47,7 @@ set(header
 	../ProcessControl/controller.h
 	../ObjectDetection/detection.h
 	../ObjectDetection/hog_people_detector.h
-	../ObjectDetection/vehicle_detector.h
+	../ObjectDetection/cascade_vehicle_detector.h
 	frame_selector.h
 	frame_selector_factory.h
 	hdf5_frame_selector.h
@@ -63,7 +63,7 @@ set(sources
 	../ProcessControl/controller.cpp
 	../ObjectDetection/detection.cpp
 	../ObjectDetection/hog_people_detector.cpp
-	../ObjectDetection/vehicle_detector.cpp
+	../ObjectDetection/cascade_vehicle_detector.cpp
 	frame_selector.cpp
 	frame_selector_factory.cpp
 	hdf5_frame_selector.cpp

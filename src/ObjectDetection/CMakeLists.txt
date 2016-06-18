@@ -16,7 +16,7 @@ set(sources
 	element.cpp
 	frame_detection_data.cpp
 	hog_people_detector.cpp
-	vehicle_detector.cpp
+	cascade_vehicle_detector.cpp
 	../StreamDecoder/image.cpp
 )
 
@@ -26,7 +26,7 @@ set(headers
 	element.h
 	frame_detection_data.h
 	hog_people_detector.h
-	vehicle_detector.h
+	cascade_vehicle_detector.h
 	../StreamDecoder/image.h
 )
 
