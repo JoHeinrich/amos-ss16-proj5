@@ -75,7 +75,7 @@ Image * HDF5FrameSelector::ReadImage(unsigned int frame_index){
     std::cout << " Size of payload: " << result_image->GetImagePayload().size() << std::endl;
 
     delete file;
-    file = NULL;
+    file = nullptr;
     
     return result_image;
 
@@ -104,7 +104,7 @@ std::vector<Image> HDF5FrameSelector::ReadAllImages(){
         BayerImage current_image(protobuf_image.GetImagePayload(), protobuf_image.GetImageWidth(), protobuf_image.GetImageHeight());
 
         delete file;
-        file = NULL;
+        file = nullptr;
         
         result_images.push_back(current_image);
         
