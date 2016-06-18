@@ -62,7 +62,7 @@ public:
      *
      * @return The image object at the given frame index
      */
-     BayerImage ReadImage(unsigned int frame_index);
+     Image ReadImage(unsigned int frame_index);
 
     
      /**
@@ -78,7 +78,7 @@ public:
       *
       * @return A vector with all image objects
       */
-      std::vector<BayerImage> ReadAllImages();
+      std::vector<Image> ReadAllImages();
 
 private:
 
