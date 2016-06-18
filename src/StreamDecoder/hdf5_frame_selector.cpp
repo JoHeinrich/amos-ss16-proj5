@@ -55,7 +55,7 @@ HDF5FrameSelector::~HDF5FrameSelector(){
 
 }
 
-BayerImage HDF5FrameSelector::ReadImage(unsigned int frame_index){
+Image HDF5FrameSelector::ReadImage(unsigned int frame_index){
     
     // get the protobuf payload from hdf5 reader
     std::vector<int64_t> protobuf_file_buffer = hdf_reader_->ReadOneProtobufFile(frame_index);
@@ -85,7 +85,7 @@ int HDF5FrameSelector::GetImageCount(){
     return hdf_reader_->GetNumberOfProtobufFiles();
 }
 
-std::vector<BayerImage> HDF5FrameSelector::ReadAllImages(){
+std::vector<Image> HDF5FrameSelector::ReadAllImages(){
     
     std::vector<std::vector<int64_t> > all_protobuf_files = hdf_reader_->ReadAllProtobufFiles();
 
