@@ -21,22 +21,34 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "vehicle_detector.h"
+#ifndef PEOPLE_DETECTOR_H
+#define PEOPLE_DETECTOR_H
 
-std::vector<cv::Rect> VehicleDetector::Detect(cv::Mat *frame) {
+#include "detector.h"
 
-  cv::CascadeClassifier vehicle_classifier;
-  vehicle_classifier.load("../../assets/vehicle_classifier.xml");
+class HOGPeopleDetector : public Detector {
 
-  // check if classifier was loaded
-  if (vehicle_classifier.empty() == true) {
-    std::cout << "Failed to load vehicle classifier" << std::endl;
-    vehicle_classifier.load("../../ObjectDetection/vehicle_classifier.xml");
-  }
+public:
 
-  //detect vehicles in the frame
-  std::vector<cv::Rect> detectedVehicles;
-  vehicle_classifier.detectMultiScale(*frame, detectedVehicles, 1.1, 2, 0, cv::Size(70,70), cv::Size(400,400)); // TODO: adjust settings to HDF5 data
+    /**
+    * Default constructor.
+    **/
+    HOGPeopleDetector();
 
-  return detectedVehicles;
-}
+    /**
+    * Detects people in the given frame (cv::Mat)
+    *
+    * @param frame The current frame
+    *
+    * @return The vector of all detected people in the current Frame
+    **/
+    std::vector<cv::Rect> Detect(cv::Mat *frame);
+
+private:
+
+    cv::HOGDescriptor hog_descriptor_; /// HOGDescriptor which is used for detection
+
+};
+
+
+#endif // PEOPLE_DETECTOR_H
