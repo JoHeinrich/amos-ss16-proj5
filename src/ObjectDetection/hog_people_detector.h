@@ -26,14 +26,14 @@
 
 #include "detector.h"
 
-class PeopleDetector : public Detector {
+class HOGPeopleDetector : public Detector {
 
 public:
 
     /**
     * Default constructor.
     **/
-    PeopleDetector();
+    HOGPeopleDetector();
 
     /**
     * Detects people in the given frame (cv::Mat)

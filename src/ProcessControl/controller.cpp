@@ -23,7 +23,7 @@
 
 #include <opencv2/opencv.hpp>
 #include "../ObjectDetection/detection.h"
-#include "../ObjectDetection/people_detector.h"
+#include "../ObjectDetection/hog_people_detector.h"
 #include "../ObjectDetection/vehicle_detector.h"
 #include "../StreamDecoder/image_view.h"
 #include "controller.h"
@@ -53,7 +53,7 @@ void Controller::AnalyseVideo(std::string videofile) {
   FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
   int protobuf_counts = pipeline->GetImageCount();
 
-  PeopleDetector peopleDetector;
+  HOGPeopleDetector peopleDetector;
   VehicleDetector vehicleDetector;
   Detection detection(&peopleDetector, &vehicleDetector);
 
