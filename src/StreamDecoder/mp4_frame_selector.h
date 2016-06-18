@@ -27,6 +27,8 @@
 #include <stdio.h>
 #include <string>
 #include "frame_selector.h"
+#include <opencv2/opencv.hpp>
+#include "mp4_image.h"
 
 class MP4FrameSelector : public FrameSelector{
     
