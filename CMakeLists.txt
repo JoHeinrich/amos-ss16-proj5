@@ -7,7 +7,6 @@ set (OUTPUT_NAME AutoDrive)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_subdirectory(src/CarCommunication)
 add_subdirectory(src/ObjectDetection)
 add_subdirectory(src/caf)
 
