@@ -24,5 +24,7 @@ fi
 echo "Starting the server"
 echo -en '\n'
 docker run -ti --name=serverContainer --net=$1 amosproj5/amosbuildimage:$2 /bin/bash -c "/home/bin/cafcommunication -s 8080"
+read -p "Press any key to exit > " -n1 junk
+echo 
 #docker run -ti -d --name=serverContainer --net=$1 amosproj5/amosbuildimage:$2
 #docker exec -it serverContainer /bin/bash 
