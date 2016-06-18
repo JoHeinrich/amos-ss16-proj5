@@ -25,7 +25,7 @@ else(OpenCV_FOUND)
 message(SEND_ERROR "OpenCV not found")
 endif(OpenCV_FOUND)
 
-set(protobufheaders	
+set(protobufheaders
 	protofiles/header.pb.h
 	protofiles/CameraImage.pb.h
 )
@@ -46,7 +46,7 @@ set(hdfsource
 set(header
 	../ProcessControl/controller.h
 	../ObjectDetection/detection.h
-	../ObjectDetection/people_detector.h
+	../ObjectDetection/hog_people_detector.h
 	../ObjectDetection/vehicle_detector.h
 	frame_selector.h
 	frame_selector_factory.h
@@ -62,7 +62,7 @@ set(header
 set(sources
 	../ProcessControl/controller.cpp
 	../ObjectDetection/detection.cpp
-	../ObjectDetection/people_detector.cpp
+	../ObjectDetection/hog_people_detector.cpp
 	../ObjectDetection/vehicle_detector.cpp
 	frame_selector.cpp
 	frame_selector_factory.cpp
@@ -78,5 +78,3 @@ set(sources
 
 add_executable(${OUTPUT_NAME} ${sources} ${header} ${protobufsources} ${protobufheaders} ${hdfsource} ${hdfheader})
 target_link_libraries(${OUTPUT_NAME} ${PROTOBUF_LIBRARY} ${LINK_LIBS}  ${OpenCV_LIBS} -lhdf5_cpp -lhdf5)
-
-
