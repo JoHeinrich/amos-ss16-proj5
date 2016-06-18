@@ -51,6 +51,7 @@ set(header
 	frame_selector.h
 	frame_selector_factory.h
 	hdf5_frame_selector.h
+	mp4_frame_selector.h
 	image.h
 	bayer_image.h
 	image_view.h
@@ -65,6 +66,7 @@ set(sources
 	frame_selector.cpp
 	frame_selector_factory.cpp
 	hdf5_frame_selector.cpp
+	mp4_frame_selector.cpp
 	main.cpp
 	image.cpp
 	bayer_image.cpp
