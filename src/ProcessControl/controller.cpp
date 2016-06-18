@@ -40,7 +40,7 @@ void Controller::PlayAsVideo(std::string videofile) {
       Image * current_image = pipeline->ReadImage(i);
       image_view.ShowImage(current_image);
       delete current_image;
-      current_image = nullptr;
+      current_image = NULL;
       if( cvWaitKey(5) == KEY_ESC ) break;
   }
 }
