@@ -55,7 +55,7 @@ int main(int argc, const char* argv[]) {
         unsigned int index = 0;
         stringstream string_index(argv[2]);
         string_index >> index;
-        Image result_image = pipeline->ReadImage(index);
+        Image * result_image = pipeline->ReadImage(index);
 
         ImageView image_viewer;
         image_viewer.ShowImage(result_image, 0);
