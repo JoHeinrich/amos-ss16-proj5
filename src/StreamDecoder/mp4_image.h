@@ -24,6 +24,53 @@
 #ifndef __amos_ss16_proj5__mp4_image__
 #define __amos_ss16_proj5__mp4_image__
 
-#include <stdio.h>
+#include <opencv2/opencv.hpp>
+#include "image.h"
 
+using namespace cv;
+
+class MP4Image : public Image{
+    
+public:
+    
+    /**
+     * Constructor
+     *
+     * @param payload  The payload of the image
+     * @param width  The width of the image
+     * @param height  The height of the image
+     */
+    MP4Image(const cv::Mat rgb_image, int width, int height);
+    
+    /**
+     * Destructor
+     */
+    ~MP4Image();
+    
+    /**
+     * Gets the image width
+     *
+     * @return The image width
+     */
+    int GetImageWidth();
+    
+    /**
+     * Gets the image height
+     *
+     * @return The image height
+     */
+    int GetImageHeight();
+    
+    /**
+     * Returns the payload as RGB image
+     *
+     */
+    Mat GetRGBImage();
+    
+    
+private:
+    cv::Mat rgb_image_;   ///< The string containing the payload of the image
+    int image_width_;		///< The image width
+    int image_height_; ///< The image height
+};
 #endif /* defined(__amos_ss16_proj5__mp4_image__) */
