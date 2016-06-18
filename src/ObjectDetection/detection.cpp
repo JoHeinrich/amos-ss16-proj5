@@ -22,22 +22,23 @@
 //
 
 #include "detection.h"
-#include "people_detector.h"
-#include "vehicle_detector.h"
 
 using namespace std;
 using namespace cv;
 
-void Detection::ProcessFrame(Image * image) {
+Detection::Detection(Detector * peopleDetector, Detector * vehicleDetector) {
 
-  PeopleDetector peopleDetector;
-  VehicleDetector vehicleDetector;
+    people_detector_ = peopleDetector;
+    vehicle_detector_ = vehicleDetector;
+}
+
+void Detection::ProcessFrame(Image * image) {
 
   Mat frame = image->GetRGBImage();
   Mat resizedFrame = ResizeFrame(&frame);
 
-  std::vector<Rect> detectedPeople = peopleDetector.Detect(&resizedFrame);
-  std::vector<Rect> detectedVehicles = vehicleDetector.Detect(&resizedFrame);
+  std::vector<Rect> detectedPeople = people_detector_->Detect(&resizedFrame);
+  std::vector<Rect> detectedVehicles = vehicle_detector_->Detect(&resizedFrame);
 
   DisplayDetectedObjects(detectedPeople, detectedVehicles, &resizedFrame);
 }

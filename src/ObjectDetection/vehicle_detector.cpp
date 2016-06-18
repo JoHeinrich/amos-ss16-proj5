@@ -23,20 +23,21 @@
 
 #include "vehicle_detector.h"
 
+VehicleDetector::VehicleDetector() {
+
+    vehicle_classifier_.load("../../assets/vehicle_classifier.xml");
+
+    // check if classifier was loaded
+    if (vehicle_classifier_.empty() == true) {
+        std::cout << "Failed to load vehicle classifier from ../../assets/vehicle_classifier.xml" << std::endl;
+        vehicle_classifier_.load("../../ObjectDetection/vehicle_classifier.xml");
+    }
+}
+
 std::vector<cv::Rect> VehicleDetector::Detect(cv::Mat *frame) {
 
-  cv::CascadeClassifier vehicle_classifier;
-  vehicle_classifier.load("../../assets/vehicle_classifier.xml");
-
-  // check if classifier was loaded
-  if (vehicle_classifier.empty() == true) {
-    std::cout << "Failed to load vehicle classifier" << std::endl;
-    vehicle_classifier.load("../../ObjectDetection/vehicle_classifier.xml");
-  }
-
-  //detect vehicles in the frame
   std::vector<cv::Rect> detectedVehicles;
-  vehicle_classifier.detectMultiScale(*frame, detectedVehicles, 1.1, 2, 0, cv::Size(70,70), cv::Size(400,400)); // TODO: adjust settings to HDF5 data
+  vehicle_classifier_.detectMultiScale(*frame, detectedVehicles, 1.1, 2, 0, cv::Size(70,70), cv::Size(400,400)); // TODO: adjust settings to HDF5 data
 
   return detectedVehicles;
 }

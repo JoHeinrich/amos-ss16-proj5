@@ -30,16 +30,23 @@ class PeopleDetector : public Detector {
 
 public:
 
-  /**
-   * Detects people in the given frame (cv::Mat)
-   *
-   * @param frame The current frame
-   *
-   * @return The vector of all detected people in the current Frame
-   **/
-  std::vector<cv::Rect> Detect(cv::Mat *frame);
+    /**
+    * Default constructor.
+    **/
+    PeopleDetector();
+
+    /**
+    * Detects people in the given frame (cv::Mat)
+    *
+    * @param frame The current frame
+    *
+    * @return The vector of all detected people in the current Frame
+    **/
+    std::vector<cv::Rect> Detect(cv::Mat *frame);
 
 private:
+
+    cv::HOGDescriptor hog_descriptor_; /// HOGDescriptor which is used for detection
 
 };
 

@@ -23,17 +23,15 @@
 
 #include "people_detector.h"
 
+PeopleDetector::PeopleDetector() {
+    // TODO: test the daimler detector with proper settings
+    hog_descriptor_.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
+}
+
 std::vector<cv::Rect> PeopleDetector::Detect(cv::Mat *frame) {
 
-  //set hog detector
-  // TODO: test the daimler detector again with proper settings
-  cv::HOGDescriptor hog;
-  hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
+    std::vector<cv::Rect> detectedPeople;
+    hog_descriptor_.detectMultiScale(*frame, detectedPeople, 0.35, cv::Size(4,4), cv::Size(16,16), 1.04, 1); // TODO: adjust settings to HDF5 data
 
-  //detect people in the frame
-  std::vector<cv::Rect> detectedPeople;
-  hog.detectMultiScale(*frame, detectedPeople, 0.35, cv::Size(4,4), cv::Size(16,16), 1.04, 1);
-  // TODO: adjust settings to HDF5 data
-
-  return detectedPeople;
+    return detectedPeople;
 }
