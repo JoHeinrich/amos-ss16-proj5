@@ -21,16 +21,34 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "hog_people_detector.h"
+#ifndef PEOPLE_DETECTOR_H
+#define PEOPLE_DETECTOR_H
 
-HOGPeopleDetector::HOGPeopleDetector() {
-    hog_descriptor_.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
-}
+#include "detector.h"
 
-std::vector<cv::Rect> HOGPeopleDetector::Detect(cv::Mat *frame) {
+class DaimlerPeopleDetector : public Detector {
 
-    std::vector<cv::Rect> detectedPeople;
-    hog_descriptor_.detectMultiScale(*frame, detectedPeople, 0.35, cv::Size(4,4), cv::Size(16,16), 1.04, 1); // TODO: adjust settings to HDF5 data
+public:
 
-    return detectedPeople;
-}
+    /**
+    * Default constructor.
+    **/
+    DaimlerPeopleDetector();
+
+    /**
+    * Detects people in the given frame (cv::Mat)
+    *
+    * @param frame The current frame
+    *
+    * @return The vector of all detected people in the current Frame
+    **/
+    std::vector<cv::Rect> Detect(cv::Mat *frame);
+
+private:
+
+    cv::HOGDescriptor hog_descriptor_; /// HOGDescriptor which is used for detection
+
+};
+
+
+#endif // PEOPLE_DETECTOR_H

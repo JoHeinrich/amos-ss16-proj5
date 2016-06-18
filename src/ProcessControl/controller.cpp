@@ -23,6 +23,7 @@
 
 #include <opencv2/opencv.hpp>
 #include "../ObjectDetection/cascade_vehicle_detector.h"
+// #include "../ObjectDetection/daimler_people_detector.h"
 #include "../ObjectDetection/detection.h"
 #include "../ObjectDetection/hog_people_detector.h"
 #include "../StreamDecoder/image_view.h"
@@ -53,6 +54,7 @@ void Controller::AnalyseVideo(std::string videofile) {
   FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
   int protobuf_counts = pipeline->GetImageCount();
 
+  // DaimlerPeopleDetector peopleDetector;
   HOGPeopleDetector peopleDetector;
   CascadeVehicleDetector vehicleDetector;
   Detection detection(&peopleDetector, &vehicleDetector);
