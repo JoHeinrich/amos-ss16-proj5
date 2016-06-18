@@ -33,6 +33,11 @@ class Image{
 public:
     
     /**
+     * Destructor
+     */
+    virtual ~Image(){};
+    
+    /**
      * Gets the image width
      *
      * @return The image width

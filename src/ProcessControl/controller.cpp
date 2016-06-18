@@ -37,7 +37,10 @@ void Controller::PlayHDFAsVideo(std::string videofile) {
   ImageView image_view;
   int protobuf_counts = pipeline->GetImageCount();
   for (int i=0; i<protobuf_counts; i++) {
-      image_view.ShowImage(pipeline->ReadImage(i));
+      Image * current_image = pipeline->ReadImage(i);
+      image_view.ShowImage(current_image);
+      delete current_image;
+      current_image = nullptr;
       if( cvWaitKey(5) == KEY_ESC ) break;
   }
 }
