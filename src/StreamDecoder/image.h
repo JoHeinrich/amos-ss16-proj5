@@ -21,64 +21,54 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef IMAGE_H
-#define IMAGE_H
+#ifndef __amos_ss16_proj5__image__
+#define __amos_ss16_proj5__image__
 
+#include <stdio.h>
 
 #include <opencv2/opencv.hpp>
-
-using namespace cv;
 
 class Image{
     
 public:
     
     /**
-     * Constructor
-     *
-     * @param payload  The payload of the image
-     * @param width  The width of the image
-     * @param height  The height of the image
-     */
-     Image(const std::string payload, int width, int height);
-
-    /**
      * Destructor
      */
-    ~Image();
+    virtual ~Image(){};
     
-     /**
-      * Gets the payload
-      *
-      * @return The image payload
-      */
-      std::string GetImagePayload();
-
-     /**
-      * Gets the image width
-      *
-      * @return The image width
-      */
-      int GetImageWidth();
-
-     /**
-      * Gets the image height
-      *
-      * @return The image height
-      */
-      int GetImageHeight();
-
-     /**
-      * Returns the payload as RGB image
-      *
-      */
-      Mat GetRGBImage();
+    /**
+     * Gets the image width
+     *
+     * @return The image width
+     */
+    virtual int GetImageWidth()=0;
     
-
+    /**
+     * Gets the image height
+     *
+     * @return The image height
+     */
+    virtual int GetImageHeight()=0;
+    
+    /**
+     * Gets the bgr image
+     *
+     * @return The bgr image as opencv::Mat object
+     */
+    virtual cv::Mat GetRGBImage()=0;
+    
+    /**
+     * Returns the image payload
+     *
+     * @return the image payload
+     */
+    virtual std::string GetImagePayload()=0;
+    
+    
 private:
-      std::string image_payload_;   ///< The string containing the payload of the image
-      int image_width_;		///< The image width
-      int image_height_;	///< The image height
+
+
 };
 
-#endif //IMAGE_H
+#endif /* defined(__amos_ss16_proj5__image__) */
