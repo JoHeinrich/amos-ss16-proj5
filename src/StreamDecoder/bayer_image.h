@@ -21,15 +21,15 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef IMAGE_H
-#define IMAGE_H
+#ifndef BAYERIMAGE_H
+#define BAYERIMAGE_H
 
 
 #include <opencv2/opencv.hpp>
 
 using namespace cv;
 
-class Image{
+class BayerImage{
     
 public:
     
@@ -40,12 +40,12 @@ public:
      * @param width  The width of the image
      * @param height  The height of the image
      */
-     Image(const std::string payload, int width, int height);
+     BayerImage(const std::string payload, int width, int height);
 
     /**
      * Destructor
      */
-    ~Image();
+    ~BayerImage();
     
      /**
       * Gets the payload
@@ -81,4 +81,4 @@ private:
       int image_height_;	///< The image height
 };
 
-#endif //IMAGE_H
+#endif //BAYERIMAGE_H
