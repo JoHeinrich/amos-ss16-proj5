@@ -54,6 +54,7 @@ set(header
 	mp4_frame_selector.h
 	image.h
 	bayer_image.h
+	mp4_image.h
 	image_view.h
 	protobuf_image_wrapper.h
 )
@@ -70,6 +71,7 @@ set(sources
 	main.cpp
 	image.cpp
 	bayer_image.cpp
+	mp4_image.cpp
 	image_view.cpp
 	protobuf_image_wrapper.cpp
 )
