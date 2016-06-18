@@ -30,6 +30,11 @@ class VehicleDetector : public Detector {
 
 public:
 
+    /**
+    * Default constructor.
+    **/
+    VehicleDetector();
+
   /**
    * Detects vehicles in the given frame (cv::Mat)
    *
@@ -40,6 +45,8 @@ public:
   std::vector<cv::Rect> Detect(cv::Mat *frame);
 
 private:
+
+    cv::CascadeClassifier vehicle_classifier_;
 
 };
 

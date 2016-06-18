@@ -23,6 +23,8 @@
 
 #include <opencv2/opencv.hpp>
 #include "../ObjectDetection/detection.h"
+#include "../ObjectDetection/people_detector.h"
+#include "../ObjectDetection/vehicle_detector.h"
 #include "../StreamDecoder/image_view.h"
 #include "controller.h"
 
@@ -51,7 +53,9 @@ void Controller::AnalyseVideo(std::string videofile) {
   FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
   int protobuf_counts = pipeline->GetImageCount();
 
-  Detection detection;
+  PeopleDetector peopleDetector;
+  VehicleDetector vehicleDetector;
+  Detection detection(&peopleDetector, &vehicleDetector);
 
   for (int i=0; i<protobuf_counts; i++) {
     Image * current_image = pipeline->ReadImage(i);
@@ -63,7 +67,7 @@ void Controller::AnalyseVideo(std::string videofile) {
 
     if (key == KEY_SPACE)
       key = cvWaitKey(0);
-      
+
     delete current_image;
     current_image = NULL;
     }
