@@ -85,13 +85,12 @@ int HDF5FrameSelector::GetImageCount(){
     return hdf_reader_->GetNumberOfProtobufFiles();
 }
 
-/*
-std::vector<Image> HDF5FrameSelector::ReadAllImages(){
+std::vector<BayerImage> * HDF5FrameSelector::ReadAllImages(){
     
     std::vector<std::vector<int64_t> > all_protobuf_files = hdf_reader_->ReadAllProtobufFiles();
 
     //all result images
-    std::vector<BayerImage> result_images;
+    std::vector<BayerImage> * result_images = new std::vector<BayerImage>;
 
     for(int i = 0; i < all_protobuf_files.size(); i++){
         
@@ -106,13 +105,11 @@ std::vector<Image> HDF5FrameSelector::ReadAllImages(){
         delete file;
         file = nullptr;
         
-        result_images.push_back(current_image);
+        result_images->push_back(current_image);
         
     }
-
     return result_images;
 }
-*/
 
 unsigned char* HDF5FrameSelector::ConvertProtobufFileToArray(std::vector<int64_t> file){
 

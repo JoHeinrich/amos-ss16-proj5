@@ -78,7 +78,7 @@ public:
       *
       * @return A vector with all image objects
       */
-      std::vector<Image> ReadAllImages();
+      std::vector<BayerImage> * ReadAllImages();
 
 private:
 
