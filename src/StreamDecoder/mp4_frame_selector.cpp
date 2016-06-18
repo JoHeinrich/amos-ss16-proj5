@@ -21,47 +21,30 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __amos_ss16_proj5__image__
-#define __amos_ss16_proj5__image__
+#include "mp4_frame_selector.h"
 
-#include <stdio.h>
+MP4FrameSelector::MP4FrameSelector(std::string file){
+    file_name_=file;
+    cap.open(file);
+    if( !cap.isOpened()){
+        std::cout << "could not open mp4 video" << std::endl;
+    }
+}
 
-#include <opencv2/opencv.hpp>
+MP4FrameSelector::~MP4FrameSelector(){
+}
 
-class Image{
-    
-public:
-    
-    /**
-     * Destructor
-     */
-    virtual ~Image(){};
-    
-    /**
-     * Gets the image width
-     *
-     * @return The image width
-     */
-    virtual int GetImageWidth()=0;
-    
-    /**
-     * Gets the image height
-     *
-     * @return The image height
-     */
-    virtual int GetImageHeight()=0;
-    
-    /**
-     * Gets the bgr image
-     *
-     * @return The bgr image as opencv::Mat object
-     */
-    virtual cv::Mat GetRGBImage()=0;
-    
-    
-private:
+Image * MP4FrameSelector::ReadImage(unsigned int frame_index){
+    cv::Mat current_frame;
+    cap.set (CV_CAP_PROP_POS_FRAMES , frame_index );
+    bool success = cap.read(current_frame);
+    if ( ! success ) {
+        std::cout << "could not read frame " << frame_index << std::endl;
+    }
+    MP4Image * current_image = new MP4Image (current_frame, current_frame.rows, current_frame.cols);
+    return current_image;
+}
 
-
-};
-
-#endif /* defined(__amos_ss16_proj5__image__) */
+int MP4FrameSelector::GetImageCount(){
+    return cap.get(CV_CAP_PROP_FRAME_COUNT);
+}

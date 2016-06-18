@@ -51,8 +51,10 @@ set(header
 	frame_selector.h
 	frame_selector_factory.h
 	hdf5_frame_selector.h
+	mp4_frame_selector.h
 	image.h
 	bayer_image.h
+	mp4_image.h
 	image_view.h
 	protobuf_image_wrapper.h
 )
@@ -65,9 +67,11 @@ set(sources
 	frame_selector.cpp
 	frame_selector_factory.cpp
 	hdf5_frame_selector.cpp
+	mp4_frame_selector.cpp
 	main.cpp
 	image.cpp
 	bayer_image.cpp
+	mp4_image.cpp
 	image_view.cpp
 	protobuf_image_wrapper.cpp
 )
