@@ -22,3 +22,24 @@
 //
 
 #include "mp4_image.h"
+
+MP4Image::MP4Image(const cv::Mat rgb_image, int width, int height){
+    rgb_image_ = rgb_image;
+    image_width_ = width;
+    image_height_ = height;
+}
+
+MP4Image::~MP4Image(){
+}
+
+int MP4Image::GetImageWidth(){
+    return image_width_;
+}
+
+int MP4Image::GetImageHeight(){
+    return image_height_;
+}
+
+Mat MP4Image::GetRGBImage(){
+    return rgb_image_;
+}
