@@ -21,23 +21,34 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "vehicle_detector.h"
+#ifndef VEHICLE_DETECTOR_H
+#define VEHICLE_DETECTOR_H
 
-VehicleDetector::VehicleDetector() {
+#include "detector.h"
 
-    vehicle_classifier_.load("../../assets/vehicle_classifier.xml");
+class CascadeVehicleDetector : public Detector {
 
-    // check if classifier was loaded
-    if (vehicle_classifier_.empty() == true) {
-        std::cout << "Failed to load vehicle classifier from ../../assets/vehicle_classifier.xml" << std::endl;
-        vehicle_classifier_.load("../../ObjectDetection/vehicle_classifier.xml");
-    }
-}
+public:
 
-std::vector<cv::Rect> VehicleDetector::Detect(cv::Mat *frame) {
+    /**
+    * Default constructor.
+    **/
+    CascadeVehicleDetector();
 
-  std::vector<cv::Rect> detectedVehicles;
-  vehicle_classifier_.detectMultiScale(*frame, detectedVehicles, 1.1, 2, 0, cv::Size(70,70), cv::Size(400,400)); // TODO: adjust settings to HDF5 data
+  /**
+   * Detects vehicles in the given frame (cv::Mat)
+   *
+   * @param frame The current frame
+   *
+   * @return The vector of all detected vehicles in the current Frame
+   **/
+  std::vector<cv::Rect> Detect(cv::Mat *frame);
 
-  return detectedVehicles;
-}
+private:
+
+    cv::CascadeClassifier cascade_vehicle_classifier_;
+
+};
+
+
+#endif // VEHICLE_DETECTOR_H
