@@ -31,7 +31,7 @@
 const int KEY_ESC = 27;
 const int KEY_SPACE = 32;
 
-void Controller::PlayHDFAsVideo(std::string videofile) {
+void Controller::PlayAsVideo(std::string videofile) {
   FrameSelectorFactory frame_selector_factory(videofile);
   FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
   ImageView image_view;
@@ -45,7 +45,7 @@ void Controller::PlayHDFAsVideo(std::string videofile) {
   }
 }
 
-void Controller::AnalyseHDF5Video(std::string videofile) {
+void Controller::AnalyseVideo(std::string videofile) {
   ImageView image_view;
   FrameSelectorFactory frame_selector_factory(videofile);
   FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
