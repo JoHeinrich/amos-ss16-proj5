@@ -66,7 +66,7 @@ void Controller::SaveAllImagesAsJPEG(std::string videofile) {
     FrameSelectorFactory frame_selector_factory(videofile);
     FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
     int protobuf_counts = pipeline->GetImageCount();
-    std:String filename = videofile.substr(videofile.find_last_of("/\\")+1);
+    std::string filename = videofile.substr(videofile.find_last_of("/\\")+1);
     std::ostringstream os;
     for (int i=0; i<protobuf_counts; i++){
         os << i;
