@@ -70,6 +70,6 @@ void Controller::SaveAllImagesAsJPEG(std::string videofile) {
     std::ostringstream os;
     for (int i=0; i<protobuf_counts; i++){
         os << i;
-        cv::imwrite(filename+"_"+os.str()+".jpeg", pipeline->ReadImage(i).GetRGBImage());
+        cv::imwrite(filename+"_"+os.str()+".jpeg", pipeline->ReadImage(i)->GetRGBImage());
     }
 }

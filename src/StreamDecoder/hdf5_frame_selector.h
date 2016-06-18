@@ -62,7 +62,7 @@ public:
      *
      * @return The image object at the given frame index
      */
-     Image ReadImage(unsigned int frame_index);
+     Image * ReadImage(unsigned int frame_index);
 
     
      /**

@@ -40,7 +40,7 @@ public:
    * @param frame The current image of the stream
    *
    **/
-  void ProcessFrame(Image image);
+  void ProcessFrame(Image * image);
 
 private:
 
