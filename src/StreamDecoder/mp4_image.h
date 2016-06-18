@@ -21,47 +21,56 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __amos_ss16_proj5__image__
-#define __amos_ss16_proj5__image__
-
-#include <stdio.h>
+#ifndef __amos_ss16_proj5__mp4_image__
+#define __amos_ss16_proj5__mp4_image__
 
 #include <opencv2/opencv.hpp>
+#include "image.h"
 
-class Image{
+using namespace cv;
+
+class MP4Image : public Image{
     
 public:
     
     /**
+     * Constructor
+     *
+     * @param payload  The payload of the image
+     * @param width  The width of the image
+     * @param height  The height of the image
+     */
+    MP4Image(const cv::Mat rgb_image, int width, int height);
+    
+    /**
      * Destructor
      */
-    virtual ~Image(){};
+    ~MP4Image();
     
     /**
      * Gets the image width
      *
      * @return The image width
      */
-    virtual int GetImageWidth()=0;
+    int GetImageWidth();
     
     /**
      * Gets the image height
      *
      * @return The image height
      */
-    virtual int GetImageHeight()=0;
+    int GetImageHeight();
     
     /**
-     * Gets the bgr image
+     * Returns the payload as RGB image
      *
-     * @return The bgr image as opencv::Mat object
      */
-    virtual cv::Mat GetRGBImage()=0;
+    Mat GetRGBImage();
     
     
 private:
-
-
+    cv::Mat rgb_image_;   ///< The string containing the payload of the image
+    int image_width_;		///< The image width
+    int image_height_; ///< The image height
 };
-
-#endif /* defined(__amos_ss16_proj5__image__) */
+#endif /* defined(__amos_ss16_proj5__mp4_image__) */

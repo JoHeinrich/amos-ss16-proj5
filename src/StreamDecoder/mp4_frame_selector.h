@@ -21,47 +21,53 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __amos_ss16_proj5__image__
-#define __amos_ss16_proj5__image__
+#ifndef __amos_ss16_proj5__mp4_frame_selector__
+#define __amos_ss16_proj5__mp4_frame_selector__
 
 #include <stdio.h>
-
+#include <string>
+#include "frame_selector.h"
 #include <opencv2/opencv.hpp>
+#include "mp4_image.h"
 
-class Image{
+class MP4FrameSelector : public FrameSelector{
     
 public:
     
     /**
+     * Constructor
+     *
+     * @param file  The filename of the mp4 file to read
+     */
+    MP4FrameSelector(std::string file);
+    
+    /**
      * Destructor
      */
-    virtual ~Image(){};
+    ~MP4FrameSelector();
     
     /**
-     * Gets the image width
+     * Reads one image at the given index from mp4 file
      *
-     * @return The image width
+     * @param frame_index The frame index of the image
+     *
+     * @return The image object at the given frame index
      */
-    virtual int GetImageWidth()=0;
+    Image * ReadImage(unsigned int frame_index);
+    
     
     /**
-     * Gets the image height
+     * Returns number of containing images
      *
-     * @return The image height
+     * @return Count of images
      */
-    virtual int GetImageHeight()=0;
-    
-    /**
-     * Gets the bgr image
-     *
-     * @return The bgr image as opencv::Mat object
-     */
-    virtual cv::Mat GetRGBImage()=0;
+    int GetImageCount();
     
     
 private:
-
-
+    
+    std::string file_name_;   ///< The full path file name of the mp4 file
+    cv::VideoCapture cap; // The Video capture fore the video
 };
 
-#endif /* defined(__amos_ss16_proj5__image__) */
+#endif /* defined(__amos_ss16_proj5__mp4_frame_selector__) */

@@ -21,47 +21,25 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __amos_ss16_proj5__image__
-#define __amos_ss16_proj5__image__
+#include "mp4_image.h"
 
-#include <stdio.h>
+MP4Image::MP4Image(const cv::Mat rgb_image, int width, int height){
+    rgb_image_ = rgb_image;
+    image_width_ = width;
+    image_height_ = height;
+}
 
-#include <opencv2/opencv.hpp>
+MP4Image::~MP4Image(){
+}
 
-class Image{
-    
-public:
-    
-    /**
-     * Destructor
-     */
-    virtual ~Image(){};
-    
-    /**
-     * Gets the image width
-     *
-     * @return The image width
-     */
-    virtual int GetImageWidth()=0;
-    
-    /**
-     * Gets the image height
-     *
-     * @return The image height
-     */
-    virtual int GetImageHeight()=0;
-    
-    /**
-     * Gets the bgr image
-     *
-     * @return The bgr image as opencv::Mat object
-     */
-    virtual cv::Mat GetRGBImage()=0;
-    
-    
-private:
+int MP4Image::GetImageWidth(){
+    return image_width_;
+}
 
+int MP4Image::GetImageHeight(){
+    return image_height_;
+}
 
-};
-
-#endif /* defined(__amos_ss16_proj5__image__) */
+Mat MP4Image::GetRGBImage(){
+    return rgb_image_;
+}
