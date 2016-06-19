@@ -19,6 +19,7 @@ set(sources
 	cascade_vehicle_detector.cpp
 	daimler_people_detector.cpp
 	../StreamDecoder/image.cpp
+	../StreamDecoder/image_view.cpp
 )
 
 set(headers
@@ -30,6 +31,7 @@ set(headers
 	cascade_vehicle_detector.h
 	daimler_people_detector.h
 	../StreamDecoder/image.h
+	../StreamDecoder/image_view.h
 )
 
 add_executable( ${OUTPUT_NAME} ${sources} ${header} )
