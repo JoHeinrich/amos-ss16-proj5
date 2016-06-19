@@ -29,8 +29,11 @@ CascadeVehicleDetector::CascadeVehicleDetector() {
 
     // check if classifier was loaded
     if (cascade_vehicle_classifier_.empty() == true) {
-        std::cout << "Failed to load vehicle classifier from ../../assets/vehicle_classifier.xml" << std::endl;
-        cascade_vehicle_classifier_.load("../../ObjectDetection/vehicle_classifier.xml");
+        cascade_vehicle_classifier_.load("../../src/ObjectDetection/vehicle_classifier.xml");
+
+        if (cascade_vehicle_classifier_.empty() == true) {
+            cascade_vehicle_classifier_.load("../../ObjectDetection/vehicle_classifier.xml");
+        }
     }
 }
 
