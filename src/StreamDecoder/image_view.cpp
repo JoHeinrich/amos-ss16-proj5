@@ -21,7 +21,10 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+//local
 #include "image_view.h"
+
+//opencv
 #include <opencv2/opencv.hpp>
 
 
@@ -34,4 +37,8 @@ void ImageView::ShowImage(Image * image){
 void ImageView::ShowImage(Image * image, int sleep_time){
     cv::imshow("name", image->GetRGBImage());
     waitKey(sleep_time);
+}
+
+void ImageView::ShowImageAndDetections(Image *image, std::vector<Element> people_detections, std::vector<Element> vehicle_detections){
+
 }

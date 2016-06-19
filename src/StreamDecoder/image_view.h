@@ -24,7 +24,11 @@
 #ifndef IMAGE_VIEW_H
 #define IMAGE_VIEW_H
 
+// local
 #include "image.h"
+#include "image_view.h"
+#include "../ObjectDetection/element.h"
+
 class ImageView{
 	
 public:
@@ -44,6 +48,15 @@ public:
      * @param sleep_time in ms. the view sleeps for this miliseconds and waits for any key to be pressed.  0 is for waiting infinitely
      */
     void ShowImage(Image * image, int sleep_time);
+
+    /**
+     * Shows the image with help of OpenCV and the detections in this image.
+     *
+     * @param image The image object that will be shown
+     * @param people_detections    The vector with detected people elements in this image
+     * @param vehicle_detections    The vector with detected vehicle elements in this image
+     */
+    void ShowImageAndDetections(Image * image, std::vector<Element> people_detections, std::vector<Element> vehicle_detections);
   
 };
 
