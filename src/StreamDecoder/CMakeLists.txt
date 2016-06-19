@@ -51,6 +51,9 @@ set(header
 	../ObjectDetection/hog_people_detector.h
 	../ObjectDetection/cascade_vehicle_detector.h
 	../ObjectDetection/daimler_people_detector.h
+	../ScenarioAnalysation/scenario.h
+	../ScenarioAnalysation/humans_in_front_of_bus_scenario.h
+	../ScenarioAnalysation/analyser.h
 	frame_selector.h
 	frame_selector_factory.h
 	hdf5_frame_selector.h
@@ -70,6 +73,9 @@ set(sources
 	../ObjectDetection/hog_people_detector.cpp
 	../ObjectDetection/cascade_vehicle_detector.cpp
 	../ObjectDetection/daimler_people_detector.cpp
+	../ScenarioAnalysation/scenario.cpp
+	../ScenarioAnalysation/humans_in_front_of_bus_scenario.cpp
+	../ScenarioAnalysation/analyser.cpp
 	frame_selector.cpp
 	frame_selector_factory.cpp
 	hdf5_frame_selector.cpp
