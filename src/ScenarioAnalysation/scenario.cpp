@@ -28,16 +28,16 @@
 
 #include "scenario.h"
 
-float Scenario::Distance(Element first, Element second){
+float Scenario::ComputeDistance(Element first, Element second){
 
     std::vector<int> first_position = first.GetPosition();
     std::vector<int> second_position = second.GetPosition();
     
-    return PointDistance(first_position, second_position);
+    return ComputePointDistance(first_position, second_position);
 
 }
 
-bool Scenario::Overlap(Element first, Element second){
+bool Scenario::DoOverlap(Element first, Element second){
 
     //determine whether the bounding box of the first element overlaps with the second one
 
@@ -65,13 +65,13 @@ bool Scenario::Overlap(Element first, Element second){
 
 }
 
-bool Scenario::Contains(Element big, Element small)
+bool Scenario::DoContain(Element big, Element small)
 {
     // checks if the small one is within the big one
     return big.MinX()<=small.MinX() && big.MinY()<=small.MinY() && big.MaxX()>=small.MaxX() && big.MaxY()>=small.MaxY();
 }
 
-float Scenario::CenterDistance(Element first, Element second){
+float Scenario::ComputeCenterDistance(Element first, Element second){
     
     // get the center points of the objects
     
@@ -84,11 +84,11 @@ float Scenario::CenterDistance(Element first, Element second){
     std::vector<int> second_center;
     second_center.push_back(second.CenterX());
     second_center.push_back(second.CenterY());
-    return PointDistance(first_center, second_center);
+    return ComputePointDistance(first_center, second_center);
     
 }
 
-float Scenario::PointDistance(std::vector<int> first, std::vector<int> second){
+float Scenario::ComputePointDistance(std::vector<int> first, std::vector<int> second){
     
     //compute distance with pythagorean theorem
 

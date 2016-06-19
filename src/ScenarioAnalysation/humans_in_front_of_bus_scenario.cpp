@@ -52,7 +52,7 @@ bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
 
                  for(vehicles_iterator = vehicles.begin(); vehicles_iterator != vehicles.end(); ++vehicles_iterator){
 
-                     bool overlapping = Overlap(current_human, *vehicles_iterator);
+                     bool overlapping = DoOverlap(current_human, *vehicles_iterator);
                      // std::cout << "Humans in front of bus OVERLAPPING: " << overlapping << std::endl;
                      if(overlapping){
 
