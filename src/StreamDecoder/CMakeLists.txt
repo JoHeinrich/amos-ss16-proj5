@@ -46,6 +46,8 @@ set(hdfsource
 set(header
 	../ProcessControl/controller.h
 	../ObjectDetection/detection.h
+	../ObjectDetection/element.h
+	../ObjectDetection/frame_detection_data.h
 	../ObjectDetection/hog_people_detector.h
 	../ObjectDetection/cascade_vehicle_detector.h
 	../ObjectDetection/daimler_people_detector.h
@@ -63,6 +65,8 @@ set(header
 set(sources
 	../ProcessControl/controller.cpp
 	../ObjectDetection/detection.cpp
+	../ObjectDetection/element.cpp
+	../ObjectDetection/frame_detection_data.cpp
 	../ObjectDetection/hog_people_detector.cpp
 	../ObjectDetection/cascade_vehicle_detector.cpp
 	../ObjectDetection/daimler_people_detector.cpp
