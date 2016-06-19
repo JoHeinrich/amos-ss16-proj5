@@ -23,7 +23,7 @@
 
 #include "detection.h"
 #include "element.h"
-#include "../StreamDecoder/image_view.h"
+
 
 using namespace std;
 using namespace cv;
@@ -36,10 +36,6 @@ Detection::Detection(Detector * peopleDetector, Detector * vehicleDetector) {
 }
 
 Detection::~Detection(){
-    delete people_detector_;
-    people_detector_ = NULL;
-    delete vehicle_detector_;
-    vehicle_detector_ = NULL;
     delete image_view_;
     image_view_ = NULL;
 }
@@ -51,8 +47,6 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
   std::vector<Rect> detected_people = people_detector_->Detect(&resized_frame);
   std::vector<Rect> detected_vehicles = vehicle_detector_->Detect(&resized_frame);
-
-  DisplayDetectedObjects(detected_people, detected_vehicles, &resized_frame);
 
   // write the detected people and vehicle data into frame detection data and return it
   FrameDetectionData* detected_objects = new FrameDetectionData();
@@ -99,8 +93,10 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
   detected_objects->AddElementsOfType(OBJECT_VEHICLE, vehicle_elements);
 
-  return detected_objects;
+  // display image and detections
+  image_view_->ShowImageAndDetections(image, people_elements, vehicle_elements);
 
+  return detected_objects;
 }
 
 Mat Detection::ResizeFrame(Mat *frame) {
