@@ -108,7 +108,7 @@ void Controller::AnalyseVideo(std::string videofile) {
     current_image = NULL;
     delete current_detections;
     current_detections = NULL;
-    delete scenario;
+    //delete scenario;
     scenario = NULL;
 
    }
