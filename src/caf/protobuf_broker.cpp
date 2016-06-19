@@ -189,6 +189,11 @@ behavior server(broker* self, actor buddy) {
     },
     others >> [=] {
       cout << "unexpected: " << to_string(self->current_message()) << endl;
+    },
+    after(std::chrono::seconds(60)) >> [=] {
+      aout(self) << "received nothing within 60 seconds..." << endl;
+      self->send_exit(buddy, exit_reason::remote_link_unreachable);
+      self->quit();
     }
   };
 }
@@ -197,35 +202,47 @@ optional<uint16_t> as_u16(const std::string& str) {
   return static_cast<uint16_t>(stoul(str));
 }
 
+void startClient (uint16_t port, const string& host) {
+	cout << "run in client mode" << endl;	
+	// spawn the actor that sends warnings
+	auto client_actor = spawn(sendWarning);
+	// spawn a broker to serialize and recognize messages
+	auto io_actor = spawn_io_client(protobuf_io, host, port, client_actor);
+	print_on_exit(io_actor, "protobuf_io");
+	print_on_exit(client_actor, "exit warning");
+	// Start the warning message actor by using a kickoff message event sent directly from main
+	send_as(io_actor, client_actor, atom("kickoff"), io_actor);
+	await_all_actors_done();
+  	shutdown();
+}
+
+void startServer (uint16_t port) {
+	cout << "run in server mode" << endl;
+	// spawn the actor that acks messages
+	auto serv_actor = spawn(ackMessage);
+	// spawn an IO server to handle communication and work with the broker later (uses the behavior server helper)
+	auto sever_actor = spawn_io_server(server, port, serv_actor);
+	print_on_exit(sever_actor, "server");
+	print_on_exit(serv_actor, "exit ack");
+	await_all_actors_done();
+	shutdown();
+}
+
 int main(int argc, char** argv) {
-// Parsing arguments
-  message_builder{argv + 1, argv + argc}.apply({
-    on("-s", as_u16) >> [&](uint16_t port) {
-    // We are a server
-      cout << "run in server mode" << endl;
-      // spawn the actor that acks messages
-      auto serv_actor = spawn(ackMessage);
-      // spawn an IO server to handle communication and work with the broker later (uses the behavior server helper)
-      auto sever_actor = spawn_io_server(server, port, serv_actor);
-      print_on_exit(sever_actor, "server");
-      print_on_exit(serv_actor, "exit ack");
-    },
-    on("-c", val<string>, as_u16) >> [&](const string& host, uint16_t port) {
-      // spawn the actor that sends warnings
-      auto client_actor = spawn(sendWarning);
-      // spawn a broker to serialize and recognize messages
-      auto io_actor = spawn_io_client(protobuf_io, host, port, client_actor);
-      print_on_exit(io_actor, "protobuf_io");
-      print_on_exit(client_actor, "exit warning");
-      // Start the warning message actor by using a kickoff message event sent directly from main
-      send_as(io_actor, client_actor, atom("kickoff"), io_actor);
-    },
-    others >> [] {
-      cerr << "use with eihter '-s PORT' as server or "
-          "'-c HOST PORT' as client"
-           << endl;
+	// Parsing arguments
+	message_builder{argv + 1, argv + argc}.apply({
+	  on("-s", as_u16) >> [&](uint16_t port) {
+		// We are a server
+		startServer(port);
+	  },
+	  on("-c", val<string>, as_u16) >> [&](const string& host, uint16_t port) {
+      		// We are a client
+		startClient(port, host);
+    	  },
+    	  others >> [] {
+      		cerr << "use with eihter '-s PORT' as server or "
+          	"'-c HOST PORT' as client"
+           	<< endl;
     }
   });
-  await_all_actors_done();
-  shutdown();
 }
