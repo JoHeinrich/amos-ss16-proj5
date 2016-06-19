@@ -22,25 +22,26 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+//local
 #include "frame_detection_data.h"
 
-std::list<Element> FrameDetectionData::GetElementsOfType(ObjectType type){
+std::vector<Element> FrameDetectionData::GetElementsOfType(ObjectType type){
 
-    std::list<Element> result = all_elements_.at(type);
+    std::vector<Element> result = all_elements_.at(type);
 
     return result;
 
 }
 
-void FrameDetectionData::AddElementsOfType(ObjectType type, std::list<Element> elements){
+void FrameDetectionData::AddElementsOfType(ObjectType type, std::vector<Element> elements){
 
-    std::map<ObjectType, std::list<Element> >::iterator map_iterator;
+    std::map<ObjectType, std::vector<Element> >::iterator map_iterator;
 
     map_iterator = all_elements_.find(type);
 
     if(map_iterator == all_elements_.end()){
 
-        all_elements_.insert(std::pair<ObjectType, std::list<Element> > (type, elements));
+        all_elements_.insert(std::pair<ObjectType, std::vector<Element> > (type, elements));
 
     }
 
