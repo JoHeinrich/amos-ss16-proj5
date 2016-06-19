@@ -22,6 +22,7 @@
 //
 
 #include "detection.h"
+#include "element.h"
 
 using namespace std;
 using namespace cv;
@@ -43,11 +44,51 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
   DisplayDetectedObjects(detected_people, detected_vehicles, &resized_frame);
 
   // write the detected people and vehicle data into frame detection data and return it
-  FrameDetectionData* detected_objects();
+  FrameDetectionData* detected_objects = new FrameDetectionData();
+  std::vector<Element> people_elements;
+  std::vector<Element> vehicle_elements;
 
-  /*for(int i=0; i<detected_people.size(); i++){
+  for(int i=0; i<detected_people.size(); i++){
 
-  }*/
+      Rect current_rec = detected_people.at(i);
+
+      std::vector<int> position;
+      std::vector<int> box;
+
+      position.push_back(current_rec.x);
+      position.push_back(current_rec.y);
+
+      box.push_back(current_rec.width);
+      box.push_back(current_rec.height);
+
+      Element current_elem(position, box);
+
+      people_elements.push_back(current_elem);
+  }
+
+  detected_objects->AddElementsOfType(OBJECT_HUMAN, people_elements);
+
+  for(int i=0; i<detected_vehicles.size(); i++){
+
+      Rect current_rec = detected_vehicles.at(i);
+
+      std::vector<int> position;
+      std::vector<int> box;
+
+      position.push_back(current_rec.x);
+      position.push_back(current_rec.y);
+
+      box.push_back(current_rec.width);
+      box.push_back(current_rec.height);
+
+      Element current_elem(position, box);
+
+      vehicle_elements.push_back(current_elem);
+  }
+
+  detected_objects->AddElementsOfType(OBJECT_VEHICLE, vehicle_elements);
+
+  return detected_objects;
 
 }
 
