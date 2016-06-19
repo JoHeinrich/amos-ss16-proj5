@@ -1,5 +1,5 @@
 // 
-// simple_broker.h 
+// protobuf_broker.h 
 // Projectname: amos-ss16-proj5 
 // 
 // Created on 14.06.2016. 
@@ -24,8 +24,8 @@
 // 
 
 
-#ifndef SIMPLE_BROKER_H
-#define SIMPLE_BROKER_H
+#ifndef PROTOBUF_BROKER_H
+#define PROTOBUF_BROKER_H
 
 #include <vector>
 #include <string>
@@ -36,48 +36,78 @@
 #include <arpa/inet.h>
 
 #include "caf/all.hpp"
-#include "caf/io/all.hpp" 
-
-/** 
-* utility function to print an exit message with custom name. 
-* 
-* @param hdl Actor which shuts down
-* @param name Actor name 
-*/ 
-void print_on_exit(const actor& hdl, const std::string& name);
+#include "caf/io/all.hpp"
 
 
-/** 
-* Client's behavior -- sends a warning after kickoff and quits after the warning has been acknowledged by the server. 
-* 
-* @param self incoming actor
-*/ 
-behavior sendWarning(event_based_actor* self);
+CAF_PUSH_WARNINGS
+#include "message.pb.h"
+CAF_POP_WARNINGS
+
+using namespace std;
+using namespace caf;
+using namespace caf::io; 
 
 
-/** 
-* Server's behavior -- gets the client's warning from the protobuf broker and responds with an "ack" message
-* 
-*/ 
-behavior ackMessage()
+class ProtoAgent {
+	
+public:
+	/** 
+	* starts the client. 
+	* 
+	* @param port Specified port for communication
+	* @param hsot Hostname for connection to server 
+	*/ 
+	void startClient (uint16_t port, const string& host);
+
+	/** 
+	* starts the server. 
+	* 
+	* @param port Specified port for communication 
+	*/ 
+	void startServer (uint16_t port);
+
+	/** 
+	* utility function to print an exit message with custom name. 
+	* 
+	* @param hdl Actor which shuts down
+	* @param name Actor name 
+	*/ 
+
+private:
+	void print_on_exit(const actor& hdl, const std::string& name);
 
 
-/** 
-* implementation of the protobuf broker. 
-* 
-* @param self incoming actor
-* @param hdl connection handler
-* @param buddy communication actor
-*/ 
-void protobuf_io(broker* self, connection_handle hdl, const actor& buddy);
-
-/** 
-* Behavior for server . 
-* 
-* @param self incoming actor
-* @param buddy communication actor
-*/ 
-behavior server(broker* self, actor buddy);
+	/** 
+	* Client's behavior -- sends a warning after kickoff and quits after the warning has been acknowledged by the server. 
+	* 
+	* @param self incoming actor
+	*/ 
+	behavior sendWarning(event_based_actor* self);
 
 
-#endif // SIMPLE_BROKER_H
+	/** 
+	* Server's behavior -- gets the client's warning from the protobuf broker and responds with an "ack" message
+	* 
+	*/ 
+	behavior ackMessage();
+
+
+	/** 
+	* implementation of the protobuf broker. 
+	* 
+	* @param self incoming actor
+	* @param hdl connection handler
+	* @param buddy communication actor
+	*/ 
+	void protobuf_io(broker* self, connection_handle hdl, const actor& buddy);
+
+	/** 
+	* Behavior for server . 
+	* 
+	* @param self incoming actor
+	* @param buddy communication actor
+	*/ 
+	behavior server(broker* self, actor buddy);
+};
+
+#endif // PROTOBUF_BROKER_H
