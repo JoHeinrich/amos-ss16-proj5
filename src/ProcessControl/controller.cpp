@@ -74,15 +74,27 @@ void Controller::AnalyseVideo(std::string videofile) {
 
     Image * current_image = pipeline->ReadImage(i);
     FrameDetectionData* current_detections = detection.ProcessFrame(current_image);
-    Scenario* scenario = analyser.Analyse(*current_detections);
 
-    if( HumansInFrontOfBusScenario* result = dynamic_cast<HumansInFrontOfBusScenario*>(scenario) ){
-
-        // TODO here for later: inform the communication module that a "Humans in front of bus" scenario was detected
+    if(!current_detections){
+        continue;
     }
 
-    // for demo: show information about scenario in current frame
-    std::cout << "Current detected scenario: " << scenario->GetScenarioInformation() << " in frame: " << i << std::endl;
+    Scenario* scenario = analyser.Analyse(*current_detections);
+
+    if(!scenario){
+
+        std::cout << "No scenario in frame " << i << " was detected!" <<std::endl;
+
+    }else{
+
+        if( HumansInFrontOfBusScenario* result = dynamic_cast<HumansInFrontOfBusScenario*>(scenario) ){
+
+            // TODO here for later: inform the communication module that a "Humans in front of bus" scenario was detected
+        }
+        // for demo: show information about scenario in current frame
+        std::cout << "Current detected scenario: " << scenario->GetScenarioInformation() << " in frame: " << i << std::endl;
+
+    }
 
     int key = cvWaitKey(10);
     if(key == KEY_ESC)
@@ -95,7 +107,9 @@ void Controller::AnalyseVideo(std::string videofile) {
     current_image = NULL;
 
     delete current_detections;
+    current_detections = NULL;
     delete scenario;
+    scenario = NULL;
 
    }
 }
