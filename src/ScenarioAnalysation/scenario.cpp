@@ -37,8 +37,6 @@ float Scenario::Distance(Element first, Element second){
 
 }
 
-
-
 bool Scenario::Overlap(Element first, Element second){
 
     //determine whether the bounding box of the first element overlaps with the second one
