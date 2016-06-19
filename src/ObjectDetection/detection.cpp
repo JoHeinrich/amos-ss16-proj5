@@ -49,6 +49,7 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
   std::vector<Rect> detected_vehicles = vehicle_detector_->Detect(&resized_frame);
 
   // write the detected people and vehicle data into frame detection data and return it
+  // resize the position and the box of detected elements to real size again
   FrameDetectionData* detected_objects = new FrameDetectionData();
   std::vector<Element> people_elements;
   std::vector<Element> vehicle_elements;
@@ -60,11 +61,11 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
       std::vector<int> position;
       std::vector<int> box;
 
-      position.push_back(current_rec.x);
-      position.push_back(current_rec.y);
+      position.push_back(current_rec.x/0.3125);
+      position.push_back(current_rec.y/0.3125);
 
-      box.push_back(current_rec.width);
-      box.push_back(current_rec.height);
+      box.push_back(current_rec.width/0.3125);
+      box.push_back(current_rec.height/0.3125);
 
       Element current_elem(position, box);
 
@@ -80,11 +81,11 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
       std::vector<int> position;
       std::vector<int> box;
 
-      position.push_back(current_rec.x);
-      position.push_back(current_rec.y);
+      position.push_back(current_rec.x/0.3125);
+      position.push_back(current_rec.y/0.3125);
 
-      box.push_back(current_rec.width);
-      box.push_back(current_rec.height);
+      box.push_back(current_rec.width/0.3125);
+      box.push_back(current_rec.height/0.3125);
 
       Element current_elem(position, box);
 
@@ -94,6 +95,7 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
   detected_objects->AddElementsOfType(OBJECT_VEHICLE, vehicle_elements);
 
   // display image and detections
+
   image_view_->ShowImageAndDetections(image, people_elements, vehicle_elements);
 
   return detected_objects;
