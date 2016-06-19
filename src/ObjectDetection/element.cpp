@@ -42,32 +42,32 @@ std::vector<int> Element::GetBoxSize(){
 
 }
 
-int Element::MinX()
+int Element::GetMinX()
 {
     return position_.at(0);
 }
 
-int Element::MaxX()
+int Element::GetMaxX()
 {
     return position_.at(0)+box_size_.at(0);
 }
 
-int Element::MinY()
+int Element::GetMinY()
 {
     return position_.at(1);
 }
 
-int Element::MaxY()
+int Element::GetMaxY()
 {
     return position_.at(1)+box_size_.at(1);
 }
 
-int Element::CenterX()
+int Element::GetCenterX()
 {
     return position_.at(0)+box_size_.at(0)/2;
 }
 
-int Element::CenterY()
+int Element::GetCenterY()
 {
     return position_.at(1)+box_size_.at(1)/2;
 }

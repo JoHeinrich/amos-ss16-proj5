@@ -46,12 +46,11 @@ bool Scenario::DoOverlap(Element first, Element second){
    // std::cout << "SCENARIO::OVERLAP: second min, max x;y : " << second_min_x << " " << second_max_x << " " << second_min_y << " " << second_max_y <<std::endl;
 
 
-    if( (first.MinX() <= second.MinX()) || (first.MaxX() >= second.MaxX()) || ( (first.MinX() >= second.MinX()) && (first.MaxX() <= second.MaxX()) ) ){
+    if( (first.GetMinX() <= second.GetMinX()) || (first.GetMaxX() >= second.GetMaxX()) || ( (first.GetMinX() >= second.GetMinX()) && (first.GetMaxX() <= second.GetMaxX()) ) ){
 
-        // std::cout << " SCENARIO::OVERLAP erstes if " <<std::endl;
 
-        if( ( (second.MinY() >= first.MinY()) && (second.MinY() <= first.MaxY()) )
-                ||  ( (second.MaxY() <= first.MaxY()) && (second.MaxY() >= first.MinY()) ) ){
+        if( ( (second.GetMinY() >= first.GetMinY()) && (second.GetMinY() <= first.GetMaxY()) )
+                ||  ( (second.GetMaxY() <= first.GetMaxY()) && (second.GetMaxY() >= first.GetMinY()) ) ){
 
 
             std::cout << "Scenario: There are overlapping elements in the frame! " << std::endl;
@@ -68,7 +67,7 @@ bool Scenario::DoOverlap(Element first, Element second){
 bool Scenario::DoContain(Element big, Element small)
 {
     // checks if the small one is within the big one
-    return big.MinX()<=small.MinX() && big.MinY()<=small.MinY() && big.MaxX()>=small.MaxX() && big.MaxY()>=small.MaxY();
+    return big.GetMinX()<=small.GetMinX() && big.GetMinY()<=small.GetMinY() && big.GetMaxX()>=small.GetMaxX() && big.GetMaxY()>=small.GetMaxY();
 }
 
 float Scenario::ComputeCenterDistance(Element first, Element second){
@@ -77,13 +76,13 @@ float Scenario::ComputeCenterDistance(Element first, Element second){
     
     
     std::vector<int> first_center;
-    first_center.push_back(first.CenterX());
-    first_center.push_back(first.CenterY());
+    first_center.push_back(first.GetCenterX());
+    first_center.push_back(first.GetCenterY());
     
 
     std::vector<int> second_center;
-    second_center.push_back(second.CenterX());
-    second_center.push_back(second.CenterY());
+    second_center.push_back(second.GetCenterX());
+    second_center.push_back(second.GetCenterY());
     return ComputePointDistance(first_center, second_center);
     
 }

@@ -87,8 +87,8 @@ int main(int argc, const char* argv[]) {
     frame_detection.AddElementsOfType(OBJECT_HUMAN, all_humans);
     frame_detection.AddElementsOfType(OBJECT_VEHICLE, all_vehicles);
 
-    std::cout << "vehicle MinX: " << vehicle.MinX() << " MinY: " << vehicle.MinY() << " MaxX: " << vehicle.MaxX() << " MaxY: " << vehicle.MaxY() << std::endl;
-    std::cout << "human   MinX: " << human.MinX() << " MinY: " << human.MinY() << " MaxX: " << human.MaxX() << " MaxY: " << human.MaxY() << std::endl;
+    std::cout << "vehicle MinX: " << vehicle.GetMinX() << " MinY: " << vehicle.GetMinY() << " MaxX: " << vehicle.GetMaxX() << " MaxY: " << vehicle.GetMaxY() << std::endl;
+    std::cout << "human   MinX: " << human.GetMinX() << " MinY: " << human.GetMinY() << " MaxX: " << human.GetMaxX() << " MaxY: " << human.GetMaxY() << std::endl;
     // analyse the fake frame detection data
     Scenario* result_scenario = analyser.Analyse(frame_detection);
 
