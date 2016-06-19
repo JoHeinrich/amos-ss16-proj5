@@ -92,7 +92,7 @@ int main(int argc, const char* argv[]) {
     // analyse the fake frame detection data
     Scenario* result_scenario = analyser.Analyse(frame_detection);
 
-    std::cout<< "distance: " << Scenario::CenterDistance(vehicle,human) << std::endl;
+    std::cout<< "distance: " << Scenario::ComputeCenterDistance(vehicle,human) << std::endl;
     if(result_scenario != NULL)
     {
         std::cout << "Main: " << result_scenario->GetScenarioInformation() << std::endl;
