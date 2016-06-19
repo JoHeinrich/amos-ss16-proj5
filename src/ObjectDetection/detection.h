@@ -64,8 +64,8 @@ public:
 
 private:
 
-    Detector * people_detector_; /// Detector for the pople on the street
-    Detector * vehicle_detector_; /// Detector for the vehicles (Bus)
+    Detector * people_detector_; ///< Detector for the pople on the street
+    Detector * vehicle_detector_; ///< Detector for the vehicles (Bus)
     ImageView * image_view_;    ///< The image view for showing frames and detections
 
     /**
@@ -76,16 +76,6 @@ private:
     * @return The resized image
     **/
     cv::Mat ResizeFrame(cv::Mat *frame);
-
-    /**
-    * Resizes an image for better accuracy and better detection
-    *
-    * @param firstDetection Vector of detected objects
-    * @param secondDetection Vector of detected objects
-    * @param frame The resized image of the stream
-    *
-    **/
-    void DisplayDetectedObjects(std::vector<cv::Rect> firstDetection, std::vector<cv::Rect> secondDetection, cv::Mat *frame);
 
 };
 

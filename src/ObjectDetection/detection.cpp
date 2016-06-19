@@ -53,7 +53,7 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
   std::vector<Element> people_elements;
   std::vector<Element> vehicle_elements;
 
-  for(int i=0; i<detected_people.size(); i++){
+  for(int i=0; i<detected_people.size(); i++) {
 
       Rect current_rec = detected_people.at(i);
 
@@ -73,7 +73,7 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
   detected_objects->AddElementsOfType(OBJECT_HUMAN, people_elements);
 
-  for(int i=0; i<detected_vehicles.size(); i++){
+  for(int i=0; i<detected_vehicles.size(); i++) {
 
       Rect current_rec = detected_vehicles.at(i);
 
@@ -107,20 +107,4 @@ Mat Detection::ResizeFrame(Mat *frame) {
   Mat resizedFrame;
   resize(*frame, resizedFrame, Size(0, 0), 0.3125, 0.3125, CV_INTER_AREA);
   return resizedFrame;
-}
-
-void Detection::DisplayDetectedObjects(std::vector<Rect> firstDetection, std::vector<Rect> secondDetection, Mat *frame) {
-  //add retangle for each Object in firstDetection
-  for (int i=0; i<firstDetection.size(); i++) {
-      Rect r = firstDetection[i];
-      rectangle(*frame, r.tl(), r.br(), Scalar(0,255,0), 2);
-  }
-
-  //add rectangle for each Object in secondDetection
-  for (int i=0; i<secondDetection.size(); i++) {
-      Rect r = secondDetection[i];
-      rectangle(*frame, r.tl(), r.br(), Scalar(255,150,0), 2);
-  }
-
-  imshow("Camera stream", *frame); // TODO: Use image_view class
 }
