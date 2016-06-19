@@ -25,6 +25,7 @@
 //std
 #include <iostream>
 
+//local
 #include "humans_in_front_of_bus_scenario.h"
 
 bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
@@ -67,5 +68,11 @@ bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
     }
 
     return false;
+}
+
+std::string HumansInFrontOfBusScenario::GetScenarioInformation(){
+
+    return "Humans in front of bus scenario detected!";
+
 }
 

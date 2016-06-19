@@ -25,7 +25,10 @@
 #ifndef SCENARIO_H
 #define SCENARIO_H
 
+//std
 #include <string>
+
+//local
 #include "../ObjectDetection/frame_detection_data.h"
 #include "../ObjectDetection/element.h"
 
@@ -44,13 +47,11 @@ public:
     
 
     /**
-    * Describes the detectable Scenario. Must be overriden in subclasses.
+    * Describes the detectable scenario with a human-readable string. Must be overriden in subclasses.
     *
-    * 
-    *
-    * @return What the scenario detects as a string
+    * @return A String that describes the detected scenario
     */
-    virtual std::string Information() = 0;
+    virtual std::string GetScenarioInformation() = 0;
 
 
     /**

@@ -40,9 +40,10 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
   std::vector<Rect> detectedPeople = people_detector_->Detect(&resizedFrame);
   std::vector<Rect> detectedVehicles = vehicle_detector_->Detect(&resizedFrame);
 
-  //TODO: write the detected people and vehicle data into frame detection data and return it
-
   DisplayDetectedObjects(detectedPeople, detectedVehicles, &resizedFrame);
+
+  // write the detected people and vehicle data into frame detection data and return it
+
 }
 
 Mat Detection::ResizeFrame(Mat *frame) {
