@@ -95,7 +95,7 @@ int main(int argc, const char* argv[]) {
     std::cout<< "distance: " << Scenario::CenterDistance(vehicle,human) << std::endl;
     if(result_scenario != NULL)
     {
-        std::cout << "Main: " << result_scenario->Information() << std::endl;
+        std::cout << "Main: " << result_scenario->GetScenarioInformation() << std::endl;
     }
     
     //if( HumansInFrontOfBusScenario* result = dynamic_cast<HumansInFrontOfBusScenario*>(result_scenario) ){
