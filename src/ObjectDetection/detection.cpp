@@ -23,6 +23,7 @@
 
 #include "detection.h"
 #include "element.h"
+#include "../StreamDecoder/image_view.h"
 
 using namespace std;
 using namespace cv;
