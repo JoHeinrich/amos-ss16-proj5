@@ -32,13 +32,15 @@ Detection::Detection(Detector * peopleDetector, Detector * vehicleDetector) {
     vehicle_detector_ = vehicleDetector;
 }
 
-void Detection::ProcessFrame(Image * image) {
+FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
   Mat frame = image->GetRGBImage();
   Mat resizedFrame = ResizeFrame(&frame);
 
   std::vector<Rect> detectedPeople = people_detector_->Detect(&resizedFrame);
   std::vector<Rect> detectedVehicles = vehicle_detector_->Detect(&resizedFrame);
+
+  //TODO: write the detected people and vehicle data into frame detection data and return it
 
   DisplayDetectedObjects(detectedPeople, detectedVehicles, &resizedFrame);
 }

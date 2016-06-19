@@ -24,9 +24,13 @@
 #ifndef DETECTION_H
 #define DETECTION_H
 
+// opencv
 #include <opencv2/opencv.hpp>
+
+//local
 #include "../StreamDecoder/image.h"
 #include "detector.h"
+#include "frame_detection_data.h"
 
 class Detection {
 
@@ -46,13 +50,14 @@ public:
     *
     * @param frame The current image of the stream
     *
+    * @return A frame detection data object that holds the detected data
     **/
-    void ProcessFrame(Image * image);
+    FrameDetectionData* ProcessFrame(Image * image);
 
 private:
 
     Detector * people_detector_; /// Detector for the pople on the street
-    Detector * vehicle_detector_; // Detector for the vehicles (Bus)
+    Detector * vehicle_detector_; /// Detector for the vehicles (Bus)
 
     /**
     * Resizes an image for better accuracy and better detection
