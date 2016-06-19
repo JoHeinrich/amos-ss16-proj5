@@ -29,8 +29,10 @@
 
 //local
 #include "../StreamDecoder/image.h"
+#include "../StreamDecoder/image_view.h"
 #include "detector.h"
 #include "frame_detection_data.h"
+
 
 class Detection {
 
@@ -43,6 +45,12 @@ public:
     * @param *vehicleDetector The vehicle detector
     **/
     Detection(Detector * peopleDetector, Detector * vehicleDetector);
+
+    /**
+    * Default destructor.
+    *
+    **/
+    ~Detection();
 
     /**
     * Resizes one frame and than performs the detection
@@ -58,6 +66,7 @@ private:
 
     Detector * people_detector_; /// Detector for the pople on the street
     Detector * vehicle_detector_; /// Detector for the vehicles (Bus)
+    ImageView * image_view_;    ///< The image view for showing frames and detections
 
     /**
     * Resizes an image for better accuracy and better detection

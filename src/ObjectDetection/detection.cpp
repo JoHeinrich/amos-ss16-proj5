@@ -32,6 +32,16 @@ Detection::Detection(Detector * peopleDetector, Detector * vehicleDetector) {
 
     people_detector_ = peopleDetector;
     vehicle_detector_ = vehicleDetector;
+    image_view_ = new ImageView();
+}
+
+Detection::~Detection(){
+    delete people_detector_;
+    people_detector_ = NULL;
+    delete vehicle_detector_;
+    vehicle_detector_ = NULL;
+    delete image_view_;
+    image_view_ = NULL;
 }
 
 FrameDetectionData* Detection::ProcessFrame(Image * image) {
