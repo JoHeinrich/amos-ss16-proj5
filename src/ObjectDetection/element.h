@@ -86,7 +86,7 @@ public:
 
 private:
     
-   std::vector<int> position_;  ///< The vector containing the position of the element
+   std::vector<int> position_;  ///< The vector containing the position of the element (x and y coordinate of the top left corner)
    std::vector<int> box_size_;  ///< The vector contatining the width and height of the bounding box of the element
     
 };

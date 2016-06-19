@@ -6,7 +6,7 @@ set (OUTPUT_NAME AutoDrive)
 #add_subdirectory(src/StreamDecoder/ProtobufDeserializer)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
+add_subdirectory(src/ScenarioAnalysation)
 add_subdirectory(src/ObjectDetection)
 add_subdirectory(src/caf)
 
@@ -16,7 +16,7 @@ add_subdirectory(src/caf)
 
 add_subdirectory(src/StreamDecoder)
 
-add_subdirectory(src/ScenarioAnalysation)
+
 
 file(GLOB_RECURSE sources "./src/*.cpp")
 file(GLOB_RECURSE headers "./src/*.h")

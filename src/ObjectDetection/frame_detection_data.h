@@ -27,12 +27,11 @@
 
 
 //std
-#include <list>
 #include <vector>
 #include <map>
 #include <string>
 
-//element
+//local
 #include "element.h"
 
 // enum for the types of detected objects
@@ -44,26 +43,26 @@ class FrameDetectionData {
 public:
     
     /**
-     * Gets a list of elements with the given type
+     * Gets a vector of elements with the given type
      *
      * @param type  The type of the elements
      *
-     * @return The list with all elements of the given type
+     * @return The vector with all elements of the given type
      */
-    std::list<Element> GetElementsOfType(ObjectType type);
+    std::vector<Element> GetElementsOfType(ObjectType type);
 
     /**
-     * Adds a list of elements with a given type
+     * Adds a vector of elements with a given type
      *
      * @param type  The type of the elements
-     * @param elements  The list with elements
+     * @param elements  The vector with elements
      *
      */
-    void AddElementsOfType(ObjectType type, std::list<Element> elements);
+    void AddElementsOfType(ObjectType type, std::vector<Element> elements);
 
 
 private:
-    std::map<ObjectType, std::list<Element> > all_elements_;   ///< The map containing all elements of all types
+    std::map<ObjectType, std::vector<Element> > all_elements_;   ///< The map containing all elements of all types
 };
 
 

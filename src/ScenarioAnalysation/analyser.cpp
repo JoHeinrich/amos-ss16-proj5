@@ -54,6 +54,10 @@ Scenario* Analyser::Analyse(FrameDetectionData detected_objects){
 
         Scenario* current_scenario = all_scenarios_.at(i);
 
+        if(!current_scenario){
+            continue;
+        }
+
         bool detected = current_scenario->Detect(detected_objects);
 
         if(detected){

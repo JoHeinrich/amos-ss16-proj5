@@ -25,8 +25,8 @@
 //std
 #include <iostream>
 #include <vector>
-#include <list>
 
+//local
 #include "analyser.h"
 #include "humans_in_front_of_bus_scenario.h"
 #include "scenario.h"
@@ -78,10 +78,10 @@ int main(int argc, const char* argv[]) {
 
     FrameDetectionData frame_detection;
 
-    std::list<Element> all_humans;
+    std::vector<Element> all_humans;
     all_humans.push_back(human);
 
-    std::list<Element> all_vehicles;
+    std::vector<Element> all_vehicles;
     all_vehicles.push_back(vehicle);
 
     frame_detection.AddElementsOfType(OBJECT_HUMAN, all_humans);
@@ -95,7 +95,7 @@ int main(int argc, const char* argv[]) {
     std::cout<< "distance: " << Scenario::CenterDistance(vehicle,human) << std::endl;
     if(result_scenario != NULL)
     {
-        std::cout << "Main: " << result_scenario->Information() << std::endl;
+        std::cout << "Main: " << result_scenario->GetScenarioInformation() << std::endl;
     }
     
     //if( HumansInFrontOfBusScenario* result = dynamic_cast<HumansInFrontOfBusScenario*>(result_scenario) ){
