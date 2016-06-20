@@ -40,7 +40,7 @@ CascadeVehicleDetector::CascadeVehicleDetector() {
 std::vector<cv::Rect> CascadeVehicleDetector::Detect(cv::Mat *frame) {
 
   std::vector<cv::Rect> detectedVehicles;
-  cascade_vehicle_classifier_.detectMultiScale(*frame, detectedVehicles, 1.1, 2, 0, cv::Size(70,70), cv::Size(400,400)); // TODO: adjust settings to HDF5 data
+  cascade_vehicle_classifier_.detectMultiScale(*frame, detectedVehicles, 1.1, 3, 0, cv::Size(25,25), cv::Size(80,80));
 
   return detectedVehicles;
 }
