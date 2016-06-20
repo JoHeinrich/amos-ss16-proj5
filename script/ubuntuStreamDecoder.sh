@@ -6,15 +6,15 @@ echo -en '\n'
 echo "Ubuntu Bash Start Script"
 echo "This script will start our docker container. Please give the path to a HDF5 File, an optional frame index and the tag for the docker image you want to start."
 echo -en '\n'
-if [ ! -f $1 ] || [ $# -lt 3 ]; then 
+if [ ! -f $1 ] || [ $# -lt 2 ]; then 
   echo -en '\n'
-  echo "Wrong Usage. Usage: ubuntuStreamDecoder.sh [ _FULL_PATH_TO_HDF5_FILE_ ] [ _CONTAINER_TAG_ ] [_FILE_EXTENSION_] [optional: _FRAME_INDEX_ ]"
+  echo "Wrong Usage. Usage: ubuntuStreamDecoder.sh [ _FULL_PATH_TO_HDF5_FILE_ ] [ _CONTAINER_TAG_ ][optional: _FRAME_INDEX_ ]"
   echo "Whitespaces in the path are not allowed!"
-  echo "Example: script/ubuntuStreamDecoder.sh /home/file.hdf5 v1 hdf5 10"  
+  echo "Example: script/ubuntuStreamDecoder.sh /home/file.hdf5 v1 10"  
   exit
 fi  
 
-if [ $3 == "hdf5" ]; then
+if [ "${1##*.}" == "hdf5" ]; then
 	echo "hdf5 File specified"
 	echo -en '\n'	
 	echo "Configuring xhost"
@@ -31,7 +31,7 @@ if [ $3 == "hdf5" ]; then
 	exit 0
 fi
 
-if [ $3 == "mp4" ]; then
+if [ "${1##*.}" == "mp4" ]; then
 	echo "mp4 File specified"
 	echo -en '\n'	
 	echo "Configuring xhost"
