@@ -31,14 +31,14 @@ class Detector {
 
 public:
 
-  /**
-   * Detects objects in the given frame (cv::Mat). Must be overwritten in subclass.
-   *
-   * @param frame The current frame
-   *
-   * @return The vector of all detected objects in the current Frame
-   **/
-  virtual std::vector<cv::Rect> Detect(cv::Mat *frame) = 0;
+    /**
+    * Detects objects in the given frame (cv::Mat). Must be overwritten in subclass.
+    *
+    * @param frame The current frame
+    *
+    * @return The vector of all detected objects in the current Frame
+    **/
+    virtual std::vector<cv::Rect> Detect(cv::Mat *frame) = 0;
 
 private:
 
