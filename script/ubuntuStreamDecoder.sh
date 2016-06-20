@@ -22,7 +22,7 @@ if [ "${1##*.}" == "hdf5" ]; then
 	echo -en '\n'
 	echo "Starting the container now. All binaries can be found in /home/bin. The hdf5 file is mapped into the home directory."
 	#docker run -ti -v $1:/home/hdf5file.hdf5 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$2 /bin/bash 
-	docker run -ti -v $1:/home/hdf5file.hdf5 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$2 /bin/bash -c "cd /home/bin/; ./frameselector ../hdf5file.hdf5 $4"
+	docker run -ti -v $1:/home/hdf5file.hdf5 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$2 /bin/bash -c "cd /home/bin/; ./frameselector ../hdf5file.hdf5 $3"
 	echo -en '\n'
 	xhost -local:
 	echo "Reverting xhost settings..."
@@ -37,9 +37,9 @@ if [ "${1##*.}" == "mp4" ]; then
 	echo "Configuring xhost"
 	xhost +local:
 	echo -en '\n'
-	echo "Starting the container now. All binaries can be found in /home/bin. The hdf5 file is mapped into the home directory."
+	echo "Starting the container now. All binaries can be found in /home/bin. The mp4 file is mapped into the home directory."
 	#docker run -ti -v $1:/home/hdf5file.hdf5 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$2 /bin/bash 
-	docker run -ti -v $1:/home/mp4file.mp4 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$2 /bin/bash -c "cd /home/bin/; ./frameselector ../mp4file.mp4 $4"
+	docker run -ti -v $1:/home/mp4file.mp4 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$2 /bin/bash -c "cd /home/bin/; ./frameselector ../mp4file.mp4 $3"
 	echo -en '\n'
 	xhost -local:
 	echo "Reverting xhost settings..."
