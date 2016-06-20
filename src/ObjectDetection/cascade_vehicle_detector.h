@@ -35,14 +35,14 @@ public:
     **/
     CascadeVehicleDetector();
 
-  /**
-   * Detects vehicles in the given frame (cv::Mat)
-   *
-   * @param frame The current frame
-   *
-   * @return The vector of all detected vehicles in the current Frame
-   **/
-  std::vector<cv::Rect> Detect(cv::Mat *frame);
+    /**
+    * Detects vehicles in the given frame (cv::Mat)
+    *
+    * @param frame The current frame
+    *
+    * @return The vector of all detected vehicles in the current Frame
+    **/
+    std::vector<cv::Rect> Detect(cv::Mat *frame);
 
 private:
 
