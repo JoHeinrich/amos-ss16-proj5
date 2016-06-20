@@ -24,15 +24,16 @@
 #include "cascade_vehicle_detector.h"
 
 CascadeVehicleDetector::CascadeVehicleDetector() {
+    std::string classifier_file = "cars3.xml";
 
-    cascade_vehicle_classifier_.load("../../assets/vehicle_classifier.xml");
+    cascade_vehicle_classifier_.load("../../assets/" + classifier_file);
 
     // check if classifier was loaded
     if (cascade_vehicle_classifier_.empty() == true) {
-        cascade_vehicle_classifier_.load("../../src/ObjectDetection/vehicle_classifier.xml");
+        cascade_vehicle_classifier_.load("../../src/ObjectDetection/" + classifier_file);
 
         if (cascade_vehicle_classifier_.empty() == true) {
-            cascade_vehicle_classifier_.load("../../ObjectDetection/vehicle_classifier.xml");
+            cascade_vehicle_classifier_.load("../../ObjectDetection/" + classifier_file);
         }
     }
 }
@@ -40,7 +41,7 @@ CascadeVehicleDetector::CascadeVehicleDetector() {
 std::vector<cv::Rect> CascadeVehicleDetector::Detect(cv::Mat *frame) {
 
       std::vector<cv::Rect> detectedVehicles;
-      cascade_vehicle_classifier_.detectMultiScale(*frame, detectedVehicles, 1.1, 3, 0, cv::Size(25,25), cv::Size(80,80));
+      cascade_vehicle_classifier_.detectMultiScale(*frame, detectedVehicles, 1.1, 3, 0, cv::Size(20,20), cv::Size(80,80));
 
       return detectedVehicles;
 }
