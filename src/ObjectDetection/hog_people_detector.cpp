@@ -30,7 +30,7 @@ HOGPeopleDetector::HOGPeopleDetector() {
 std::vector<cv::Rect> HOGPeopleDetector::Detect(cv::Mat *frame) {
 
     std::vector<cv::Rect> detectedPeople;
-    hog_descriptor_.detectMultiScale(*frame, detectedPeople, 0, cv::Size(4,4), cv::Size(16,16), 1.03, 0);
+    hog_descriptor_.detectMultiScale(*frame, detectedPeople, 0, cv::Size(4,4), cv::Size(16,16), 1.04, 0);
 
     return detectedPeople;
 }
