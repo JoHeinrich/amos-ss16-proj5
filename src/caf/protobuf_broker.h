@@ -81,14 +81,14 @@ public:
 	* 
 	* @param self incoming actor
 	*/ 
-	behavior sendWarning(event_based_actor* self);
+	static behavior sendWarning(event_based_actor* self);
 
 
 	/** 
 	* Server's behavior -- gets the client's warning from the protobuf broker and responds with an "ack" message
 	* 
 	*/ 
-	behavior ackMessage();
+	static behavior ackMessage();
 
 
 	/** 
@@ -98,7 +98,7 @@ public:
 	* @param hdl connection handler
 	* @param buddy communication actor
 	*/ 
-	void protobuf_io(broker* self, connection_handle hdl, const actor& buddy);
+	static void protobuf_io(broker* self, connection_handle hdl, const actor& buddy);
 
 	/** 
 	* Behavior for server . 
@@ -106,7 +106,7 @@ public:
 	* @param self incoming actor
 	* @param buddy communication actor
 	*/ 
-	behavior server(broker* self, actor buddy);
+	static behavior server(broker* self, actor buddy);
 };
 
 #endif // PROTOBUF_BROKER_H

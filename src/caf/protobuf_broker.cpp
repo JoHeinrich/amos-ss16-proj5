@@ -166,7 +166,7 @@ behavior ProtoAgent::server(broker* self, actor buddy) {
     [=](const new_connection_msg& msg) {
       aout(self) << "server accepted new connection" << endl;
       auto io_actor = self->fork(protobuf_io, msg.handle, buddy);
-      print_on_exit(io_actor, "protobuf_io");
+      //print_on_exit(io_actor, "protobuf_io");
       // only accept 1 connection in our example
       self->quit();
     },
