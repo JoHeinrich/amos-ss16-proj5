@@ -23,7 +23,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "protobuf_broker.h"
+#include "protoagent.h"
 
 void ProtoAgent::print_on_exit(const actor& hdl, const std::string& name) {
   hdl->attach_functor([=](abstract_actor* ptr, uint32_t reason) {

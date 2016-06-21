@@ -45,7 +45,7 @@ public:
      *
      *@param videofile path to the video file
      */
-    void AnalyseVideo(std::string videofile);
+    void AnalyseVideo(std::string videofile, uint16_t port = 0, std::string host = "");
 
     /**
      * Saves all images as jepg to disc
