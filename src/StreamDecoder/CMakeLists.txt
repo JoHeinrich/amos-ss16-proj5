@@ -49,7 +49,7 @@ set(header
 	../ObjectDetection/element.h
 	../ObjectDetection/frame_detection_data.h
 	../ObjectDetection/hog_people_detector.h
-	../ObjectDetection/cascade_vehicle_detector.h
+	../ObjectDetection/cascade_haar_detector.h
 	../ObjectDetection/daimler_people_detector.h
 	../ScenarioAnalysation/scenario.h
 	../ScenarioAnalysation/humans_in_front_of_bus_scenario.h
@@ -71,7 +71,7 @@ set(sources
 	../ObjectDetection/element.cpp
 	../ObjectDetection/frame_detection_data.cpp
 	../ObjectDetection/hog_people_detector.cpp
-	../ObjectDetection/cascade_vehicle_detector.cpp
+	../ObjectDetection/cascade_haar_detector.cpp
 	../ObjectDetection/daimler_people_detector.cpp
 	../ScenarioAnalysation/scenario.cpp
 	../ScenarioAnalysation/humans_in_front_of_bus_scenario.cpp

@@ -21,27 +21,38 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "cascade_vehicle_detector.h"
+#ifndef CASCADE_HAAR_DETECTOR_H
+#define CASCADE_HAAR_DETECTOR_H
 
-CascadeVehicleDetector::CascadeVehicleDetector() {
-    std::string classifier_file = "cars3.xml";
+#include "detector.h"
 
-    cascade_vehicle_classifier_.load("../../assets/" + classifier_file);
+class CascadeHaarDetector : public Detector {
 
-    // check if classifier was loaded
-    if (cascade_vehicle_classifier_.empty() == true) {
-        cascade_vehicle_classifier_.load("../../src/ObjectDetection/" + classifier_file);
+public:
 
-        if (cascade_vehicle_classifier_.empty() == true) {
-            cascade_vehicle_classifier_.load("../../ObjectDetection/" + classifier_file);
-        }
-    }
-}
+    /**
+    * Default constructor.
+    **/
+    CascadeHaarDetector(std::string classifier_file, double scale_factor = 1.1, int min_neighbors = 3, cv::Size min_size = cv::Size(20,20), cv::Size max_size = cv::Size(80,80));
 
-std::vector<cv::Rect> CascadeVehicleDetector::Detect(cv::Mat *frame) {
+    /**
+    * Detects objects in the given frame (cv::Mat) acording to the classifier.
+    *
+    * @param frame The current frame
+    *
+    * @return The vector of all detected objects in the current Frame
+    **/
+    std::vector<cv::Rect> Detect(cv::Mat *frame);
 
-      std::vector<cv::Rect> detectedVehicles;
-      cascade_vehicle_classifier_.detectMultiScale(*frame, detectedVehicles, 1.1, 3, 0, cv::Size(20,20), cv::Size(80,80));
+private:
 
-      return detectedVehicles;
-}
+    cv::CascadeClassifier cascade_haar_classifier_;
+    double scale_factor_;
+    int min_neighbors_;
+    cv::Size min_size_;
+    cv::Size max_size_;
+
+};
+
+
+#endif // CASCADE_HAAR_DETECTOR_H
