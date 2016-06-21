@@ -28,10 +28,10 @@
 using namespace std;
 using namespace cv;
 
-Detection::Detection(Detector * peopleDetector, Detector * vehicleDetector) {
+Detection::Detection(Detector * people_detector, Detector * vehicle_detector) {
 
-    people_detector_ = peopleDetector;
-    vehicle_detector_ = vehicleDetector;
+    people_detector_ = people_detector;
+    vehicle_detector_ = vehicle_detector;
     image_view_ = new ImageView();
 }
 
@@ -106,7 +106,7 @@ Mat Detection::ResizeFrame(Mat *frame) {
     //0.3125 is used because the test video is 1280 x 720, so the width resized images is 400px this has to be changed to our image size (best would be no hard coded scaling so other images sizes work too!)
     // TODO: dynamic risizeing depending on input (min width 400px)
 
-    Mat resizedFrame;
-    resize(*frame, resizedFrame, Size(0, 0), 0.3125, 0.3125, CV_INTER_AREA);
-    return resizedFrame;
+    Mat resized_frame;
+    resize(*frame, resized_frame, Size(0, 0), 0.3125, 0.3125, CV_INTER_AREA);
+    return resized_frame;
 }
