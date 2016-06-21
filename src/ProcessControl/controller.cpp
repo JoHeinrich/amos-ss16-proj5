@@ -34,7 +34,7 @@
 #include "../ScenarioAnalysation/humans_in_front_of_bus_scenario.h"
 #include "../ScenarioAnalysation/analyser.h"
 #include "controller.h"
-
+#include "../CarCommunication/protoagent.h"
 
 //define keys
 const int KEY_ESC = 27;
@@ -54,7 +54,7 @@ void Controller::PlayAsVideo(std::string videofile) {
   }
 }
 
-void Controller::AnalyseVideo(std::string videofile) {
+void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string host) {
   ImageView image_view;
   FrameSelectorFactory frame_selector_factory(videofile);
   FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
@@ -95,6 +95,14 @@ void Controller::AnalyseVideo(std::string videofile) {
         // for demo: show information about scenario in current frame
         std::cout << "Current detected scenario: " << scenario->GetScenarioInformation() << " in frame: " << i << std::endl;
 
+        #ifdef COMBINE
+        //Notifying other car
+        if(port!=0)
+        {
+            std::cout << "Informing other car" << std::endl;
+            ProtoAgent::startClient(port,host);
+        }
+        #endif
     }
 
     int key = cvWaitKey(10);
