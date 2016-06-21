@@ -20,9 +20,10 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-#ifndef COMBINE
-int main(int argc, const char * argv[]) {
 
+/*
+* This is the global main for our project
+*/
+int main(int argc, const char * argv[]) {
     return 0;
 }
-#endif
