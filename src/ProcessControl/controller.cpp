@@ -60,7 +60,7 @@ void Controller::AnalyseVideo(std::string videofile) {
   FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
   int protobuf_counts = pipeline->GetImageCount();
 
-  // DaimlerPeopleDetector peopleDetector;
+  // DaimlerPeopleDetector people_detector;
   HOGPeopleDetector people_detector;
   CascadeVehicleDetector vehicle_detector;
   Detection detection(&people_detector, &vehicle_detector);
