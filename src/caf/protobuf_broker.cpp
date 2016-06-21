@@ -25,7 +25,7 @@
 
 #include "protobuf_broker.h"
 
-void print_on_exit(const actor& hdl, const std::string& name) {
+void ProtoAgent::print_on_exit(const actor& hdl, const std::string& name) {
   hdl->attach_functor([=](abstract_actor* ptr, uint32_t reason) {
     aout(ptr) << name << " exited with reason " << reason << endl;
   });
@@ -37,7 +37,7 @@ void print_on_exit(const actor& hdl, const std::string& name) {
   after the warning has been acknowledged by the server
   **************************
 */
-behavior sendWarning(event_based_actor* self) {
+behavior ProtoAgent::sendWarning(event_based_actor* self) {
   auto count = make_shared<size_t>(0);
   return {
     on(atom("kickoff"), arg_match) >> [=](const actor& pong) {
@@ -58,7 +58,7 @@ behavior sendWarning(event_based_actor* self) {
   and responds with an "ack" message
   **************************
 */
-behavior ackMessage() {
+behavior ProtoAgent::ackMessage() {
   return {
     on(atom("warning"), arg_match) >> [](int value) {
       return make_message(atom("ack"), value);
@@ -73,7 +73,7 @@ behavior ackMessage() {
   Deserizalizes/serializes messages 
   **************************
 */
-void protobuf_io(broker* self, connection_handle hdl, const actor& buddy) {
+void ProtoAgent::protobuf_io(broker* self, connection_handle hdl, const actor& buddy) {
   // monitor buddy to quit broker if buddy is done
   self->monitor(buddy);
   auto write = [=](const org::libcppa::WarnOrAck& p) {
@@ -160,7 +160,7 @@ void protobuf_io(broker* self, connection_handle hdl, const actor& buddy) {
  Starts the server broker with the received message handle if a client connects
  **************************
 */
-behavior server(broker* self, actor buddy) {
+behavior ProtoAgent::server(broker* self, actor buddy) {
   aout(self) << "server is running" << endl;
   return {
     [=](const new_connection_msg& msg) {
@@ -185,7 +185,7 @@ optional<uint16_t> as_u16(const std::string& str) {
   return static_cast<uint16_t>(stoul(str));
 }
 
-void startClient (uint16_t port, const string& host) {
+void ProtoAgent::startClient (uint16_t port, const string& host) {
 	cout << "run in client mode" << endl;	
 	// spawn the actor that sends warnings
 	auto client_actor = spawn(sendWarning);
@@ -199,7 +199,7 @@ void startClient (uint16_t port, const string& host) {
   	shutdown();
 }
 
-void startServer (uint16_t port) {
+void ProtoAgent::startServer (uint16_t port) {
 	cout << "run in server mode" << endl;
 	// spawn the actor that acks messages
 	auto serv_actor = spawn(ackMessage);
@@ -216,11 +216,13 @@ int main(int argc, char** argv) {
 	message_builder{argv + 1, argv + argc}.apply({
 	  on("-s", as_u16) >> [&](uint16_t port) {
 		// We are a server
-		startServer(port);
+	  	ProtoAgent server;
+		server.startServer(port);
 	  },
 	  on("-c", val<string>, as_u16) >> [&](const string& host, uint16_t port) {
       		// We are a client
-		startClient(port, host);
+		ProtoAgent client;
+		client.startClient(port, host);
     	  },
     	  others >> [] {
       		cerr << "use with eihter '-s PORT' as server or "
