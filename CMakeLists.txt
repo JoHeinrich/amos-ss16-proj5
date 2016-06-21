@@ -8,41 +8,9 @@ add_definitions(${CAF_COMPILE_FLAGS})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_subdirectory(src/ScenarioAnalysation)
 add_subdirectory(src/ObjectDetection)
-add_subdirectory(src/caf)
+add_subdirectory(src/CarCommunication)
 add_subdirectory(src/StreamDecoder)
 
-
-
-file(GLOB_RECURSE sources0 "./src/ScenarioAnalysation/*.cpp")
-file(GLOB_RECURSE headers0 "./src/ScenarioAnalysation/*.h")
-
-file(GLOB_RECURSE sources1 "./src/ObjectDetection/*.cpp")
-file(GLOB_RECURSE headers1 "./src/ObjectDetection/*.h")
-
-file(GLOB_RECURSE sources2 "./src/StreamDecoder/*.cpp")
-file(GLOB_RECURSE sourcesc2 "./src/StreamDecoder/*.cc")
-file(GLOB_RECURSE headers2 "./src/StreamDecoder/*.h")
-
-file(GLOB_RECURSE sources3 "./src/caf/*.cpp")
-file(GLOB_RECURSE sourcesc3 "./src/caf/*.cc")
-file(GLOB_RECURSE headers3 "./src/caf/*.h")
-
-LIST(APPEND sources ${sources0} ${sources1} ${sources2} ${sourcesc2} ${sources3} ${sourcesc3}
-    #src/ObjectDetection/element.cpp
-    #src/ObjectDetection/frame_detection_data.cpp
-	#src/StreamDecoder/image.cpp
-	#src/StreamDecoder/image_view.cpp
-
-)
-
-LIST(APPEND headers ${headers0} ${headers1} ${header2} ${headers3}
-    #src/ObjectDetection/element.h
-    #src/ObjectDetection/frame_detection_data.h
-	#src/StreamDecoder/image.h
-	#src/StreamDecoder/image_view.h
-
-
-)
 file(GLOB_RECURSE sourcesc "./src/*.cc")
 file(GLOB_RECURSE sources "./src/*.cpp")
 file(GLOB_RECURSE headers "./src/*.h")

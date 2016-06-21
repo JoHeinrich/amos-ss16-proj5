@@ -16,6 +16,6 @@ else(PROTOBUF_FOUND)
 message(SEND_ERROR "Protobuff NOT found")
 endif(PROTOBUF_FOUND)
 
-ADD_EXECUTABLE(${OUTPUT_NAME} protobuf_broker.cpp ${PROTO_HEADER} ${PROTO_SRC})
+ADD_EXECUTABLE(${OUTPUT_NAME} protoagent.cpp ${PROTO_HEADER} ${PROTO_SRC})
 target_link_libraries(${OUTPUT_NAME} ${PROTOBUF_LIBRARY} ${CMAKE_THREAD_LIBS_INIT} -lcaf_io -lcaf_core)
 

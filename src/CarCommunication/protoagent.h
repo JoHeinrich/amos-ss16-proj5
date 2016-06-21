@@ -57,14 +57,14 @@ public:
 	* @param port Specified port for communication
 	* @param hsot Hostname for connection to server 
 	*/ 
-	void startClient (uint16_t port, const string& host);
+	static void startClient (uint16_t port, const string& host);
 
 	/** 
 	* starts the server. 
 	* 
 	* @param port Specified port for communication 
 	*/ 
-	void startServer (uint16_t port);
+	static void startServer (uint16_t port);
 
 	/** 
 	* utility function to print an exit message with custom name. 
@@ -73,7 +73,7 @@ public:
 	* @param name Actor name 
 	*/ 
 
-	void print_on_exit(const actor& hdl, const std::string& name);
+	static void print_on_exit(const actor& hdl, const std::string& name);
 
 
 	/** 
