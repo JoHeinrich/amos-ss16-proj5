@@ -36,7 +36,7 @@
 
 using namespace std;
 
-
+#ifndef COMBINE
 int main(int argc, const char* argv[]) {
 
     if (argc > 1 ){
@@ -105,3 +105,5 @@ int main(int argc, const char* argv[]) {
 
     return 0;
 }
+
+#endif
