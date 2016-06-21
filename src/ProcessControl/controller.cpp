@@ -25,7 +25,7 @@
 #include <opencv2/opencv.hpp>
 
 //local
-#include "../ObjectDetection/cascade_vehicle_detector.h"
+#include "../ObjectDetection/cascade_haar_detector.h"
 // #include "../ObjectDetection/daimler_people_detector.h"
 #include "../ObjectDetection/detection.h"
 #include "../ObjectDetection/hog_people_detector.h"
@@ -60,9 +60,9 @@ void Controller::AnalyseVideo(std::string videofile) {
   FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
   int protobuf_counts = pipeline->GetImageCount();
 
-  // DaimlerPeopleDetector peopleDetector;
+  // DaimlerPeopleDetector people_detector;
   HOGPeopleDetector people_detector;
-  CascadeVehicleDetector vehicle_detector;
+  CascadeHaarDetector vehicle_detector("cars3.xml");
   Detection detection(&people_detector, &vehicle_detector);
 
   // set up all objects needed for analysing
