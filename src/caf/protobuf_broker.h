@@ -73,7 +73,6 @@ public:
 	* @param name Actor name 
 	*/ 
 
-private:
 	void print_on_exit(const actor& hdl, const std::string& name);
 
 
