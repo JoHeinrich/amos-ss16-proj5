@@ -23,24 +23,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include <vector>
-#include <string>
-#include <limits>
-#include <memory>
-#include <iostream>
-
-#include <arpa/inet.h>
-
-#include "caf/all.hpp"
-#include "caf/io/all.hpp"
-
-CAF_PUSH_WARNINGS
-#include "message.pb.h"
-CAF_POP_WARNINGS
-
-using namespace std;
-using namespace caf;
-using namespace caf::io;
+#include "protobuf_broker.h"
 
 void print_on_exit(const actor& hdl, const std::string& name) {
   hdl->attach_functor([=](abstract_actor* ptr, uint32_t reason) {
