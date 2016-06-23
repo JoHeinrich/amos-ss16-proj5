@@ -21,8 +21,8 @@ then
 		echo "This is an release -- deploy it to Dockerhub under release tag"
 		docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 		docker pull amosproj5/amosbuildimage:v1
-		docker images amosproj5/amosbuildimage:v1
 		docker build -t amosproj5/amosbuildimage:v1 docker/
+		docker images amosproj5/amosbuildimage:v1
 		line=$(docker images amosproj5/amosbuildimage:v1) 
 		echo "$line" 
 		ip=$(echo $line | cut -c66-77) 
@@ -35,4 +35,5 @@ fi
 docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 docker pull amosproj5/amosbuildimage:v1
 docker build -t amosproj5/amosbuildimage:v1 docker/
+docker images amosproj5/amosbuildimage:v1
 docker push amosproj5/amosbuildimage:v1
