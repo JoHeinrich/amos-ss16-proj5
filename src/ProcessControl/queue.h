@@ -20,23 +20,30 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 //
-
+#ifndef QUEUE
+#define QUEUE
 template <class c> class Queue
 {
-    public:
+protected:
+    bool& end;
+public:
     //if end is set to true the blocking will end and every function will return NULL
-    Queue(bool& end)
+    Queue(bool& end):end(end)
+    {
+
+    }
 
 
     /*
     * Stores the object and returns the old one if there are to many
     * depending on subclass implementation this function can be blocking or not
     */
-    c* Add(c* object);
+    virtual c* Add(c* object)=0;
 
     /* 
     * returns the next object in line
     * depending on subclass implementation this function can be blocking or not
     */
-    c* Remove();
-}
+    virtual c* Remove()=0;
+};
+#endif //QUEUE
