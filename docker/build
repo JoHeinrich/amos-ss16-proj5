@@ -21,6 +21,7 @@ then
 		echo "This is an release -- deploy it to Dockerhub under release tag"
 		docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 		docker pull amosproj5/amosbuildimage:v1
+		docker images amosproj5/amosbuildimage:v1
 		docker build -t amosproj5/amosbuildimage:v1 docker/
 		line=$(docker images amosproj5/amosbuildimage:v1) 
 		echo "$line" 
