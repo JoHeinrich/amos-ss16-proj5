@@ -22,11 +22,7 @@ then
 		docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 		docker pull amosproj5/amosbuildimage:v1
 		docker build -t amosproj5/amosbuildimage:v1 docker/
-		docker images amosproj5/amosbuildimage:v1
-		line=$(docker images amosproj5/amosbuildimage:v1) 
-		echo "$line" 
-		ip=$(echo $line | cut -c66-77) 
-		docker tag $ip amosproj5/amosbuildimage:release 
+		docker tag amosproj5/amosbuildimage:v1 amosproj5/amosbuildimage:release 
 		#docker tag d68ff7846403 amosproj5/amosbuildimage:release 		
 		docker push amosproj5/amosbuildimage:release
 	fi
@@ -35,5 +31,4 @@ fi
 docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 docker pull amosproj5/amosbuildimage:v1
 docker build -t amosproj5/amosbuildimage:v1 docker/
-docker images amosproj5/amosbuildimage:v1
 docker push amosproj5/amosbuildimage:v1
