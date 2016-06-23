@@ -38,9 +38,12 @@ class MultithreadedController
     int port;
     string serverip;
 
-    Queue<Image> imageQueue;
-    Queue<FrameDetectionData> fddQueue;
-    Queue<string> waringQueue;
+    Queue<Image>* imageQueue;
+    Queue<FrameDetectionData>* fddQueue;
+    Queue<string>* waringQueue;
+
+public:
+    MultithreadedController(std::string videofile, uint16_t port = 0, std::string host = "");
 
     /*
     * loads ONE ore more Images from filename and pushes them into imageQueue

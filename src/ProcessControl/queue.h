@@ -23,11 +23,16 @@
 
 template <class c> class Queue
 {
+    public:
+    //if end is set to true the blocking will end and every function will return NULL
+    Queue(bool& end)
+
+
     /*
-    * Stores the pointer to the object
+    * Stores the object and returns the old one if there are to many
     * depending on subclass implementation this function can be blocking or not
     */
-    void Add(c* object);
+    c* Add(c* object);
 
     /* 
     * returns the next object in line
