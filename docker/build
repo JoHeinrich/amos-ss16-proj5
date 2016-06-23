@@ -13,4 +13,9 @@ echo "Copying final artifact to docker assets directory"
 
 mkdir -p docker/assets/bin
 cp -v -r build/bin ./docker/assets/bin
+if [ "$TRAVIS_BRANCH" == "master" ] then
+	echo "We are in master"
+	echo "Commit is: $TRAVIS_COMMIT"
+fi
+
 
