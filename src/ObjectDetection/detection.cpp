@@ -94,9 +94,11 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
     detected_objects->AddElementsOfType(OBJECT_VEHICLE, vehicle_elements);
 
+    #ifndef COMBINE
     // display image and detections
-
+    cout<<"display detections"<<endl;
     image_view_->ShowImageAndDetections(image, people_elements, vehicle_elements);
+    #endif
 
     return detected_objects;
 }

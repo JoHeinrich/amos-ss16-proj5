@@ -28,19 +28,22 @@
 #include "../StreamDecoder/frame_selector.h"
 #include "../StreamDecoder/frame_selector_factory.h"
 #include "../StreamDecoder/image.h"
+#include "../ObjectDetection/frame_detection_data.h"
 #include "queue.h"
 
 using namespace std;
 
+#ifndef MULTITHREADEDCONTROLLER
+#define MULTITHREADEDCONTROLLER
 class MultithreadedController
 {
-    string filename;
+    string videofile;
     int port;
-    string serverip;
+    string host;
 
     Queue<Image>* imageQueue;
     Queue<FrameDetectionData>* fddQueue;
-    Queue<string>* waringQueue;
+    Queue<string>* warningQueue;
 
 public:
     MultithreadedController(std::string videofile, uint16_t port = 0, std::string host = "");
@@ -74,5 +77,7 @@ public:
     */
     void CarCommunication(bool& loop);
 
+    
+};
 
-}
+#endif

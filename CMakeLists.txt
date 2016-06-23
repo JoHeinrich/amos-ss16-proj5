@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.8)
 project(AutoDrive)
-set (OUTPUT_NAME AutoDrive)
+set (OUTPUT_NAME caotic)
 add_definitions(-std=c++11)
 SET(CAF_COMPILE_FLAGS "-lcaf_io -lcaf_core")
 add_definitions(${CAF_COMPILE_FLAGS})
@@ -38,6 +38,13 @@ if(HDF5_FOUND)
 else(HDF5_FOUND)
     message(SEND_ERROR "HDF5 was not Found")
 endif(HDF5_FOUND)
+
+#openmp
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif()
 
 add_definitions(-D COMBINE) 
 
