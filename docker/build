@@ -16,6 +16,7 @@ cp -v -r build/bin ./docker/assets/bin
 if [ "$TRAVIS_BRANCH" != "master" ]
 then
   echo "Commit is: $TRAVIS_COMMIT"
+  echo "Tag is: $TRAVIS_TAG"
 fi
 
 
