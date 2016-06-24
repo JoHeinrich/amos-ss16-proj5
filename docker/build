@@ -23,7 +23,6 @@ then
 		docker pull amosproj5/amosbuildimage:v1
 		docker build -t amosproj5/amosbuildimage:v1 docker/
 		docker tag amosproj5/amosbuildimage:v1 amosproj5/amosbuildimage:release 
-		#docker tag d68ff7846403 amosproj5/amosbuildimage:release 		
 		docker push amosproj5/amosbuildimage:release
 		exit 0
 	fi
