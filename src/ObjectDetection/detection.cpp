@@ -61,11 +61,41 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
         std::vector<int> position;
         std::vector<int> box;
 
-        position.push_back(current_rec.x/0.3125);
-        position.push_back(current_rec.y/0.3125);
+        int pos_x_resized = current_rec.x/0.3125;
+        int pos_y_resized = current_rec.y/0.3125;
 
-        box.push_back(current_rec.width/0.3125);
-        box.push_back(current_rec.height/0.3125);
+        if(pos_x_resized < 0){
+            pos_x_resized = 0;
+        }
+        if(pos_x_resized > image->GetImageWidth()){
+            pos_x_resized = image->GetImageWidth();
+        }
+
+        if(pos_y_resized < 0){
+            pos_y_resized = 0;
+        }
+        if(pos_y_resized > image->GetImageHeight()){
+            pos_y_resized = image->GetImageHeight();
+        }
+
+        position.push_back(pos_x_resized);
+        position.push_back(pos_y_resized);
+
+        int box_width_resized = current_rec.width/0.3125;
+        int box_height_resized = current_rec.height/0.3125;
+
+        if((position.at(0) + box_width_resized) > image->GetImageWidth()){
+            box_width_resized = image->GetImageWidth()-position.at(0);
+        }
+        if((position.at(1) + box_height_resized) > image->GetImageHeight()){
+            box_height_resized = image->GetImageHeight()-position.at(1);
+        }
+
+        box.push_back(box_width_resized);
+        box.push_back(box_height_resized);
+
+        //std::cout << "Process Frame: position of elem: " << position.at(0) << " " << position.at(1) << std::endl;
+        //std::cout << "Process Frame: width and height: " << box.at(0) << " " << box.at(1) << std::endl;
 
         Element current_elem(position, box);
 
