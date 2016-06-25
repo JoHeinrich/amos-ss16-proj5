@@ -90,7 +90,6 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
         if( HumansInFrontOfBusScenario* result = dynamic_cast<HumansInFrontOfBusScenario*>(scenario) ){
 
             // TODO here for later: inform the communication module that a "Humans in front of bus" scenario was detected
-            std::cout << "HUMANS IN FRONT OF BUS !!!!!!!" << std::endl;
         }
         // for demo: show information about scenario in current frame
         std::cout << "Current detected scenario: " << scenario->GetScenarioInformation() << " in frame: " << i << std::endl;
