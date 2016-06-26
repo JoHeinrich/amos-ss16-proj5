@@ -56,7 +56,7 @@ int main(int argc, const char * argv[]) {
         {
             cerr << "Could not read port" << endl;
         }
-    }else if(argc = 4)
+    }else if(argc == 4)
     {
         uint16_t port;
         if(str_to_uint16(argv[1],&port))
