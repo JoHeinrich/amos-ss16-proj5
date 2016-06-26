@@ -80,13 +80,15 @@ private:
     /**
      * Adjust the image for better contrast and better brightness
      *
-     * @param frame The current image of the stream
+     * @param frame - the current image of the stream
      * @param contrastValue - set a value between 1.0-3.0
      * @param brightnessValue - set a value between 0-100
      *
-     * @return The changed image
+     * @return The changed image = contrastValue * image + brightnessValue
      **/
     cv::Mat adjustContrastAndBrightness(cv::Mat *frame, double contrastValue, int brightnessValue);
+    
+
 
 };
 
