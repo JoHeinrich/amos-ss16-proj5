@@ -88,7 +88,7 @@ private:
      *
      * @return The changed image = contrastValue * image + brightnessValue
      **/
-    cv::Mat adjustContrastAndBrightness(cv::Mat *frame, double contrastValue, int brightnessValue);
+    cv::Mat AdjustContrastAndBrightness(cv::Mat *frame, double contrastValue, int brightnessValue);
     
 
     /**
@@ -98,7 +98,7 @@ private:
      *
      * @return The changed image
      **/
-    cv::Mat adjustContrastAndBrightness(cv::Mat *frame);
+    cv::Mat AdjustContrastAndBrightness(cv::Mat *frame);
 
 };
 
