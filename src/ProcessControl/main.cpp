@@ -20,10 +20,10 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 
-
+/*
 /*
 * This is the global main for our project
-*/
+
 #include "caf/all.hpp"
 #include "caf/io/all.hpp"
 
@@ -32,9 +32,7 @@
 #include "../CarCommunication/protoagent.h"
 using namespace std;
 
-static bool
-str_to_uint16(const char *str, uint16_t *res)
-{
+static bool str_to_uint16(const char *str, uint16_t *res){
   char *end;
   errno = 0;
   intmax_t val = strtoimax(str, &end, 10);
@@ -56,8 +54,7 @@ int main(int argc, const char * argv[]) {
         {
             cerr << "Could not read port" << endl;
         }
-    }else if(argc = 4)
-    {
+    }else if(argc = 4){
         uint16_t port;
         if(str_to_uint16(argv[1],&port))
         {
@@ -70,8 +67,7 @@ int main(int argc, const char * argv[]) {
         }
 
     }
-    else
-    {
+    else{
         cerr << "Usage:  " << " PORT (SERVER_IP_ADRESS FULL_PATH_TO_HDF5_FILE)" << endl;
         return -1;
     }
@@ -79,3 +75,4 @@ int main(int argc, const char * argv[]) {
 
     return 0;
 }
+*/

@@ -211,7 +211,7 @@ void ProtoAgent::startServer (uint16_t port) {
 	shutdown();
 }
 
-#ifndef COMBINE
+/*#ifndef COMBINE
 int main(int argc, char** argv) {
 	// Parsing arguments
 	message_builder{argv + 1, argv + argc}.apply({
@@ -233,4 +233,4 @@ int main(int argc, char** argv) {
   });
 }
 
-#endif
+#endif*/
