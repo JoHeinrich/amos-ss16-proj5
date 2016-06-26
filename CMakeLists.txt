@@ -1,25 +1,20 @@
 #general
 cmake_minimum_required (VERSION 2.8)
-project(AutoDrive)
-set (OUTPUT_NAME AutoDrive)
+project(amos-ss16-proj5)
+set (OUTPUT_NAME amos-ss16-proj5)
 add_definitions(-std=c++11)
 
 #caf compile flags
 SET(CAF_COMPILE_FLAGS "-lcaf_io -lcaf_core")
 add_definitions(${CAF_COMPILE_FLAGS})
 
-#subdirectories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-add_subdirectory(src/ScenarioAnalysation)
-add_subdirectory(src/ObjectDetection)
-add_subdirectory(src/CarCommunication)
-add_subdirectory(src/StreamDecoder)
-
 
 file(GLOB_RECURSE sourcesc "./src/*.cc")
 file(GLOB_RECURSE sources "./src/*.cpp")
 file(GLOB_RECURSE headers "./src/*.h")
 
+#libraries
 #protobuf
 include(FindProtobuf)
 find_package(Protobuf REQUIRED)
@@ -44,10 +39,9 @@ else(HDF5_FOUND)
     message(SEND_ERROR "HDF5 was not Found")
 endif(HDF5_FOUND)
 
-#add_definitions(-D COMBINE) 
 
 #link libraries
-#add_executable(${OUTPUT_NAME} ${sources} ${headers} ${sourcesc})
-#target_link_libraries(${OUTPUT_NAME} ${LINK_LIBS} -lhdf5_cpp -lhdf5)
-#target_link_libraries(${OUTPUT_NAME} ${PROTOBUF_LIBRARY})
-#target_link_libraries(${OUTPUT_NAME} ${PROTOBUF_LIBRARY} ${CMAKE_THREAD_LIBS_INIT} -lcaf_io -lcaf_core)
+add_executable(${OUTPUT_NAME} ${sources} ${headers} ${sourcesc})
+target_link_libraries(${OUTPUT_NAME} ${LINK_LIBS} -lhdf5_cpp -lhdf5)
+target_link_libraries(${OUTPUT_NAME} ${PROTOBUF_LIBRARY})
+target_link_libraries(${OUTPUT_NAME} ${PROTOBUF_LIBRARY} ${CMAKE_THREAD_LIBS_INIT} -lcaf_io -lcaf_core)
