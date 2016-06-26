@@ -2,6 +2,7 @@
 cmake_minimum_required (VERSION 2.8)
 project(amos-ss16-proj5)
 set (OUTPUT_NAME amos-ss16-proj5)
+
 add_definitions(-std=c++11)
 
 #caf compile flags
@@ -14,7 +15,7 @@ file(GLOB_RECURSE sourcesc "./src/*.cc")
 file(GLOB_RECURSE sources "./src/*.cpp")
 file(GLOB_RECURSE headers "./src/*.h")
 
-#libraries
+
 #protobuf
 include(FindProtobuf)
 find_package(Protobuf REQUIRED)
@@ -38,6 +39,14 @@ if(HDF5_FOUND)
 else(HDF5_FOUND)
     message(SEND_ERROR "HDF5 was not Found")
 endif(HDF5_FOUND)
+
+
+#openmp
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif()
 
 
 #link libraries
