@@ -94,14 +94,14 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
         // for demo: show information about scenario in current frame
         std::cout << "Current detected scenario: " << scenario->GetScenarioInformation() << " in frame: " << i << std::endl;
 
-        #ifdef COMBINE
+        //#ifdef COMBINE
         //Notifying other car
         if(port!=0)
         {
             std::cout << "Informing other car" << std::endl;
             ProtoAgent::startClient(port,host);
         }
-        #endif
+        //#endif
     }
 
     int key = cvWaitKey(10);

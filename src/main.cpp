@@ -38,12 +38,26 @@
 #include "StreamDecoder/frame_selector_factory.h"
 #include "StreamDecoder/image_view.h"
 #include "ProcessControl/controller.h"
+#include "ProcessControl/multithreadedcontroller.h"
+#include "CarCommunication/protoagent.h"
 
 using namespace std;
 
+static bool
+str_to_uint16(const char *str, uint16_t *res)
+{
+  char *end;
+  errno = 0;
+  intmax_t val = strtoimax(str, &end, 10);
+  if (errno == ERANGE || val < 0 || val > UINT16_MAX || end == str || *end != '\0')
+    return false;
+  *res = (uint16_t) val;
+  return true;
+}
+
 int main(int argc, const char* argv[]) {
 
-    if (argc > 3 || argc == 1){
+    if (argc > 4 || argc == 1){
 
         cerr << "Usage:  " << " FULL_PATH_TO_VIDEO_FILE (optional: image index)" << endl;
         return -1;
@@ -51,13 +65,20 @@ int main(int argc, const char* argv[]) {
     }
 
     if(argc == 2){
+        uint16_t port;
+        if(str_to_uint16(argv[1],&port))
+        {
+            ProtoAgent::startServer(port);
+        }
+        else
+        {
+            cerr << "Analysing video in file " << argv[1] << endl;
+            Controller controller;
+            controller.AnalyseVideo(argv[1]);
+        }
+    } 
 
-        Controller controller;
-        controller.AnalyseVideo(argv[1]);
-
-
-    } else if(argc == 3){
-
+    if(argc == 3){
         FrameSelectorFactory frame_selector_factory(argv[1]);
         FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
         // read one image
@@ -69,7 +90,20 @@ int main(int argc, const char* argv[]) {
         ImageView image_viewer;
         image_viewer.ShowImage(result_image, 0);
     }
+    
+    if(argc == 4){
+        uint16_t port;
+        if(str_to_uint16(argv[1],&port))
+        {
+            //MultithreadedController controller(argv[3],port,argv[2]);
+            Controller().AnalyseVideo(argv[3],port,argv[2]);
+        }
+        else
+        {
+            cerr << "Could not read port" << endl;
+        }
 
+}
 
 
     return 0;
