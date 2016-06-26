@@ -141,7 +141,7 @@ Mat Detection::ResizeFrame(Mat *frame) {
     return resized_frame;
 }
 
-cv::Mat AdjustContrastAndBrightness(cv::Mat *frame,  double contrastValue, int brightnessValue){
+cv::Mat Detection::AdjustContrastAndBrightness(cv::Mat *frame,  double contrastValue, int brightnessValue){
     Mat adjusted_image = Mat::zeros( frame->size(), frame->type() );
         for( int x = 0; x < frame->rows; x++ ){
             for( int y = 0; y < frame->cols; y++ ){
@@ -154,7 +154,7 @@ cv::Mat AdjustContrastAndBrightness(cv::Mat *frame,  double contrastValue, int b
     return adjusted_image;
 }
 
-cv::Mat AdjustContrastAndBrightness(cv::Mat *frame){
-    return AdjustContrastAndBrightness(frame, defaultContrastValue, defaultBrightnessValue);
+cv::Mat Detection::AdjustContrastAndBrightness(cv::Mat *frame){
+    return AdjustContrastAndBrightness(frame, default_contrast_value, default_brightness_value);
 }
 

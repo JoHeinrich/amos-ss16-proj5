@@ -33,8 +33,8 @@
 #include "detector.h"
 #include "frame_detection_data.h"
 
-const double defaultContrastValue = 3.0;
-const int defaultBrightnessValue = 50;
+const double default_contrast_value = 3.0;
+const int default_brightness_value = 50;
 
 class Detection {
 
