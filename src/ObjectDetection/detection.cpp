@@ -28,6 +28,7 @@
 using namespace std;
 using namespace cv;
 
+
 Detection::Detection(Detector * people_detector, Detector * vehicle_detector) {
 
     people_detector_ = people_detector;
@@ -141,7 +142,7 @@ Mat Detection::ResizeFrame(Mat *frame) {
     return resized_frame;
 }
 
-cv::Mat adjustContrastAndBrightness(cv::Mat *frame,  double contrastValue, int brightnessValue){
+cv::Mat Detection::adjustContrastAndBrightness(cv::Mat *frame,  double contrastValue, int brightnessValue){
     Mat adjusted_image = Mat::zeros( frame->size(), frame->type() );
         for( int x = 0; x < frame->rows; x++ ){
             for( int y = 0; y < frame->cols; y++ ){
@@ -153,3 +154,7 @@ cv::Mat adjustContrastAndBrightness(cv::Mat *frame,  double contrastValue, int b
     }
     return adjusted_image;
 }
+
+cv::Mat Detection::adjustContrastAndBrightness(cv::Mat *frame){
+    return adjustContrastAndBrightness(frame, defaultContrastValue, defaultBrightnessValue);
+};

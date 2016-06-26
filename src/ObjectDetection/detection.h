@@ -33,6 +33,8 @@
 #include "detector.h"
 #include "frame_detection_data.h"
 
+const double defaultContrastValue = 3.0;
+const int defaultBrightnessValue = 50;
 
 class Detection {
 
@@ -89,6 +91,14 @@ private:
     cv::Mat adjustContrastAndBrightness(cv::Mat *frame, double contrastValue, int brightnessValue);
     
 
+    /**
+     * Adjust the image for better contrast and better brightness with default values
+     *
+     * @param frame - the current image of the stream
+     *
+     * @return The changed image
+     **/
+    cv::Mat adjustContrastAndBrightness(cv::Mat *frame);
 
 };
 
