@@ -52,7 +52,7 @@ bool Scenario::DoOverlap(Element first, Element second){
                       << " 3: " << second.GetMaxX() << " " << second.GetMaxY() << " 4: " << second.GetMinX() << " " << second.GetMaxY() <<std::endl;
     */
 
-    if( (first.GetMinX() <= second.GetMinX()) && (first.GetMaxX() >= second.GetMinX()) ||
+    if( ( (first.GetMinX() <= second.GetMinX()) && (first.GetMaxX() >= second.GetMinX()) ) ||
             ( (first.GetMaxX() >= second.GetMaxX()) && (first.GetMinX() <= second.GetMaxX()) ) ){
 
 
