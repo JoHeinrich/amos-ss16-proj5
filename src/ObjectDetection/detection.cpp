@@ -43,7 +43,8 @@ Detection::~Detection(){
 FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
     Mat frame = image->GetRGBImage();
-    Mat resized_frame = ResizeFrame(&frame);
+    Mat contrast_and_brightness_adjusted_frame = AdjustContrastAndBrightness(&frame);
+    Mat resized_frame = ResizeFrame(&contrast_and_brightness_adjusted_frame);
 
     std::vector<Rect> detected_people = people_detector_->Detect(&resized_frame);
     std::vector<Rect> detected_vehicles = vehicle_detector_->Detect(&resized_frame);
@@ -61,11 +62,41 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
         std::vector<int> position;
         std::vector<int> box;
 
-        position.push_back(current_rec.x/0.3125);
-        position.push_back(current_rec.y/0.3125);
+        int pos_x_resized = current_rec.x/0.3125;
+        int pos_y_resized = current_rec.y/0.3125;
 
-        box.push_back(current_rec.width/0.3125);
-        box.push_back(current_rec.height/0.3125);
+        if(pos_x_resized < 0){
+            pos_x_resized = 0;
+        }
+        if(pos_x_resized > image->GetImageWidth()){
+            pos_x_resized = image->GetImageWidth();
+        }
+
+        if(pos_y_resized < 0){
+            pos_y_resized = 0;
+        }
+        if(pos_y_resized > image->GetImageHeight()){
+            pos_y_resized = image->GetImageHeight();
+        }
+
+        position.push_back(pos_x_resized);
+        position.push_back(pos_y_resized);
+
+        int box_width_resized = current_rec.width/0.3125;
+        int box_height_resized = current_rec.height/0.3125;
+
+        if((position.at(0) + box_width_resized) > image->GetImageWidth()){
+            box_width_resized = image->GetImageWidth()-position.at(0);
+        }
+        if((position.at(1) + box_height_resized) > image->GetImageHeight()){
+            box_height_resized = image->GetImageHeight()-position.at(1);
+        }
+
+        box.push_back(box_width_resized);
+        box.push_back(box_height_resized);
+
+        //std::cout << "Process Frame: position of elem: " << position.at(0) << " " << position.at(1) << std::endl;
+        //std::cout << "Process Frame: width and height: " << box.at(0) << " " << box.at(1) << std::endl;
 
         Element current_elem(position, box);
 
@@ -94,11 +125,11 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
     detected_objects->AddElementsOfType(OBJECT_VEHICLE, vehicle_elements);
 
-    #ifndef COMBINE
+
     // display image and detections
     cout<<"display detections"<<endl;
     image_view_->ShowImageAndDetections(image, people_elements, vehicle_elements);
-    #endif
+
 
     return detected_objects;
 }
@@ -112,3 +143,21 @@ Mat Detection::ResizeFrame(Mat *frame) {
     resize(*frame, resized_frame, Size(0, 0), 0.3125, 0.3125, CV_INTER_AREA);
     return resized_frame;
 }
+
+cv::Mat Detection::AdjustContrastAndBrightness(cv::Mat *frame,  double contrastValue, int brightnessValue){
+    Mat adjusted_image = Mat::zeros( frame->size(), frame->type() );
+        for( int x = 0; x < frame->rows; x++ ){
+            for( int y = 0; y < frame->cols; y++ ){
+                // c: use all colours of RGB / BGR
+                for( int c = 0; c < 3; c++ ){
+                    adjusted_image.at<Vec3b>(x,y)[c] = saturate_cast<uchar>(contrastValue* (frame->at<Vec3b>(x,y)[c])+brightnessValue );
+            }
+        }
+    }
+    return adjusted_image;
+}
+
+cv::Mat Detection::AdjustContrastAndBrightness(cv::Mat *frame){
+    return AdjustContrastAndBrightness(frame, default_contrast_value, default_brightness_value);
+}
+

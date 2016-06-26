@@ -45,8 +45,15 @@ bool Scenario::DoOverlap(Element first, Element second){
    // std::cout << "SCENARIO::OVERLAP: first min, max x;y : " << first_min_x << " " << first_max_x << " " << first_min_y << " " << first_max_y <<std::endl;
    // std::cout << "SCENARIO::OVERLAP: second min, max x;y : " << second_min_x << " " << second_max_x << " " << second_min_y << " " << second_max_y <<std::endl;
 
+    /*std::cout<< "In function DoOverlap: " << std::endl << "First Element positions: 1:" << first.GetMinX() << " " << first.GetMinY() << " 2: " << first.GetMaxX() << " " << first.GetMinY()
+                << " 3: " << first.GetMaxX() << " " << first.GetMaxY() << " 4: " << first.GetMinX() << " " << first.GetMaxY()
+                   << std::endl << "Second Element positions: 1:" <<
+                      second.GetMinX() << " " << second.GetMinY() << " 2: " << second.GetMaxX() << " " << second.GetMinY()
+                      << " 3: " << second.GetMaxX() << " " << second.GetMaxY() << " 4: " << second.GetMinX() << " " << second.GetMaxY() <<std::endl;
+    */
 
-    if( (first.GetMinX() <= second.GetMinX()) || (first.GetMaxX() >= second.GetMaxX()) || ( (first.GetMinX() >= second.GetMinX()) && (first.GetMaxX() <= second.GetMaxX()) ) ){
+    if( ( (first.GetMinX() <= second.GetMinX()) && (first.GetMaxX() >= second.GetMinX()) ) ||
+            ( (first.GetMaxX() >= second.GetMaxX()) && (first.GetMinX() <= second.GetMaxX()) ) ){
 
 
         if( ( (second.GetMinY() >= first.GetMinY()) && (second.GetMinY() <= first.GetMaxY()) )
