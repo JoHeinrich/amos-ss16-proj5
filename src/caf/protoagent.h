@@ -47,11 +47,13 @@ using namespace std;
 using namespace caf;
 using namespace caf::io; 
 
+enum class Scenarios : int { WARN1 = 1, WARN2 = 2, WARN3 = 3, EXIT = 4 };
 
 class ProtoAgent {
 	
 public:
-
+	
+	
 	/** 
 	* starts the client. 
 	* 
@@ -68,7 +70,7 @@ public:
 	*/ 
 	void startServer (uint16_t port);
 
-	void sendMsgFromClient(int id);
+	void sendMsgFromClient(Scenarios id);
 
 	/** 
 	* utility function to print an exit message with custom name. 
@@ -112,5 +114,6 @@ public:
 	*/ 
 	static behavior server(broker* self, actor buddy);
 };
+
 
 #endif // PROTOBUF_BROKER_H

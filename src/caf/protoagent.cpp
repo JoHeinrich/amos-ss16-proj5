@@ -27,6 +27,7 @@
 
 static actor client_actor;
 static actor io_actor;
+int mess_id = 1;
 
 void ProtoAgent::print_on_exit(const actor& hdl, const std::string& name) {
   hdl->attach_functor([=](abstract_actor* ptr, uint32_t reason) {
@@ -36,14 +37,19 @@ void ProtoAgent::print_on_exit(const actor& hdl, const std::string& name) {
 
 /*
   **************************
-  Client's behavior -- sends a warning after kickoff and quits
-  after the warning has been acknowledged by the server
+  Client's behavior -- sends a warning after he gets the "warnServer" event from the controller
   **************************
 */
 behavior ProtoAgent::sendWarning(event_based_actor* self) {
   return {
-    on(atom("kickoff"), arg_match) >> [=](const actor& pong, int id) {
-      self->send(pong, atom("warning"), id);
+    on(atom("warnSc1"), arg_match) >> [=](const actor& pong, int id) {
+      self->send(pong, atom("warning1"), id);
+    },
+    on(atom("warnSc2"), arg_match) >> [=](const actor& pong, int id) {
+      self->send(pong, atom("warning2"), id);
+    },
+    on(atom("warnSc3"), arg_match) >> [=](const actor& pong, int id) {
+      self->send(pong, atom("warning3"), id);
     },
     on(atom("exit"), arg_match) >> [=](int value) -> void {
           self->quit();
@@ -90,8 +96,20 @@ void ProtoAgent::protobuf_io(broker* self, connection_handle hdl, const actor& b
       self->send_exit(buddy, exit_reason::remote_link_unreachable);
       self->quit(exit_reason::remote_link_unreachable);
     },
-    on(atom("warning"), arg_match) >> [=](int i) {
-      aout(self) << "Send: warning with ID " << i << endl;
+    on(atom("warning1"), arg_match) >> [=](int i) {
+      aout(self) << "Send: warning type 1 with ID " << i << endl;
+      org::libcppa::WarnOrAck p;
+      p.mutable_warn()->set_id(i);
+      write(p);
+    },
+    on(atom("warning2"), arg_match) >> [=](int i) {
+      aout(self) << "Send: warning type 2 with ID " << i << endl;
+      org::libcppa::WarnOrAck p;
+      p.mutable_warn()->set_id(i);
+      write(p);
+    },
+    on(atom("warning3"), arg_match) >> [=](int i) {
+      aout(self) << "Send: warning type 3 with ID " << i << endl;
       org::libcppa::WarnOrAck p;
       p.mutable_warn()->set_id(i);
       write(p);
@@ -199,11 +217,21 @@ void ProtoAgent::startClient (uint16_t port, const string& host) {
   	//shutdown();
 }
 
-void ProtoAgent::sendMsgFromClient(int id) {	
-	if ( id == 3) {
-		send_as(io_actor, client_actor, atom("kickoff"), io_actor, id);
+
+void ProtoAgent::sendMsgFromClient(Scenarios id) {	
+	if ( Scenarios::WARN1 == id) {
+		send_as(io_actor, client_actor, atom("warnSc1"), io_actor, mess_id);
+		mess_id++;
 	}
-	if ( id == 2) {
+	if ( Scenarios::WARN2 == id) {
+		send_as(io_actor, client_actor, atom("warnSc2"), io_actor, mess_id);
+		mess_id++;
+	}
+	if ( Scenarios::WARN3 == id) {
+		send_as(io_actor, client_actor, atom("warnSc3"), io_actor, mess_id);
+		mess_id++;
+	}
+	if ( Scenarios::EXIT == id) {
 		send_as(io_actor, client_actor, atom("exit"), 1);
 	}
 }
@@ -233,8 +261,10 @@ int main(int argc, char** argv) {
       		// We are a client
 		ProtoAgent client;
 		client.startClient(port, host);
-		client.sendMsgFromClient(3);
-		client.sendMsgFromClient(2);
+		client.sendMsgFromClient(Scenarios::WARN1);
+		client.sendMsgFromClient(Scenarios::WARN2);
+		client.sendMsgFromClient(Scenarios::WARN3);
+		client.sendMsgFromClient(Scenarios::EXIT);
 		await_all_actors_done();
   		shutdown();
     	  },
