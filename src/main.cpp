@@ -21,13 +21,23 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+/**
+* This is the global main of amos-ss16-proj5.
+*
+* It takes a video (hdf5 or mp4), extracts it, executes object detection and scenario analysation.
+* Every time a specific scenario is detected, the communication is performed.
+*/
+
+//std
 #include <iostream>
 #include <sstream>
-#include "hdf5_frame_selector.h"
-#include "frame_selector_factory.h"
-#include "image_view.h"
 #include <vector>
-#include "../ProcessControl/controller.h"
+
+//local
+#include "StreamDecoder/hdf5_frame_selector.h"
+#include "StreamDecoder/frame_selector_factory.h"
+#include "StreamDecoder/image_view.h"
+#include "ProcessControl/controller.h"
 
 using namespace std;
 
@@ -35,7 +45,7 @@ int main(int argc, const char* argv[]) {
 
     if (argc > 3 || argc == 1){
 
-        cerr << "Usage:  " << " FULL_PATH_TO_HDF5_FILE (optional: image index)" << endl;
+        cerr << "Usage:  " << " FULL_PATH_TO_VIDEO_FILE (optional: image index)" << endl;
         return -1;
 
     }
