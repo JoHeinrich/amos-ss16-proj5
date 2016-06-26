@@ -2,9 +2,11 @@ package org.libcppa;
 
 message warning {
   required int32 id = 1;
+  required int32 type = 2;
 }
 message ack {
   required int32 id = 1;
+  required int32 type = 2;
 }
 
 message WarnOrAck {

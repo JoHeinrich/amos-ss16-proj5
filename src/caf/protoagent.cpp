@@ -66,8 +66,8 @@ behavior ProtoAgent::sendWarning(event_based_actor* self) {
 */
 behavior ProtoAgent::ackMessage() {
   return {
-    on(atom("warning"), arg_match) >> [](int value) {
-      return make_message(atom("ack"), value);
+    on(atom("warning"), arg_match) >> [](int id, int type) {
+      return make_message(atom("ack"), id, type);
     }
   };
 }
@@ -97,27 +97,31 @@ void ProtoAgent::protobuf_io(broker* self, connection_handle hdl, const actor& b
       self->quit(exit_reason::remote_link_unreachable);
     },
     on(atom("warning1"), arg_match) >> [=](int i) {
-      aout(self) << "Send: warning type 1 with ID " << i << endl;
+      aout(self) << "Send: warning of type 1 with ID " << i << endl;
       org::libcppa::WarnOrAck p;
       p.mutable_warn()->set_id(i);
+      p.mutable_warn()->set_type(1);      
       write(p);
     },
     on(atom("warning2"), arg_match) >> [=](int i) {
-      aout(self) << "Send: warning type 2 with ID " << i << endl;
+      aout(self) << "Send: warning of type 2 with ID " << i << endl;
       org::libcppa::WarnOrAck p;
       p.mutable_warn()->set_id(i);
+      p.mutable_warn()->set_type(2);
       write(p);
     },
     on(atom("warning3"), arg_match) >> [=](int i) {
-      aout(self) << "Send: warning type 3 with ID " << i << endl;
+      aout(self) << "Send: warning of type 3 with ID " << i << endl;
       org::libcppa::WarnOrAck p;
       p.mutable_warn()->set_id(i);
+      p.mutable_warn()->set_type(3);      
       write(p);
     },
-    on(atom("ack"), arg_match) >> [=](int i) {
-      aout(self) << "Send: ack with ID " << i << endl;
+    on(atom("ack"), arg_match) >> [=](int i, int type) {
+      aout(self) << "Send: ack with ID " << i << " of type " << type << endl;
       org::libcppa::WarnOrAck p;
       p.mutable_ack()->set_id(i);
+      p.mutable_ack()->set_type(type);
       write(p);
     },
     [=](const down_msg& dm) {
@@ -135,12 +139,12 @@ void ProtoAgent::protobuf_io(broker* self, connection_handle hdl, const actor& b
       org::libcppa::WarnOrAck p;
       p.ParseFromArray(msg.buf.data(), static_cast<int>(msg.buf.size()));
       if (p.has_warn()) {
-        aout(self) << "Received: warning with ID " << p.warn().id() << endl;
-        self->send(buddy, atom("warning"), p.warn().id());
+        aout(self) << "Received: warning with ID " << p.warn().id() << " of type " << p.warn().type() << endl;
+        self->send(buddy, atom("warning"), p.warn().id(), p.warn().type());
       }
       else if (p.has_ack()) {
-        aout(self) << "Received: ack for ID " << p.ack().id() << endl;
-        self->send(buddy, atom("ack"), p.ack().id());
+        aout(self) << "Received: ack for ID " << p.ack().id() << " of type " << p.ack().type() << endl;
+        self->send(buddy, atom("ack"), p.ack().id(), p.ack().type());
       }
       else {
         self->quit(exit_reason::user_shutdown);
@@ -264,12 +268,12 @@ int main(int argc, char** argv) {
 		client.sendMsgFromClient(Scenarios::WARN1);
 		client.sendMsgFromClient(Scenarios::WARN2);
 		client.sendMsgFromClient(Scenarios::WARN3);
-		client.sendMsgFromClient(Scenarios::EXIT);
 		await_all_actors_done();
+		client.sendMsgFromClient(Scenarios::EXIT);
   		shutdown();
     	  },
     	  others >> [] {
-      		cerr << "use with eihter '-s PORT' as server or "
+      		cerr << "use with either '-s PORT' as server or "
           	"'-c HOST PORT' as client"
            	<< endl;
     }
