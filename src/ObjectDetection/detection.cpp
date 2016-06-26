@@ -43,7 +43,8 @@ Detection::~Detection(){
 FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
     Mat frame = image->GetRGBImage();
-    Mat resized_frame = ResizeFrame(&frame);
+    Mat contrast_and_brightness_adjusted_frame = AdjustContrastAndBrightness(&frame);
+    Mat resized_frame = ResizeFrame(&contrast_and_brightness_adjusted_frame);
 
     std::vector<Rect> detected_people = people_detector_->Detect(&resized_frame);
     std::vector<Rect> detected_vehicles = vehicle_detector_->Detect(&resized_frame);
