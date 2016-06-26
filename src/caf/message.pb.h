@@ -100,16 +100,26 @@ class warning : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 id() const;
   inline void set_id(::google::protobuf::int32 value);
 
+  // required int32 type = 2;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 2;
+  inline ::google::protobuf::int32 type() const;
+  inline void set_type(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:org.libcppa.warning)
  private:
   inline void set_has_id();
   inline void clear_has_id();
+  inline void set_has_type();
+  inline void clear_has_type();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 type_;
   friend void  protobuf_AddDesc_message_2eproto();
   friend void protobuf_AssignDesc_message_2eproto();
   friend void protobuf_ShutdownFile_message_2eproto();
@@ -179,16 +189,26 @@ class ack : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 id() const;
   inline void set_id(::google::protobuf::int32 value);
 
+  // required int32 type = 2;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 2;
+  inline ::google::protobuf::int32 type() const;
+  inline void set_type(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:org.libcppa.ack)
  private:
   inline void set_has_id();
   inline void clear_has_id();
+  inline void set_has_type();
+  inline void clear_has_type();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 type_;
   friend void  protobuf_AddDesc_message_2eproto();
   friend void protobuf_AssignDesc_message_2eproto();
   friend void protobuf_ShutdownFile_message_2eproto();
@@ -320,6 +340,30 @@ inline void warning::set_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:org.libcppa.warning.id)
 }
 
+// required int32 type = 2;
+inline bool warning::has_type() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void warning::set_has_type() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void warning::clear_has_type() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void warning::clear_type() {
+  type_ = 0;
+  clear_has_type();
+}
+inline ::google::protobuf::int32 warning::type() const {
+  // @@protoc_insertion_point(field_get:org.libcppa.warning.type)
+  return type_;
+}
+inline void warning::set_type(::google::protobuf::int32 value) {
+  set_has_type();
+  type_ = value;
+  // @@protoc_insertion_point(field_set:org.libcppa.warning.type)
+}
+
 // -------------------------------------------------------------------
 
 // ack
@@ -346,6 +390,30 @@ inline void ack::set_id(::google::protobuf::int32 value) {
   set_has_id();
   id_ = value;
   // @@protoc_insertion_point(field_set:org.libcppa.ack.id)
+}
+
+// required int32 type = 2;
+inline bool ack::has_type() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ack::set_has_type() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ack::clear_has_type() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void ack::clear_type() {
+  type_ = 0;
+  clear_has_type();
+}
+inline ::google::protobuf::int32 ack::type() const {
+  // @@protoc_insertion_point(field_get:org.libcppa.ack.type)
+  return type_;
+}
+inline void ack::set_type(::google::protobuf::int32 value) {
+  set_has_type();
+  type_ = value;
+  // @@protoc_insertion_point(field_set:org.libcppa.ack.type)
 }
 
 // -------------------------------------------------------------------
