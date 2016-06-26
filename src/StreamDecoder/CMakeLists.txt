@@ -1,3 +1,4 @@
+#general
 cmake_minimum_required (VERSION 2.8)
 project(frameselector)
 set (OUTPUT_NAME frameselector)
@@ -80,12 +81,12 @@ set(sources
 	frame_selector_factory.cpp
 	hdf5_frame_selector.cpp
 	mp4_frame_selector.cpp
-	main.cpp
 	image.cpp
 	bayer_image.cpp
 	mp4_image.cpp
 	image_view.cpp
 	protobuf_image_wrapper.cpp
+	main.cpp
 )
 
 add_executable(${OUTPUT_NAME} ${sources} ${header} ${protobufsources} ${protobufheaders} ${hdfsource} ${hdfheader})
