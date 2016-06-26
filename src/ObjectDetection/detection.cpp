@@ -140,3 +140,16 @@ Mat Detection::ResizeFrame(Mat *frame) {
     resize(*frame, resized_frame, Size(0, 0), 0.3125, 0.3125, CV_INTER_AREA);
     return resized_frame;
 }
+
+cv::Mat adjustContrastAndBrightness(cv::Mat *frame,  double contrastValue, int brightnessValue){
+    Mat adjusted_image = Mat::zeros( frame->size(), frame->type() );
+        for( int x = 0; x < frame->rows; x++ ){
+            for( int y = 0; y < frame->cols; y++ ){
+                // c: use all colours of RGB / BGR
+                for( int c = 0; c < 3; c++ ){
+                    adjusted_image.at<Vec3b>(x,y)[c] = saturate_cast<uchar>(contrastValue* (frame->at<Vec3b>(x,y)[c])+ brightnessValue );
+            }
+        }
+    }
+    return adjusted_image;
+}
