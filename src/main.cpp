@@ -19,18 +19,28 @@
 // You should have received a copy of the GNU Affero General Public
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
+//
 
-
-/*
-* This is the global main for our project
+/**
+* This is the global main of amos-ss16-proj5.
+*
+* It takes a video (hdf5 or mp4), extracts it, executes object detection and scenario analysation.
+* Every time a specific scenario is detected, the communication is performed.
 */
-#include "caf/all.hpp"
-#include "caf/io/all.hpp"
 
+//std
 #include <iostream>
-#include "controller.h"
-#include "multithreadedcontroller.h"
-#include "../CarCommunication/protoagent.h"
+#include <sstream>
+#include <vector>
+
+//local
+#include "StreamDecoder/hdf5_frame_selector.h"
+#include "StreamDecoder/frame_selector_factory.h"
+#include "StreamDecoder/image_view.h"
+#include "ProcessControl/controller.h"
+#include "ProcessControl/multithreadedcontroller.h"
+#include "CarCommunication/protoagent.h"
+
 using namespace std;
 
 static bool
@@ -45,7 +55,14 @@ str_to_uint16(const char *str, uint16_t *res)
   return true;
 }
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
+
+    if (argc > 4 || argc == 1){
+
+        cerr << "Usage:  " << " FULL_PATH_TO_VIDEO_FILE (optional: image index)" << endl;
+        return -1;
+
+    }
 
     if(argc == 2){
         uint16_t port;
@@ -55,28 +72,40 @@ int main(int argc, const char * argv[]) {
         }
         else
         {
-            cerr << "Could not read port" << endl;
+            cerr << "Analysing video in file " << argv[1] << endl;
+            Controller controller;
+            controller.AnalyseVideo(argv[1]);
         }
-    }else if(argc == 4)
-    {
+    } 
+
+    if(argc == 3){
+        FrameSelectorFactory frame_selector_factory(argv[1]);
+        FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
+        // read one image
+        unsigned int index = 0;
+        stringstream string_index(argv[2]);
+        string_index >> index;
+        Image * result_image = pipeline->ReadImage(index);
+
+        ImageView image_viewer;
+        image_viewer.ShowImage(result_image, 0);
+    }
+    
+    if(argc == 4){
         uint16_t port;
         if(str_to_uint16(argv[1],&port))
         {
-            MultithreadedController controller(argv[3],port,argv[2]);
-            //controller.AnalyseVideo(argv[3],port,argv[2]);
+            //MultithreadedController controller(argv[3],port,argv[2]);
+            Controller().AnalyseVideo(argv[3],port,argv[2]);
         }
         else
         {
             cerr << "Could not read port" << endl;
         }
 
-    }
-    else
-    {
-        cerr << "Usage:  " << " PORT (SERVER_IP_ADRESS FULL_PATH_TO_HDF5_FILE)" << endl;
-        return -1;
-    }
+}
 
 
     return 0;
 }
+
