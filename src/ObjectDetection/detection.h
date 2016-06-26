@@ -76,6 +76,17 @@ private:
     * @return The resized image
     **/
     cv::Mat ResizeFrame(cv::Mat *frame);
+    
+    /**
+     * Adjust the image for better contrast and better brightness
+     *
+     * @param frame The current image of the stream
+     * @param contrastValue - set a value between 1.0-3.0
+     * @param brightnessValue - set a value between 0-100
+     *
+     * @return The changed image
+     **/
+    cv::Mat adjustContrastAndBrightness(cv::Mat *frame, double contrastValue, int brightnessValue);
 
 };
 
