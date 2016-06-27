@@ -63,7 +63,7 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
 
   //DaimlerPeopleDetector people_detector;
   //HOGPeopleDetector people_detector;
-  TemplateMatchingPeopleDetector people_detector("template.jpg");
+  TemplateMatchingPeopleDetector people_detector("/home/anyuser/Desktop/amos/amos-ss16-proj5/src/ObjectDetection/template.png");
   CascadeHaarDetector vehicle_detector("cars3.xml");
   Detection detection(&people_detector, &vehicle_detector);
 
