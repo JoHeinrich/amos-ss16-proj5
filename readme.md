@@ -16,7 +16,7 @@ A bus stops at a bus stop vis-à-vis to a school. A car that drives behind the b
 
 #### Setup:
 - Operating System: Linux Ubuntu
-- SW Agents library: Mobile-C
+- SW Agents library: CAF: C++ Actor Framework
 - Library for detection: OpenCV
 - Messaging format: HDF5, Google Protobuf
 

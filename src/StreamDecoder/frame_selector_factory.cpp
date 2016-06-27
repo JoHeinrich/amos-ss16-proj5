@@ -22,8 +22,6 @@
 //
 
 #include "frame_selector_factory.h"
-#include "hdf5_frame_selector.h"
-#include "frame_selector.h"
 
 FrameSelectorFactory::FrameSelectorFactory(std::string file){
     file_name_= file;
@@ -32,6 +30,9 @@ FrameSelectorFactory::FrameSelectorFactory(std::string file){
 FrameSelector * FrameSelectorFactory::GetFrameSelector(){
     if (HasSuffix(file_name_, ".HDF5")||HasSuffix(file_name_, ".hdf5")){
         return new HDF5FrameSelector(file_name_);
+    }
+    if (HasSuffix(file_name_, ".MP4")||HasSuffix(file_name_, ".mp4")){
+        return new MP4FrameSelector (file_name_);
     }
     else return NULL;
 }

@@ -23,7 +23,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#include "protobuf_broker.h"
+#include "protoagent.h"
 
 void ProtoAgent::print_on_exit(const actor& hdl, const std::string& name) {
   hdl->attach_functor([=](abstract_actor* ptr, uint32_t reason) {
@@ -211,6 +211,7 @@ void ProtoAgent::startServer (uint16_t port) {
 	shutdown();
 }
 
+/*#ifndef COMBINE
 int main(int argc, char** argv) {
 	// Parsing arguments
 	message_builder{argv + 1, argv + argc}.apply({
@@ -231,3 +232,5 @@ int main(int argc, char** argv) {
     }
   });
 }
+
+#endif*/

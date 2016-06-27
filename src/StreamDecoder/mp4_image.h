@@ -1,7 +1,6 @@
-
+//
 // Projectname: amos-ss16-proj5
 //
-// Created on 02.06.2016.
 // Copyright (c) 2016 de.fau.cs.osr.amos2016.gruppe5
 //
 // This file is part of the AMOS Project 2016 @ FAU
@@ -22,48 +21,56 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef FRAME_DETECTION_DATA_H
-#define FRAME_DETECTION_DATA_H
+#ifndef __amos_ss16_proj5__mp4_image__
+#define __amos_ss16_proj5__mp4_image__
 
+#include <opencv2/opencv.hpp>
+#include "image.h"
 
-//std
-#include <vector>
-#include <map>
-#include <string>
+using namespace cv;
 
-//local
-#include "element.h"
-
-// enum for the types of detected objects
-enum ObjectType { OBJECT_HUMAN = 0, OBJECT_VEHICLE = 1 };
-
-
-class FrameDetectionData {
+class MP4Image : public Image{
     
 public:
     
     /**
-     * Gets a vector of elements with the given type
+     * Constructor
      *
-     * @param type  The type of the elements
-     *
-     * @return The vector with all elements of the given type
+     * @param payload  The payload of the image
+     * @param width  The width of the image
+     * @param height  The height of the image
      */
-    std::vector<Element> GetElementsOfType(ObjectType type);
-
+    MP4Image(const cv::Mat rgb_image, int width, int height);
+    
     /**
-     * Adds a vector of elements with a given type
+     * Destructor
+     */
+    ~MP4Image();
+    
+    /**
+     * Gets the image width
      *
-     * @param type  The type of the elements
-     * @param elements  The vector with elements
+     * @return The image width
+     */
+    int GetImageWidth();
+    
+    /**
+     * Gets the image height
+     *
+     * @return The image height
+     */
+    int GetImageHeight();
+    
+    /**
+     * Returns the payload as RGB image
      *
      */
-    void AddElementsOfType(ObjectType type, std::vector<Element> elements);
-
-
+    Mat GetRGBImage();
+    
+    
 private:
-    std::map<ObjectType, std::vector<Element> > all_elements_;   ///< The map containing all elements of all types
+    cv::Mat rgb_image_;   ///< The string containing the payload of the image
+    int image_width_;		///< The image width
+    int image_height_; ///< The image height
 };
-
-
-#endif // FRAME_DETECTION_DATA_H
+#endif /* defined(__amos_ss16_proj5__mp4_image__) */

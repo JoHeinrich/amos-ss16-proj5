@@ -26,6 +26,9 @@
 
 #include <stdio.h>
 #include "frame_selector.h"
+#include "hdf5_frame_selector.h"
+#include "mp4_frame_selector.h"
+
 class FrameSelectorFactory {
     
 public:

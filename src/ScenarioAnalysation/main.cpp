@@ -25,8 +25,8 @@
 //std
 #include <iostream>
 #include <vector>
-#include <list>
 
+//local
 #include "analyser.h"
 #include "humans_in_front_of_bus_scenario.h"
 #include "scenario.h"
@@ -36,7 +36,7 @@
 
 using namespace std;
 
-
+/*#ifndef COMBINE
 int main(int argc, const char* argv[]) {
 
     if (argc > 1 ){
@@ -78,24 +78,24 @@ int main(int argc, const char* argv[]) {
 
     FrameDetectionData frame_detection;
 
-    std::list<Element> all_humans;
+    std::vector<Element> all_humans;
     all_humans.push_back(human);
 
-    std::list<Element> all_vehicles;
+    std::vector<Element> all_vehicles;
     all_vehicles.push_back(vehicle);
 
     frame_detection.AddElementsOfType(OBJECT_HUMAN, all_humans);
     frame_detection.AddElementsOfType(OBJECT_VEHICLE, all_vehicles);
 
-    std::cout << "vehicle MinX: " << vehicle.MinX() << " MinY: " << vehicle.MinY() << " MaxX: " << vehicle.MaxX() << " MaxY: " << vehicle.MaxY() << std::endl;
-    std::cout << "human   MinX: " << human.MinX() << " MinY: " << human.MinY() << " MaxX: " << human.MaxX() << " MaxY: " << human.MaxY() << std::endl;
+    std::cout << "vehicle MinX: " << vehicle.GetMinX() << " MinY: " << vehicle.GetMinY() << " MaxX: " << vehicle.GetMaxX() << " MaxY: " << vehicle.GetMaxY() << std::endl;
+    std::cout << "human   MinX: " << human.GetMinX() << " MinY: " << human.GetMinY() << " MaxX: " << human.GetMaxX() << " MaxY: " << human.GetMaxY() << std::endl;
     // analyse the fake frame detection data
     Scenario* result_scenario = analyser.Analyse(frame_detection);
 
-    std::cout<< "distance: " << Scenario::CenterDistance(vehicle,human) << std::endl;
+    std::cout<< "distance: " << Scenario::ComputeCenterDistance(vehicle,human) << std::endl;
     if(result_scenario != NULL)
     {
-        std::cout << "Main: " << result_scenario->Information() << std::endl;
+        std::cout << "Main: " << result_scenario->GetScenarioInformation() << std::endl;
     }
     
     //if( HumansInFrontOfBusScenario* result = dynamic_cast<HumansInFrontOfBusScenario*>(result_scenario) ){
@@ -105,3 +105,5 @@ int main(int argc, const char* argv[]) {
 
     return 0;
 }
+
+#endif*/

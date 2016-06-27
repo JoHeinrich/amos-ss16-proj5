@@ -22,48 +22,151 @@
 //
 
 #include "detection.h"
-#include "people_detector.h"
-#include "vehicle_detector.h"
+#include "element.h"
+
 
 using namespace std;
 using namespace cv;
 
-void Detection::ProcessFrame(Image image) {
+Detection::Detection(Detector * people_detector, Detector * vehicle_detector) {
 
-  PeopleDetector peopleDetector;
-  VehicleDetector vehicleDetector;
+    people_detector_ = people_detector;
+    vehicle_detector_ = vehicle_detector;
+    image_view_ = new ImageView();
+    //default resize factor value
+    resize_factor_ = 1.0;
+}
 
-  Mat frame = image.GetRGBImage();
-  Mat resizedFrame = ResizeFrame(&frame);
+Detection::~Detection(){
+    delete image_view_;
+    image_view_ = NULL;
+}
 
-  std::vector<Rect> detectedPeople = peopleDetector.Detect(&resizedFrame);
-  std::vector<Rect> detectedVehicles = vehicleDetector.Detect(&resizedFrame);
+FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
-  DisplayDetectedObjects(detectedPeople, detectedVehicles, &resizedFrame);
+    Mat frame = image->GetRGBImage();
+    Mat contrast_and_brightness_adjusted_frame = AdjustContrastAndBrightness(&frame);
+    Mat resized_frame = ResizeFrame(&contrast_and_brightness_adjusted_frame);
+
+    std::vector<Rect> detected_people = people_detector_->Detect(&resized_frame);
+    std::vector<Rect> detected_vehicles = vehicle_detector_->Detect(&resized_frame);
+
+    // write the detected people and vehicle data into frame detection data and return it
+    // resize the position and the box of detected elements to real size again
+    FrameDetectionData* detected_objects = new FrameDetectionData();
+    std::vector<Element> people_elements;
+    std::vector<Element> vehicle_elements;
+
+    for(int i=0; i<detected_people.size(); i++) {
+
+        Rect current_rec = detected_people.at(i);
+
+        std::vector<int> position;
+        std::vector<int> box;
+
+        int pos_x_resized = current_rec.x/resize_factor_;
+        int pos_y_resized = current_rec.y/resize_factor_;
+
+        if(pos_x_resized < 0){
+            pos_x_resized = 0;
+        }
+        if(pos_x_resized > image->GetImageWidth()){
+            pos_x_resized = image->GetImageWidth();
+        }
+
+        if(pos_y_resized < 0){
+            pos_y_resized = 0;
+        }
+        if(pos_y_resized > image->GetImageHeight()){
+            pos_y_resized = image->GetImageHeight();
+        }
+
+        position.push_back(pos_x_resized);
+        position.push_back(pos_y_resized);
+
+        int box_width_resized = current_rec.width/resize_factor_;
+        int box_height_resized = current_rec.height/resize_factor_;
+
+        if((position.at(0) + box_width_resized) > image->GetImageWidth()){
+            box_width_resized = image->GetImageWidth()-position.at(0);
+        }
+        if((position.at(1) + box_height_resized) > image->GetImageHeight()){
+            box_height_resized = image->GetImageHeight()-position.at(1);
+        }
+
+        box.push_back(box_width_resized);
+        box.push_back(box_height_resized);
+
+        //std::cout << "Process Frame: position of elem: " << position.at(0) << " " << position.at(1) << std::endl;
+        //std::cout << "Process Frame: width and height: " << box.at(0) << " " << box.at(1) << std::endl;
+
+        Element current_elem(position, box);
+
+        people_elements.push_back(current_elem);
+    }
+
+    detected_objects->AddElementsOfType(OBJECT_HUMAN, people_elements);
+
+    for(int i=0; i<detected_vehicles.size(); i++) {
+
+        Rect current_rec = detected_vehicles.at(i);
+
+        std::vector<int> position;
+        std::vector<int> box;
+
+        position.push_back(current_rec.x/resize_factor_);
+        position.push_back(current_rec.y/resize_factor_);
+
+        box.push_back(current_rec.width/resize_factor_);
+        box.push_back(current_rec.height/resize_factor_);
+
+        Element current_elem(position, box);
+
+        vehicle_elements.push_back(current_elem);
+    }
+
+    detected_objects->AddElementsOfType(OBJECT_VEHICLE, vehicle_elements);
+
+
+    // display image and detections
+    cout<<"display detections"<<endl;
+    image_view_->ShowImageAndDetections(image, people_elements, vehicle_elements);
+
+
+    return detected_objects;
 }
 
 Mat Detection::ResizeFrame(Mat *frame) {
-  //resize the image to width of 400px to reduce detection time and improve detection accuracy
-  //0.3125 is used because the test video is 1280 x 720, so the width resized images is 400px this has to be changed to our image size (best would be no hard coded scaling so other images sizes work too!)
-  // TODO: dynamic risizeing depending on input (min width 400px)
+    // resize the image to width of 400px to reduce detection time and improve detection accuracy
+    // dynamic risizing depending on input (min width 400px)
 
-  Mat resizedFrame;
-  resize(*frame, resizedFrame, Size(0, 0), 0.3125, 0.3125, CV_INTER_AREA);
-  return resizedFrame;
+    // compute resize factor
+    Size size = frame->size();
+
+    resize_factor_ = static_cast<float>(default_resized_frame_width)/size.width;
+
+   // std::cout << "Detection: resized factor: " << resize_factor_ << std::endl;
+
+    Mat resized_frame;
+    resize(*frame, resized_frame, Size(0, 0), resize_factor_, resize_factor_, CV_INTER_AREA);
+
+    return resized_frame;
 }
 
-void Detection::DisplayDetectedObjects(std::vector<Rect> firstDetection, std::vector<Rect> secondDetection, Mat *frame) {
-  //add retangle for each Object in firstDetection
-  for (int i=0; i<firstDetection.size(); i++) {
-      Rect r = firstDetection[i];
-      rectangle(*frame, r.tl(), r.br(), Scalar(0,255,0), 2);
-  }
-
-  //add rectangle for each Object in secondDetection
-  for (int i=0; i<secondDetection.size(); i++) {
-      Rect r = secondDetection[i];
-      rectangle(*frame, r.tl(), r.br(), Scalar(255,150,0), 2);
-  }
-
-  imshow("Camera stream", *frame); // TODO: Use image_view class
+cv::Mat Detection::AdjustContrastAndBrightness(cv::Mat *frame,  double contrastValue, int brightnessValue){
+    Mat adjusted_image = Mat::zeros( frame->size(), frame->type() );
+        for( int x = 0; x < frame->rows; x++ ){
+            for( int y = 0; y < frame->cols; y++ ){
+                // c: use all colours of RGB / BGR
+                for( int c = 0; c < 3; c++ ){
+                    adjusted_image.at<Vec3b>(x,y)[c] = saturate_cast<uchar>(contrastValue* (frame->at<Vec3b>(x,y)[c])+brightnessValue );
+            }
+        }
+    }
+    return adjusted_image;
 }
+
+cv::Mat Detection::AdjustContrastAndBrightness(cv::Mat *frame){
+    return AdjustContrastAndBrightness(frame, default_contrast_value, default_brightness_value);
+}
+

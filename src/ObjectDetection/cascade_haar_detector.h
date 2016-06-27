@@ -21,28 +21,38 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef DETECTOR_H
-#define DETECTOR_H
+#ifndef CASCADE_HAAR_DETECTOR_H
+#define CASCADE_HAAR_DETECTOR_H
 
-#include <opencv2/opencv.hpp>
-#include <vector>
+#include "detector.h"
 
-class Detector {
+class CascadeHaarDetector : public Detector {
 
 public:
 
     /**
-    * Detects objects in the given frame (cv::Mat). Must be overwritten in subclass.
+    * Default constructor.
+    **/
+    CascadeHaarDetector(std::string classifier_file, double scale_factor = 1.1, int min_neighbors = 3, cv::Size min_size = cv::Size(20,20), cv::Size max_size = cv::Size(80,80));
+
+    /**
+    * Detects objects in the given frame (cv::Mat) acording to the classifier.
     *
     * @param frame The current frame
     *
     * @return The vector of all detected objects in the current Frame
     **/
-    virtual std::vector<cv::Rect> Detect(cv::Mat *frame) = 0;
+    std::vector<cv::Rect> Detect(cv::Mat *frame);
 
 private:
+
+    cv::CascadeClassifier cascade_haar_classifier_;
+    double scale_factor_;
+    int min_neighbors_;
+    cv::Size min_size_;
+    cv::Size max_size_;
 
 };
 
 
-#endif // DETECTOR_H
+#endif // CASCADE_HAAR_DETECTOR_H

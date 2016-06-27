@@ -24,15 +24,17 @@
 
 //std
 #include <iostream>
+#include <vector>
 
+//local
 #include "humans_in_front_of_bus_scenario.h"
 
 bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
 
     // first: check whether there are humans detected
 
-    std::list<Element> humans = detected_objects.GetElementsOfType(OBJECT_HUMAN);
-    std::list<Element> vehicles = detected_objects.GetElementsOfType(OBJECT_VEHICLE);
+    std::vector<Element> humans = detected_objects.GetElementsOfType(OBJECT_HUMAN);
+    std::vector<Element> vehicles = detected_objects.GetElementsOfType(OBJECT_VEHICLE);
 
     std:: cout << "Humans in Front of Bus Scenario: Number of humans = " << humans.size() << " Number of vehicles = " << vehicles.size() << std::endl;
     if(humans.size() != 0){
@@ -40,17 +42,17 @@ bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
         if(vehicles.size() != 0){
 
             // check whether there are human objects which overlap with vehicle objects
-            std::list <Element>::const_iterator humans_iterator;
+            std::vector<Element>::const_iterator humans_iterator;
 
             for(humans_iterator = humans.begin(); humans_iterator != humans.end(); ++humans_iterator){
 
                 Element current_human = *humans_iterator;
 
-                 std::list <Element>::const_iterator vehicles_iterator;
+                 std::vector<Element>::const_iterator vehicles_iterator;
 
                  for(vehicles_iterator = vehicles.begin(); vehicles_iterator != vehicles.end(); ++vehicles_iterator){
 
-                     bool overlapping = Overlap(current_human, *vehicles_iterator);
+                     bool overlapping = DoOverlap(current_human, *vehicles_iterator);
                      // std::cout << "Humans in front of bus OVERLAPPING: " << overlapping << std::endl;
                      if(overlapping){
 
@@ -67,5 +69,11 @@ bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
     }
 
     return false;
+}
+
+std::string HumansInFrontOfBusScenario::GetScenarioInformation(){
+
+    return "Humans in front of bus scenario detected!";
+
 }
 

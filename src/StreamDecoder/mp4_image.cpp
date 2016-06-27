@@ -21,27 +21,25 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef VEHICLE_DETECTOR_H
-#define VEHICLE_DETECTOR_H
+#include "mp4_image.h"
 
-#include "detector.h"
+MP4Image::MP4Image(const cv::Mat rgb_image, int width, int height){
+    rgb_image_ = rgb_image;
+    image_width_ = width;
+    image_height_ = height;
+}
 
-class VehicleDetector : public Detector {
+MP4Image::~MP4Image(){
+}
 
-public:
+int MP4Image::GetImageWidth(){
+    return image_width_;
+}
 
-  /**
-   * Detects vehicles in the given frame (cv::Mat)
-   *
-   * @param frame The current frame
-   *
-   * @return The vector of all detected vehicles in the current Frame
-   **/
-  std::vector<cv::Rect> Detect(cv::Mat *frame);
+int MP4Image::GetImageHeight(){
+    return image_height_;
+}
 
-private:
-
-};
-
-
-#endif // VEHICLE_DETECTOR_H
+Mat MP4Image::GetRGBImage(){
+    return rgb_image_;
+}

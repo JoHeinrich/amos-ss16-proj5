@@ -24,44 +24,83 @@
 #ifndef DETECTION_H
 #define DETECTION_H
 
+// opencv
 #include <opencv2/opencv.hpp>
+
+//local
 #include "../StreamDecoder/image.h"
-#include "people_detector.h"
-#include "vehicle_detector.h"
+#include "../StreamDecoder/image_view.h"
+#include "detector.h"
+#include "frame_detection_data.h"
+
+const double default_contrast_value = 3.0;
+const int default_brightness_value = 50;
+const int default_resized_frame_width = 400;
 
 class Detection {
 
 public:
 
-  /**
-   * Resizes one frame and than performs the detection
-   * (people and vehicle for now) on the resized frame.
-   *
-   * @param frame The current image of the stream
-   *
-   **/
-  void ProcessFrame(Image image);
+    /**
+    * Default constructor.
+    *
+    * @param *peopleDetector The people detector
+    * @param *vehicleDetector The vehicle detector
+    **/
+    Detection(Detector * peopleDetector, Detector * vehicleDetector);
+
+    /**
+    * Default destructor.
+    *
+    **/
+    ~Detection();
+
+    /**
+    * Resizes one frame and than performs the detection
+    * (people and vehicle for now) on the resized frame.
+    *
+    * @param frame The current image of the stream
+    *
+    * @return A frame detection data object that holds the detected data
+    **/
+    FrameDetectionData* ProcessFrame(Image * image);
 
 private:
 
-  /**
-   * Resizes an image for better accuracy and better detection
-   *
-   * @param frame The current image of the stream
-   *
-   * @return The resized image
-   **/
-  cv::Mat ResizeFrame(cv::Mat *frame);
+    Detector * people_detector_; ///< Detector for the pople on the street
+    Detector * vehicle_detector_; ///< Detector for the vehicles (Bus)
+    ImageView * image_view_;    ///< The image view for showing frames and detections
+    float resize_factor_;   ///< The resize factor for resizing the image before execute detection
 
-  /**
-   * Resizes an image for better accuracy and better detection
-   *
-   * @param firstDetection Vector of detected objects
-   * @param secondDetection Vector of detected objects
-   * @param frame The resized image of the stream
-   *
-   **/
-  void DisplayDetectedObjects(std::vector<cv::Rect> firstDetection, std::vector<cv::Rect> secondDetection, cv::Mat *frame);
+    /**
+    * Resizes an image for better accuracy and better detection
+    *
+    * @param frame The current image of the stream
+    *
+    * @return The resized image
+    **/
+    cv::Mat ResizeFrame(cv::Mat *frame);
+    
+    /**
+     * Adjust the image for better contrast and better brightness
+     *
+     * @param frame - the current image of the stream
+     * @param contrastValue - set a value between 1.0-3.0
+     * @param brightnessValue - set a value between 0-100
+     *
+     * @return The changed image = contrastValue * image + brightnessValue
+     **/
+    cv::Mat AdjustContrastAndBrightness(cv::Mat *frame, double contrastValue, int brightnessValue);
+    
+
+    /**
+     * Adjust the image for better contrast and better brightness with default values
+     *
+     * @param frame - the current image of the stream
+     *
+     * @return The changed image
+     **/
+    cv::Mat AdjustContrastAndBrightness(cv::Mat *frame);
 
 };
 

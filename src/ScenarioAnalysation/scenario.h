@@ -25,7 +25,10 @@
 #ifndef SCENARIO_H
 #define SCENARIO_H
 
+//std
 #include <string>
+
+//local
 #include "../ObjectDetection/frame_detection_data.h"
 #include "../ObjectDetection/element.h"
 
@@ -44,13 +47,11 @@ public:
     
 
     /**
-    * Describes the detectable Scenario. Must be overriden in subclasses.
+    * Describes the detectable scenario with a human-readable string. Must be overriden in subclasses.
     *
-    * 
-    *
-    * @return What the scenario detects as a string
+    * @return A String that describes the detected scenario
     */
-    virtual std::string Information() = 0;
+    virtual std::string GetScenarioInformation() = 0;
 
 
     /**
@@ -61,7 +62,7 @@ public:
     *
     * @return The distance between the objects
     */
-    static float Distance(Element first, Element second);
+    static float ComputeDistance(Element first, Element second);
     
     /**
      * Computes the distance between two objects. Uses the distance between the center of the objects. Can be overriden in subclasses.
@@ -71,7 +72,7 @@ public:
      *
      * @return The distance between the center of the objects.
      */
-    static float CenterDistance(Element first, Element second);
+    static float ComputeCenterDistance(Element first, Element second);
 
     /**
      * Computes whether the two objects overlap. As default, overlapping of one pixel in the bounding boxes of the elements is enough to return true. Can be overriden in subclasses.
@@ -81,7 +82,7 @@ public:
      *
      * @return true whether there is an overlapping, false if not
      */
-    static bool Overlap(Element first, Element second);
+    static bool DoOverlap(Element first, Element second);
 
     /**
      * Computes whether the big element contains the small one 
@@ -91,7 +92,7 @@ public:
      *
      * @return true whether it is contained, false if not (equal size and position will be true)
      */
-    static bool Contains(Element big, Element small);
+    static bool DoContain(Element big, Element small);
 
 
 private:
@@ -104,7 +105,7 @@ private:
      *
      * @return The distance between the two points.
      */
-    static float PointDistance(std::vector<int> first, std::vector<int> second);
+    static float ComputePointDistance(std::vector<int> first, std::vector<int> second);
     
 
 };

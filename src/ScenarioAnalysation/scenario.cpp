@@ -28,18 +28,16 @@
 
 #include "scenario.h"
 
-float Scenario::Distance(Element first, Element second){
+float Scenario::ComputeDistance(Element first, Element second){
 
     std::vector<int> first_position = first.GetPosition();
     std::vector<int> second_position = second.GetPosition();
     
-    return PointDistance(first_position, second_position);
+    return ComputePointDistance(first_position, second_position);
 
 }
 
-
-
-bool Scenario::Overlap(Element first, Element second){
+bool Scenario::DoOverlap(Element first, Element second){
 
     //determine whether the bounding box of the first element overlaps with the second one
 
@@ -47,13 +45,19 @@ bool Scenario::Overlap(Element first, Element second){
    // std::cout << "SCENARIO::OVERLAP: first min, max x;y : " << first_min_x << " " << first_max_x << " " << first_min_y << " " << first_max_y <<std::endl;
    // std::cout << "SCENARIO::OVERLAP: second min, max x;y : " << second_min_x << " " << second_max_x << " " << second_min_y << " " << second_max_y <<std::endl;
 
+    /*std::cout<< "In function DoOverlap: " << std::endl << "First Element positions: 1:" << first.GetMinX() << " " << first.GetMinY() << " 2: " << first.GetMaxX() << " " << first.GetMinY()
+                << " 3: " << first.GetMaxX() << " " << first.GetMaxY() << " 4: " << first.GetMinX() << " " << first.GetMaxY()
+                   << std::endl << "Second Element positions: 1:" <<
+                      second.GetMinX() << " " << second.GetMinY() << " 2: " << second.GetMaxX() << " " << second.GetMinY()
+                      << " 3: " << second.GetMaxX() << " " << second.GetMaxY() << " 4: " << second.GetMinX() << " " << second.GetMaxY() <<std::endl;
+    */
 
-    if( (first.MinX() <= second.MinX()) || (first.MaxX() >= second.MaxX()) || ( (first.MinX() >= second.MinX()) && (first.MaxX() <= second.MaxX()) ) ){
+    if( ( (first.GetMinX() <= second.GetMinX()) && (first.GetMaxX() >= second.GetMinX()) ) ||
+            ( (first.GetMaxX() >= second.GetMaxX()) && (first.GetMinX() <= second.GetMaxX()) ) ){
 
-        // std::cout << " SCENARIO::OVERLAP erstes if " <<std::endl;
 
-        if( ( (second.MinY() >= first.MinY()) && (second.MinY() <= first.MaxY()) )
-                ||  ( (second.MaxY() <= first.MaxY()) && (second.MaxY() >= first.MinY()) ) ){
+        if( ( (second.GetMinY() >= first.GetMinY()) && (second.GetMinY() <= first.GetMaxY()) )
+                ||  ( (second.GetMaxY() <= first.GetMaxY()) && (second.GetMaxY() >= first.GetMinY()) ) ){
 
 
             std::cout << "Scenario: There are overlapping elements in the frame! " << std::endl;
@@ -67,30 +71,30 @@ bool Scenario::Overlap(Element first, Element second){
 
 }
 
-bool Scenario::Contains(Element big, Element small)
+bool Scenario::DoContain(Element big, Element small)
 {
     // checks if the small one is within the big one
-    return big.MinX()<=small.MinX() && big.MinY()<=small.MinY() && big.MaxX()>=small.MaxX() && big.MaxY()>=small.MaxY();
+    return big.GetMinX()<=small.GetMinX() && big.GetMinY()<=small.GetMinY() && big.GetMaxX()>=small.GetMaxX() && big.GetMaxY()>=small.GetMaxY();
 }
 
-float Scenario::CenterDistance(Element first, Element second){
+float Scenario::ComputeCenterDistance(Element first, Element second){
     
     // get the center points of the objects
     
     
     std::vector<int> first_center;
-    first_center.push_back(first.CenterX());
-    first_center.push_back(first.CenterY());
+    first_center.push_back(first.GetCenterX());
+    first_center.push_back(first.GetCenterY());
     
 
     std::vector<int> second_center;
-    second_center.push_back(second.CenterX());
-    second_center.push_back(second.CenterY());
-    return PointDistance(first_center, second_center);
+    second_center.push_back(second.GetCenterX());
+    second_center.push_back(second.GetCenterY());
+    return ComputePointDistance(first_center, second_center);
     
 }
 
-float Scenario::PointDistance(std::vector<int> first, std::vector<int> second){
+float Scenario::ComputePointDistance(std::vector<int> first, std::vector<int> second){
     
     //compute distance with pythagorean theorem
 
