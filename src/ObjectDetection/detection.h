@@ -35,6 +35,7 @@
 
 const double default_contrast_value = 3.0;
 const int default_brightness_value = 50;
+const int default_resized_frame_width = 400;
 
 class Detection {
 
@@ -69,6 +70,7 @@ private:
     Detector * people_detector_; ///< Detector for the pople on the street
     Detector * vehicle_detector_; ///< Detector for the vehicles (Bus)
     ImageView * image_view_;    ///< The image view for showing frames and detections
+    float resize_factor_;   ///< The resize factor for resizing the image before execute detection
 
     /**
     * Resizes an image for better accuracy and better detection
