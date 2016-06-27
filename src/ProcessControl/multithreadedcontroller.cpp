@@ -38,13 +38,23 @@
 #include "controller.h"
 #include "../CarCommunication/protoagent.h"
 #include "basicqueue.h"
+#include "blockingqueue.h"
+
+void MultithreadedController::Unlock()
+{
+    imageQueue->Unlock();
+    analysationQueue->Unlock();
+    warningQueue->Unlock();
+    displayQueue->Unlock();
+}
 
 MultithreadedController::MultithreadedController(std::string videofile, uint16_t port, std::string host):videofile(videofile),port(port),host(host)
 {
     bool b = true;
-    imageQueue = new BasicQueue<Image>(b);
-    fddQueue = new BasicQueue<FrameDetectionData>(b);
-    warningQueue = new BasicQueue<string>(b);
+    imageQueue = new BlockingQueue<Image>(b);
+    analysationQueue = new BlockingQueue<ImageData>(b);
+    warningQueue = new BlockingQueue<string>(b);
+    displayQueue = new BlockingQueue<ImageData>(b);
     
      #pragma omp parallel sections // starts a new team
     {
@@ -63,6 +73,10 @@ MultithreadedController::MultithreadedController(std::string videofile, uint16_t
         {
             CarCommunication(b);
         }
+        #pragma omp section
+        {
+            ShowVideo(b);
+        }
     }
 
 }
@@ -79,12 +93,14 @@ void MultithreadedController::StreamDecoder(bool& loop)
         imageQueue->Add(current_image);
         if(!loop)break;
     }
+    loop = false;
 }
 
 void MultithreadedController::ObjectDetection(bool& loop)
 {
+    //namedWindow( "Camera stream", WINDOW_AUTOSIZE );
     // DaimlerPeopleDetector people_detector;
-    ImageView image_view;
+    
     HOGPeopleDetector people_detector;
     CascadeHaarDetector vehicle_detector("cars3.xml");
     Detection detection(&people_detector, &vehicle_detector);
@@ -95,12 +111,14 @@ void MultithreadedController::ObjectDetection(bool& loop)
         if(current_image==NULL)continue;
         FrameDetectionData* current_detections = detection.ProcessFrame(current_image);
         if(current_detections != NULL){
-            fddQueue->Add(current_detections);
-            cout << "ObjectDetection" << endl;
-            //image_view.ShowImage(current_image);
-            image_view.ShowImageAndDetections(current_image, current_detections->GetElementsOfType(OBJECT_HUMAN), current_detections->GetElementsOfType(OBJECT_VEHICLE));
+            analysationQueue->Add(new ImageData(current_image,current_detections));
+            //cout << "ObjectDetection" << endl;
         }
-        delete current_image;
+        else
+        {
+            delete current_image;
+        }
+        
         current_image = NULL;
     }while(loop);
 }
@@ -114,7 +132,9 @@ void MultithreadedController::ScenarioAnalysation(bool& loop)
     do
     {
         //cout << "ScenarioAnalysation" << endl;
-        FrameDetectionData* current_detections = fddQueue->Remove();
+        ImageData * imagedata = analysationQueue->Remove();
+        if(imagedata == NULL) continue;
+        FrameDetectionData* current_detections = imagedata->frame_detection_data;
         if(current_detections == NULL) continue;
         Scenario* scenario = analyser.Analyse(*current_detections);
         if(scenario != NULL)
@@ -122,7 +142,7 @@ void MultithreadedController::ScenarioAnalysation(bool& loop)
             string message = scenario->GetScenarioInformation();
             warningQueue->Add(new string(message));
         }
-        delete current_detections;
+        displayQueue->Add(imagedata);
         current_detections = NULL;
     }while(loop);
     
@@ -130,17 +150,54 @@ void MultithreadedController::ScenarioAnalysation(bool& loop)
 
 void MultithreadedController::CarCommunication(bool& loop)
 {
-    do
+    try
     {
-        //cout << "CarCommunication" << endl;
-        string* warningpointer = warningQueue->Remove();
-        if(warningpointer==NULL)continue;
-        ProtoAgent::startClient(port,host);
-    }while(loop);
+        ProtoAgent protoagent(port,host);
+        do
+        {
+            //cout << "CarCommunication" << endl;
+            string* warningpointer = warningQueue->Remove();
+            if(warningpointer==NULL)continue;
+            protoagent.sendMsgFromClient(Scenarios::WARN1);
+            delete warningpointer;
+        }while(loop);
+    }
+    catch(caf::network_error)
+    {
+        cout << "could not connect to server going local mode" << endl;
+        do
+        {
+            //cout << "CarCommunication" << endl;
+            string* warningpointer = warningQueue->Remove();
+            if(warningpointer==NULL)continue;
+            delete warningpointer;
+        }while(loop);
+    }
+
 
 }
 
-  
+void MultithreadedController::ShowVideo(bool& loop)
+{
+    ImageView image_view;
+    do
+    {
+        
+        ImageData * imagedata  = displayQueue->Remove();
+        if(imagedata == NULL) continue;
+        FrameDetectionData* current_detections = imagedata->frame_detection_data;
+        if(current_detections == NULL) continue;
+        
+        image_view.ShowImageAndDetections(imagedata->current_image, current_detections->GetElementsOfType(OBJECT_HUMAN), current_detections->GetElementsOfType(OBJECT_VEHICLE));
+        int key = cvWaitKey(10);
+        if(key == KEY_ESC)
+        {
+            loop = false;
+            Unlock();
+        }
+
+    }while(loop);
+}
 
 
 

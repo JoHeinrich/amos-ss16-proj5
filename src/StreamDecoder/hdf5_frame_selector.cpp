@@ -71,8 +71,8 @@ Image * HDF5FrameSelector::ReadImage(unsigned int frame_index){
     // create an Image from msgCameraImage
     BayerImage * result_image = new BayerImage(protobuf_image.GetImagePayload(), protobuf_image.GetImageWidth(), protobuf_image.GetImageHeight());
 
-    std::cout << "Protobuf file: WIDTH: " << result_image->GetImageWidth() << " HEIGHT: " << result_image->GetImageHeight() << std::endl;
-    std::cout << " Size of payload: " << result_image->GetImagePayload().size() << std::endl;
+    //std::cout << "Protobuf file: WIDTH: " << result_image->GetImageWidth() << " HEIGHT: " << result_image->GetImageHeight() << std::endl;
+    //std::cout << " Size of payload: " << result_image->GetImagePayload().size() << std::endl;
 
     delete file;
     file = NULL;

@@ -36,7 +36,7 @@ bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
     std::vector<Element> humans = detected_objects.GetElementsOfType(OBJECT_HUMAN);
     std::vector<Element> vehicles = detected_objects.GetElementsOfType(OBJECT_VEHICLE);
 
-    std:: cout << "Humans in Front of Bus Scenario: Number of humans = " << humans.size() << " Number of vehicles = " << vehicles.size() << std::endl;
+    //std:: cout << "Humans in Front of Bus Scenario: Number of humans = " << humans.size() << " Number of vehicles = " << vehicles.size() << std::endl;
     if(humans.size() != 0){
 
         if(vehicles.size() != 0){

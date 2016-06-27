@@ -41,6 +41,7 @@ void ImageView::ShowImage(Image * image, int sleep_time){
 
 void ImageView::ShowImageAndDetections(Image *image, std::vector<Element> people_detections, std::vector<Element> vehicle_detections){
 
+    static bool wait = true;
       Mat frame = image->GetRGBImage();
 
       //add retangle for each object in people_detections
@@ -67,4 +68,8 @@ void ImageView::ShowImageAndDetections(Image *image, std::vector<Element> people
       }
 
       imshow("Camera stream", frame);
+
+      
+
+
 }
