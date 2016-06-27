@@ -54,39 +54,51 @@ public:
     std::vector<int> GetBoxSize();
 
     /**
-    * Returns the minimum x value that is contained in the Boundingbox
+    *   Gets the minimal x position of the bounding box of this element.
+    *
+    *   @return The minimal x position
     */
-    int MinX();
+    int GetMinX();
 
     /**
-    * Returns the minimum y value that is contained in the Boundingbox
+    *   Gets the minimal y position of the bounding box of this element.
+    *
+    *   @return The minimal y position
     */
-    int MinY();
+    int GetMinY();
 
     /**
-    * Returns the maximum x value that is contained in the Boundingbox
+    *   Gets the maximal x position of the bounding box of this element.
+    *
+    *   @return The maximal x position
     */
-    int MaxX();
+    int GetMaxX();
 
     /**
-    * Returns the maximum value that is contained in the Boundingbox
+    *   Gets the maximal y position of the bounding box of this element.
+    *
+    *   @return The maximal y position
     */
-    int MaxY();
+    int GetMaxY();
 
     /**
-    * Returns the x value of center of the Boundingbox
+    *   Gets the x value of center of the bounding box of this element.
+    *
+    *   @return The x position of the center
     */
-    int CenterX();
+    int GetCenterX();
 
     /**
-    * Returns the y value of center of the Boundingbox
+    *   Gets the y value of center of the bounding box of this element.
+    *
+    *   @return The y position of the center
     */
-    int CenterY();
+    int GetCenterY();
 
 
 private:
     
-   std::vector<int> position_;  ///< The vector containing the position of the element
+   std::vector<int> position_;  ///< The vector containing the position of the element (x and y coordinate of the top left corner)
    std::vector<int> box_size_;  ///< The vector contatining the width and height of the bounding box of the element
     
 };

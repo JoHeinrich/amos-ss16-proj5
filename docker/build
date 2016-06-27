@@ -13,4 +13,22 @@ echo "Copying final artifact to docker assets directory"
 
 mkdir -p docker/assets/bin
 cp -v -r build/bin ./docker/assets/bin
+# TODO Master hier reinschreiben
+if [ "$TRAVIS_BRANCH" != "master" ]
+then
+  if [[ "$TRAVIS_TAG" == "sprint-"+([0-9])"-release" ]]
+	then 
+		echo "This is an release -- deploy it to Dockerhub under release tag"
+		docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+		docker pull amosproj5/amosbuildimage:v1
+		docker build -t amosproj5/amosbuildimage:v1 docker/
+		docker tag amosproj5/amosbuildimage:v1 amosproj5/amosbuildimage:release 
+		docker push amosproj5/amosbuildimage:release
+		exit 0
+	fi
+fi
 
+docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+docker pull amosproj5/amosbuildimage:v1
+docker build -t amosproj5/amosbuildimage:v1 docker/
+docker push amosproj5/amosbuildimage:v1

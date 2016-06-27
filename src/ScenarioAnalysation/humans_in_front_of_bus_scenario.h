@@ -25,8 +25,10 @@
 #ifndef HUMANS_IN_FRONT_OF_BUS_SCENARIO_H
 #define HUMANS_IN_FRONT_OF_BUS_SCENARIO_H
 
-
+//local
 #include "scenario.h"
+
+//std
 #include <string>
 
 
@@ -43,14 +45,12 @@ public:
 
 
     /**
-    * Returns the detected Information
+    * Returns the information about the detected scenario as a human-readable string
     *
-    * @return A string that describes the situation
+    * @return A string that describes the scenario
     */
-    std::string Information()
-    {
-        return "Humans in front of bus scenario detected!";
-    }
+    virtual std::string GetScenarioInformation() override;
+
 private:
 
 };

@@ -21,17 +21,50 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+//local
 #include "image_view.h"
+
+//opencv
 #include <opencv2/opencv.hpp>
 
 
 using namespace cv;
 
-void ImageView::ShowImage(Image image){
+void ImageView::ShowImage(Image * image){
     ShowImage(image, 5);
 }
 
-void ImageView::ShowImage(Image image, int sleep_time){
-    cv::imshow("name", image.GetRGBImage());
+void ImageView::ShowImage(Image * image, int sleep_time){
+    cv::imshow("name", image->GetRGBImage());
     waitKey(sleep_time);
+}
+
+void ImageView::ShowImageAndDetections(Image *image, std::vector<Element> people_detections, std::vector<Element> vehicle_detections){
+
+      Mat frame = image->GetRGBImage();
+
+      //add retangle for each object in people_detections
+      for (int i=0; i<people_detections.size(); i++) {
+          Element current_element = people_detections.at(i);
+          Rect current_rect;
+          current_rect.x = current_element.GetPosition().at(0);
+          current_rect.y = current_element.GetPosition().at(1);
+          current_rect.width = current_element.GetBoxSize().at(0);
+          current_rect.height = current_element.GetBoxSize().at(1);
+
+          rectangle(frame, current_rect.tl(), current_rect.br(), Scalar(0,255,0), 2);
+      }
+
+      //add rectangle for each object in vehicle_detections
+      for (int i=0; i<vehicle_detections.size(); i++) {
+          Element current_element = vehicle_detections.at(i);
+          Rect current_rect;
+          current_rect.x = current_element.GetPosition().at(0);
+          current_rect.y = current_element.GetPosition().at(1);
+          current_rect.width = current_element.GetBoxSize().at(0);
+          current_rect.height = current_element.GetBoxSize().at(1);
+          rectangle(frame, current_rect.tl(), current_rect.br(), Scalar(255,150,0), 2);
+      }
+
+      imshow("Camera stream", frame);
 }

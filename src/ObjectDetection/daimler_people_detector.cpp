@@ -21,28 +21,17 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef DETECTOR_H
-#define DETECTOR_H
+#include "daimler_people_detector.h"
 
-#include <opencv2/opencv.hpp>
-#include <vector>
+DaimlerPeopleDetector::DaimlerPeopleDetector() {
+    hog_descriptor_.winSize = cv::Size(48, 96);
+    hog_descriptor_.setSVMDetector(cv::HOGDescriptor::getDaimlerPeopleDetector());
+}
 
-class Detector {
-
-public:
-
-    /**
-    * Detects objects in the given frame (cv::Mat). Must be overwritten in subclass.
-    *
-    * @param frame The current frame
-    *
-    * @return The vector of all detected objects in the current Frame
-    **/
-    virtual std::vector<cv::Rect> Detect(cv::Mat *frame) = 0;
-
-private:
-
-};
-
-
-#endif // DETECTOR_H
+std::vector<cv::Rect> DaimlerPeopleDetector::Detect(cv::Mat *frame) {
+    
+    std::vector<cv::Rect> detected_people;
+    hog_descriptor_.detectMultiScale(*frame, detected_people, 1.0, cv::Size(8,8), cv::Size(16,16), 1.00, 0); // TODO: adjust settings to HDF5 data
+    
+    return detected_people;
+}

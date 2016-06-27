@@ -21,7 +21,11 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+//std
 #include <string>
+
+
+//local
 #include "../StreamDecoder/frame_selector.h"
 #include "../StreamDecoder/frame_selector_factory.h"
 #include "../StreamDecoder/image.h"
@@ -34,14 +38,14 @@ public:
      *
      *@param videofile path to the video file
      */
-    void PlayHDFAsVideo(std::string videofile);
+    void PlayAsVideo(std::string videofile);
     
     /**
      * Opens a HDF5Videofile, calls the Analyser and displays the video and the Analyser-results
      *
      *@param videofile path to the video file
      */
-    void AnalyseHDF5Video(std::string videofile);
+    void AnalyseVideo(std::string videofile, uint16_t port = 0, std::string host = "");
 
     /**
      * Saves all images as jepg to disc

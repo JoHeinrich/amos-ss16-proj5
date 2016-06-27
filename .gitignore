@@ -8,3 +8,6 @@ build/
 *.xcodeproj
 .xcodeproj/
 amos-ss16-proj5.xcodeproj/
+
+#windows files
+.vscode

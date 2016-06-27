@@ -21,28 +21,34 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef DETECTOR_H
-#define DETECTOR_H
+#ifndef PEOPLE_DETECTOR_H
+#define PEOPLE_DETECTOR_H
 
-#include <opencv2/opencv.hpp>
-#include <vector>
+#include "detector.h"
 
-class Detector {
+class DaimlerPeopleDetector : public Detector {
 
 public:
 
     /**
-    * Detects objects in the given frame (cv::Mat). Must be overwritten in subclass.
+    * Default constructor.
+    **/
+    DaimlerPeopleDetector();
+
+    /**
+    * Detects people in the given frame (cv::Mat)
     *
     * @param frame The current frame
     *
-    * @return The vector of all detected objects in the current Frame
+    * @return The vector of all detected people in the current Frame
     **/
-    virtual std::vector<cv::Rect> Detect(cv::Mat *frame) = 0;
+    std::vector<cv::Rect> Detect(cv::Mat *frame);
 
 private:
+
+    cv::HOGDescriptor hog_descriptor_; /// HOGDescriptor which is used for detection
 
 };
 
 
-#endif // DETECTOR_H
+#endif // PEOPLE_DETECTOR_H

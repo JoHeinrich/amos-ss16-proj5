@@ -20,23 +20,30 @@
 // License along with this program. If not, see
 // <http://www.gnu.org/licenses/>.
 //
+#ifndef QUEUE
+#define QUEUE
+template <class c> class Queue
+{
+protected:
+    bool& end;
+public:
+    //if end is set to true the blocking will end and every function will return NULL
+    Queue(bool& end):end(end)
+    {
 
-#include "vehicle_detector.h"
+    }
 
-std::vector<cv::Rect> VehicleDetector::Detect(cv::Mat *frame) {
 
-  cv::CascadeClassifier vehicle_classifier;
-  vehicle_classifier.load("../../assets/vehicle_classifier.xml");
+    /*
+    * Stores the object and returns the old one if there are to many
+    * depending on subclass implementation this function can be blocking or not
+    */
+    virtual c* Add(c* object)=0;
 
-  // check if classifier was loaded
-  if (vehicle_classifier.empty() == true) {
-    std::cout << "Failed to load vehicle classifier" << std::endl;
-    vehicle_classifier.load("../../ObjectDetection/vehicle_classifier.xml");
-  }
-
-  //detect vehicles in the frame
-  std::vector<cv::Rect> detectedVehicles;
-  vehicle_classifier.detectMultiScale(*frame, detectedVehicles, 1.1, 2, 0, cv::Size(70,70), cv::Size(400,400)); // TODO: adjust settings to HDF5 data
-
-  return detectedVehicles;
-}
+    /* 
+    * returns the next object in line
+    * depending on subclass implementation this function can be blocking or not
+    */
+    virtual c* Remove()=0;
+};
+#endif //QUEUE
