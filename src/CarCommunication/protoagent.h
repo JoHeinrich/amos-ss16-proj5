@@ -47,24 +47,38 @@ using namespace std;
 using namespace caf;
 using namespace caf::io; 
 
+enum class Scenarios : int { WARN1 = 1, WARN2 = 2, WARN3 = 3, EXIT = 4 };
 
 class ProtoAgent {
 	
 public:
+	
+	/** 
+	* starts the client or the server. 
+	* 
+	* @param port Specified port for communication
+	* @param host Hostname for connection to server if empty server will be started
+
+	*/ 
+	ProtoAgent(uint16_t port, string host = "");
+	
 	/** 
 	* starts the client. 
 	* 
 	* @param port Specified port for communication
-	* @param hsot Hostname for connection to server 
+	* @param host Hostname for connection to server 
+
 	*/ 
-	static void startClient (uint16_t port, const string& host);
+	void startClient (uint16_t port, const string& host);
 
 	/** 
 	* starts the server. 
 	* 
 	* @param port Specified port for communication 
 	*/ 
-	static void startServer (uint16_t port);
+	void startServer (uint16_t port);
+
+	void sendMsgFromClient(Scenarios id);
 
 	/** 
 	* utility function to print an exit message with custom name. 
@@ -87,7 +101,7 @@ public:
 	/** 
 	* Server's behavior -- gets the client's warning from the protobuf broker and responds with an "ack" message
 	* 
-	*/ 
+	*/
 	static behavior ackMessage();
 
 
@@ -108,5 +122,6 @@ public:
 	*/ 
 	static behavior server(broker* self, actor buddy);
 };
+
 
 #endif // PROTOBUF_BROKER_H

@@ -70,6 +70,9 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
   possible_scenarios.push_back(new HumansInFrontOfBusScenario());
   Analyser analyser(possible_scenarios);
 
+
+  
+
   for (int i=0; i<protobuf_counts; i++) {
 
     Image * current_image = pipeline->ReadImage(i);
@@ -79,6 +82,7 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
         continue;
     }
 
+    image_view.ShowImageAndDetections(current_image, current_detections->GetElementsOfType(OBJECT_HUMAN), current_detections->GetElementsOfType(OBJECT_VEHICLE));
     Scenario* scenario = analyser.Analyse(*current_detections);
 
     if(!scenario){
@@ -98,8 +102,9 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
         //Notifying other car
         if(port!=0)
         {
+            ProtoAgent protoagent(port,host);
             std::cout << "Informing other car" << std::endl;
-            ProtoAgent::startClient(port,host);
+            protoagent.sendMsgFromClient(Scenarios::WARN1);
         }
         //#endif
     }
