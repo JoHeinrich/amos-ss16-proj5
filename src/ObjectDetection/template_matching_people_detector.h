@@ -31,9 +31,11 @@ class TemplateMatchingPeopleDetector : public Detector {
 public:
 
     /**
-    * Default constructor.
+    * Default constructor. 
+    *
+    * @param image_file The file containg the template image for detection.
     **/
-    TemplateMatchingPeopleDetector();
+    TemplateMatchingPeopleDetector(std::string image_file);
 
     /**
     * Detects people in the given frame (cv::Mat)
@@ -46,6 +48,8 @@ public:
 
 private:
 
+    cv::Mat template_image_;   ///< The template image for detection
+    int match_method_;      ///< The match method
 };
 
 
