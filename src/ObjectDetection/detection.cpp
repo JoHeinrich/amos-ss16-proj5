@@ -33,6 +33,8 @@ Detection::Detection(Detector * people_detector, Detector * vehicle_detector) {
     people_detector_ = people_detector;
     vehicle_detector_ = vehicle_detector;
     image_view_ = new ImageView();
+    //default resize factor value
+    resize_factor_ = 1.0;
 }
 
 Detection::~Detection(){
@@ -62,8 +64,8 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
         std::vector<int> position;
         std::vector<int> box;
 
-        int pos_x_resized = current_rec.x/0.3125;
-        int pos_y_resized = current_rec.y/0.3125;
+        int pos_x_resized = current_rec.x/resize_factor_;
+        int pos_y_resized = current_rec.y/resize_factor_;
 
         if(pos_x_resized < 0){
             pos_x_resized = 0;
@@ -82,8 +84,8 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
         position.push_back(pos_x_resized);
         position.push_back(pos_y_resized);
 
-        int box_width_resized = current_rec.width/0.3125;
-        int box_height_resized = current_rec.height/0.3125;
+        int box_width_resized = current_rec.width/resize_factor_;
+        int box_height_resized = current_rec.height/resize_factor_;
 
         if((position.at(0) + box_width_resized) > image->GetImageWidth()){
             box_width_resized = image->GetImageWidth()-position.at(0);
@@ -112,11 +114,11 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
         std::vector<int> position;
         std::vector<int> box;
 
-        position.push_back(current_rec.x/0.3125);
-        position.push_back(current_rec.y/0.3125);
+        position.push_back(current_rec.x/resize_factor_);
+        position.push_back(current_rec.y/resize_factor_);
 
-        box.push_back(current_rec.width/0.3125);
-        box.push_back(current_rec.height/0.3125);
+        box.push_back(current_rec.width/resize_factor_);
+        box.push_back(current_rec.height/resize_factor_);
 
         Element current_elem(position, box);
 
@@ -135,12 +137,19 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
 }
 
 Mat Detection::ResizeFrame(Mat *frame) {
-    //resize the image to width of 400px to reduce detection time and improve detection accuracy
-    //0.3125 is used because the test video is 1280 x 720, so the width resized images is 400px this has to be changed to our image size (best would be no hard coded scaling so other images sizes work too!)
-    // TODO: dynamic risizeing depending on input (min width 400px)
+    // resize the image to width of 400px to reduce detection time and improve detection accuracy
+    // dynamic risizing depending on input (min width 400px)
+
+    // compute resize factor
+    Size size = frame->size();
+
+    resize_factor_ = static_cast<float>(default_resized_frame_width)/size.width;
+
+   // std::cout << "Detection: resized factor: " << resize_factor_ << std::endl;
 
     Mat resized_frame;
-    resize(*frame, resized_frame, Size(0, 0), 0.3125, 0.3125, CV_INTER_AREA);
+    resize(*frame, resized_frame, Size(0, 0), resize_factor_, resize_factor_, CV_INTER_AREA);
+
     return resized_frame;
 }
 
