@@ -86,8 +86,8 @@ int HDFReader::ReadFile(){
         data_space.getSimpleExtentDims(dimensions_output, NULL);
 
 
-        std::cout << " Number of dimensions : " << dimensions_number <<  " isSimple: " << is_simple <<
-                     " Number of elements " << elements_number  << " Dimensions extent" << dimensions_output[0] << " " << dimensions_output[1] << std::endl;
+        //std::cout << " Number of dimensions : " << dimensions_number <<  " isSimple: " << is_simple <<
+        //             " Number of elements " << elements_number  << " Dimensions extent" << dimensions_output[0] << " " << dimensions_output[1] << std::endl;
 
         if(dimensions_output[1] != 2){
             
@@ -155,7 +155,7 @@ int HDFReader::ReadFile(){
         delete file;
         file = NULL;
 
-        std::cout << "Number of protobuf files  " << protobuf_file_ids_.size() << std::endl;
+        //std::cout << "Number of protobuf files  " << protobuf_file_ids_.size() << std::endl;
 
     }  // end of try block
 
@@ -250,7 +250,7 @@ std::vector<int64_t> HDFReader::ReadOneProtobufFile(unsigned int index){
 
         // read buffer: without input for memory data space the whole data space will be read
 
-        std::cout << "Reading protobuf file : file id:" << index << std::endl;
+        //std::cout << "Reading protobuf file : file id:" << index << std::endl;
         current_protobuf_file_data_set.read(protobuf_file_buffer, PredType::NATIVE_INT64);
 
 
@@ -325,7 +325,7 @@ std::vector<std::vector<int64_t> > HDFReader::ReadAllProtobufFiles(){
 
     }
 
-    std::cout << "Read all protobuf files; number of read files: " << all_protobuf_files.size() << std::endl;
+    //std::cout << "Read all protobuf files; number of read files: " << all_protobuf_files.size() << std::endl;
     return all_protobuf_files;
 }
 

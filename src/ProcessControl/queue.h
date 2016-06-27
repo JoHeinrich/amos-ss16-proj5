@@ -33,7 +33,10 @@ public:
 
     }
 
-
+    /*
+    * Unlocks the queue and allows all functions to return NULL;
+    */
+    virtual void Unlock()=0;
     /*
     * Stores the object and returns the old one if there are to many
     * depending on subclass implementation this function can be blocking or not
