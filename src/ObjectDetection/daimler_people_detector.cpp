@@ -29,9 +29,17 @@ DaimlerPeopleDetector::DaimlerPeopleDetector() {
 }
 
 std::vector<cv::Rect> DaimlerPeopleDetector::Detect(cv::Mat *frame) {
-    
+
     std::vector<cv::Rect> detected_people;
     hog_descriptor_.detectMultiScale(*frame, detected_people, 1.0, cv::Size(8,8), cv::Size(16,16), 1.00, 0); // TODO: adjust settings to HDF5 data
-    
+
+    return detected_people;
+}
+
+std::vector<cv::Rect> DaimlerPeopleDetector::DetectInROI(cv::Mat *frame, std::vector<cv::Rect> *rois) {
+
+    std::vector<cv::Rect> detected_people;
+    hog_descriptor_.detectMultiScale(*frame, detected_people, 1.0, cv::Size(8,8), cv::Size(16,16), 1.00, 0); // TODO: adjust settings to HDF5 data
+
     return detected_people;
 }
