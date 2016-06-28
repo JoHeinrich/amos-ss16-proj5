@@ -4,18 +4,12 @@
 #### General
 This scripts are bound to change with the continued progress we make in this project. We will try to keep this readme up to date though! If the scripts don't work, try to pull the most recent docker image from our dockerhub!
 
-#### Caf Communication
-The communication with the C++ Actor Framework consists of 2 scripts, which implement a client and server model. Start the scripts in separate terminals like this:
+#### Amos-SS16-Proj5 -- the main program
+This script starts our main program that consists of a hdf5/mp4 stream decoder, an object detection, scenario analyzation, and a client-server communication via the C++ Actor Framework. It needs to be run with a docker container tag, the full path to either an mp4 or hdf5 encoded video stream, the name of a docker network and the port the server and client should work on:
 
-$ script/ubuntuCafClient.sh.sh _NETWORK_NAME_  _DOCKER_CONTAINER_TAG_
+$ script/amos-ss16-proj5.sh _CONTAINER_TAG_  _FULL_PATH_TO_FILE_  _NAME_OF_NETWORK_  _PORT_
 
-$ script/ubuntuCafServer.sh.sh _NETWORK_NAME_  _DOCKER_CONTAINER_TAG_
 
-Now the server should receive a warning from the client na acknowledge it.
+Now, you should be able to see object detection for cars and humans in the specified video as well as communication between the client and server.
 
-#### Stream Decoder
-The stream decoder reads one given or all frames from a specified HDF-File. Start the script like this:
 
-$ script/ubuntuStreamDecoder.sh _FULL_PATH_TO_HDF5_FILE_ _DOCKER_CONTAINER_TAG_ [optional: _FRAME_INDEX_ ]
-
-You should see an image of the specified frame.
