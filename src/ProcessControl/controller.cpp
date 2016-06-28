@@ -60,10 +60,10 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
   FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
   int protobuf_counts = pipeline->GetImageCount();
 
-  DaimlerPeopleDetector people_detector;
+  // DaimlerPeopleDetector people_detector; // TODO: remove if no longer needed
   // HOGPeopleDetector people_detector;
   CascadeHaarDetector vehicle_detector("cars3.xml");
-  // CascadeHaarDetector people_detector("haarcascade_fullbody.xml", 1.5, 1, cv::Size(14,28), cv::Size(56,112));
+  CascadeHaarDetector people_detector("haarcascade_fullbody.xml", 1.5, 0, cv::Size(14,28), cv::Size(56,112));
   Detection detection(&people_detector, &vehicle_detector);
 
   // set up all objects needed for analysing
