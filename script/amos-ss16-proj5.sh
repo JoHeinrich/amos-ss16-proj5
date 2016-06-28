@@ -8,9 +8,9 @@ echo "This script will start our docker container. Please give a port number, th
 echo -en '\n'
 if [ $# -lt 4 ]; then 
 	echo -en '\n'
-	echo "Wrong Usage. Usage: caotic.sh [ _CONTAINER_TAG_ ] [ _FULL_PATH_TO_FILE_ ] [ _NAME_OF_NETWORK_ ] [ _PORT_ ]"
+	echo "Wrong Usage. Usage: amos-ss16-proj5.sh [ _CONTAINER_TAG_ ] [ _FULL_PATH_TO_FILE_ ] [ _NAME_OF_NETWORK_ ] [ _PORT_ ]"
 	echo "Whitespaces in the path are not allowed!"
-	echo "Example: script/caotic.sh release /home/file.hdf5 dockerNW 8080 (localhost)"  
+	echo "Example: script/amos-ss16-proj5.sh release /home/file.hdf5 dockerNW 8080 (localhost)"  
 	exit 1
 fi 
 
@@ -53,7 +53,7 @@ if [ "${2##*.}" == "hdf5" ]; then
 	# Starting the client
 	echo "Starting the client"
 	echo -en '\n'
-	docker run -ti --name=clientContainer --net=$3 -v $2:/home/hdf5file.hdf5 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$1 /bin/bash -c "/home/bin/amos-ss16-proj5 $4 $ip ../hdf5file.hdf5"
+	docker run -ti --name=clientContainer --net=$3 -v $2:/home/hdf5file.hdf5 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$1 /bin/bash -c "cd /home/bin/; ./amos-ss16-proj5 $4 $ip ../hdf5file.hdf5"
 	echo -en '\n'
 	xhost -local:
 	echo "Reverting xhost settings..."
@@ -76,12 +76,13 @@ if [ "${2##*.}" == "mp4" ]; then
 	echo -en '\n'
 	line=$(docker network inspect $3 | sed -n '/serverContainer/{n;n;n;p}')
 	ip=$(echo $line | cut -c17-26)
-	#echo "$ip"
+#	echo $ip
 	echo "Configuring xhost"
 	xhost +local:
 	echo "Starting the client"
 	echo -en '\n'
-	docker run -ti --name=clientContainer --net=$3 -v $2:/home/mp4file.mp4 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$1 /bin/bash -c "/home/bin/amos-ss16-proj5 $4 $ip ../mp4file.mp4"
+#	echo "/home/bin/amos-ss16-proj5 $4 $ip ../mp4file.mp4"
+	docker run -ti --name=clientContainer --net=$3 -v $2:/home/mp4file.mp4 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$1 /bin/bash -c "cd /home/bin/; ./amos-ss16-proj5 $4 $ip ../mp4file.mp4"
 	echo -en '\n'
 	xhost -local:
 	echo "Reverting xhost settings..."
