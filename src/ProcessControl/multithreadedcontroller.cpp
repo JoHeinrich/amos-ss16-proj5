@@ -56,7 +56,7 @@ MultithreadedController::MultithreadedController(std::string videofile, uint16_t
     warningQueue = new BlockingQueue<string>(b);
     displayQueue = new BlockingQueue<ImageData>(b);
     
-     #pragma omp parallel sections // starts a new team
+     #pragma omp parallel sections num_threads(5)// starts a new team
     {
         {
             StreamDecoder(b);
