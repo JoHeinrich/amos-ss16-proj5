@@ -49,3 +49,24 @@ std::vector<cv::Rect> CascadeHaarDetector::Detect(cv::Mat *frame) {
 
       return detected_objects;
 }
+
+std::vector<cv::Rect> CascadeHaarDetector::DetectInROI(cv::Mat *frame, std::vector<cv::Rect> *rois) {
+
+    std::vector<cv::Rect> detected_objects;
+    for( size_t i = 0; i < rois->size(); i++ ) {
+        cv::Mat ROI = frame->operator()( rois->operator[](i) );
+
+        cascade_haar_classifier_.detectMultiScale(ROI, detected_objects, scale_factor_, min_neighbors_, 0, min_size_, max_size_);
+
+        if (!detected_objects.empty()) {
+            imshow( "", ROI );
+            cv::waitKey(0);
+        }
+    }
+
+    for (size_t i = 0; i < detected_objects.size(); i++) {
+        
+    }
+
+    return detected_objects;
+}

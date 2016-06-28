@@ -48,8 +48,8 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
     Mat contrast_and_brightness_adjusted_frame = AdjustContrastAndBrightness(&frame);
     Mat resized_frame = ResizeFrame(&contrast_and_brightness_adjusted_frame);
 
-    std::vector<Rect> detected_people = people_detector_->Detect(&resized_frame);
     std::vector<Rect> detected_vehicles = vehicle_detector_->Detect(&resized_frame);
+    std::vector<Rect> detected_people = people_detector_->DetectInROI(&resized_frame, &detected_vehicles);
 
     // write the detected people and vehicle data into frame detection data and return it
     // resize the position and the box of detected elements to real size again
@@ -169,4 +169,3 @@ cv::Mat Detection::AdjustContrastAndBrightness(cv::Mat *frame,  double contrastV
 cv::Mat Detection::AdjustContrastAndBrightness(cv::Mat *frame){
     return AdjustContrastAndBrightness(frame, default_contrast_value, default_brightness_value);
 }
-
