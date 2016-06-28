@@ -28,7 +28,7 @@
 #include "../ObjectDetection/cascade_haar_detector.h"
 #include "../ObjectDetection/daimler_people_detector.h"
 #include "../ObjectDetection/detection.h"
-//#include "../ObjectDetection/hog_people_detector.h"
+// #include "../ObjectDetection/hog_people_detector.h"
 #include "../StreamDecoder/image_view.h"
 #include "../ScenarioAnalysation/scenario.h"
 #include "../ScenarioAnalysation/humans_in_front_of_bus_scenario.h"
@@ -61,8 +61,9 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
   int protobuf_counts = pipeline->GetImageCount();
 
   DaimlerPeopleDetector people_detector;
-  //HOGPeopleDetector people_detector;
+  // HOGPeopleDetector people_detector;
   CascadeHaarDetector vehicle_detector("cars3.xml");
+  // CascadeHaarDetector people_detector("haarcascade_fullbody.xml", 1.5, 1, cv::Size(14,28), cv::Size(56,112));
   Detection detection(&people_detector, &vehicle_detector);
 
   // set up all objects needed for analysing
