@@ -97,14 +97,14 @@ void ProtoAgent::protobuf_io(broker* self, connection_handle hdl, const actor& b
       self->quit(exit_reason::remote_link_unreachable);
     },
     on(atom("warning1"), arg_match) >> [=](int i) {
-      aout(self) << "Send: warning of type 1 with ID " << i << endl;
+      aout(self) << "Send: 'People in front of car' warning with ID " << i << endl;
       org::libcppa::WarnOrAck p;
       p.mutable_warn()->set_id(i);
       p.mutable_warn()->set_type(1);      
       write(p);
     },
     on(atom("warning2"), arg_match) >> [=](int i) {
-      aout(self) << "Send: warning of type 2 with ID " << i << endl;
+      aout(self) << "Send: 'People on street detected' warning with ID " << i << endl;
       org::libcppa::WarnOrAck p;
       p.mutable_warn()->set_id(i);
       p.mutable_warn()->set_type(2);
@@ -139,7 +139,12 @@ void ProtoAgent::protobuf_io(broker* self, connection_handle hdl, const actor& b
       org::libcppa::WarnOrAck p;
       p.ParseFromArray(msg.buf.data(), static_cast<int>(msg.buf.size()));
       if (p.has_warn()) {
-        aout(self) << "Received: warning with ID " << p.warn().id() << " of type " << p.warn().type() << endl;
+      	if (p.warn().type() == 1)
+	        aout(self) << "Received: 'People in front of car' warning with ID " << p.warn().id() << endl;
+	    if (p.warn().type() == 2)
+	        aout(self) << "Received: 'People on street detected' warning with ID " << p.warn().id() << endl;
+	    if (p.warn().type() == 3 || p.warn().type() == 4)
+	    	aout(self) << "Received: warning with ID " << p.warn().id() << " of type " << p.warn().type() << endl;
         self->send(buddy, atom("warning"), p.warn().id(), p.warn().type());
       }
       else if (p.has_ack()) {
@@ -291,6 +296,6 @@ int main(int argc, char** argv) {
     }
   });
 }
-
-
 */
+
+
