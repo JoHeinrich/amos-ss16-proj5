@@ -24,7 +24,10 @@
 #ifndef __amos_ss16_proj5__frame_selector__
 #define __amos_ss16_proj5__frame_selector__
 
+//std
 #include <stdio.h>
+
+//local
 #include "image.h"
 
 
