@@ -21,8 +21,10 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+//local
 #include "hdf_reader.h"
 
+//std
 #include <sstream>
 #include <iostream>
 #include <fstream>
@@ -51,10 +53,10 @@ HDFReader::HDFReader(std::string file){
 
 int HDFReader::ReadFile(){
     
-    // Try block to detect exceptions raised by any of the calls inside it
+    // try block to detect exceptions raised by any of the calls inside it
     try{
 
-        // Turn off the auto-printing when failure occurs so that we can
+        // turn off the auto-printing when failure occurs so that we can
         // handle the errors appropriately
         Exception::dontPrint();
 
@@ -196,13 +198,13 @@ int HDFReader::ReadFile(){
 
 std::vector<int64_t> HDFReader::ReadOneProtobufFile(unsigned int index){
     
-    // return value
+    // return vector
     std::vector<int64_t> current_protobuf_file;
 
-    // Try block to detect exceptions raised by any of the calls inside it
+    // try block to detect exceptions raised by any of the calls inside it
     try{
 
-        // Turn off the auto-printing when failure occurs so that we can
+        // turn off the auto-printing when failure occurs so that we can
         // handle the errors appropriately
         Exception::dontPrint();
 
@@ -311,8 +313,10 @@ std::vector<int64_t> HDFReader::ReadOneProtobufFile(unsigned int index){
 
 std::vector<std::vector<int64_t> > HDFReader::ReadAllProtobufFiles(){
 
+    //return vector with all files
     std::vector<std::vector<int64_t> > all_protobuf_files;
 
+    // fill the return vector by reading every file
     for(int i = 0; i < this->GetNumberOfProtobufFiles(); i++){
         
         std::vector<int64_t> current_protobuf_file = this->ReadOneProtobufFile(i);
