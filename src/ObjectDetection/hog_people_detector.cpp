@@ -45,8 +45,8 @@ std::vector<cv::Rect> HOGPeopleDetector::DetectInROI(cv::Mat *frame, std::vector
         // std::cout << ROI.cols << std::endl;
 
         // FIXME: detectMultiScale does not work on roi?
-        // hog_descriptor_.detectMultiScale(ROI, detectedPeople, 0, cv::Size(4,4), cv::Size(16,16), 1.04, 0);
-        hog_descriptor_.detectMultiScale(*frame, detectedPeople, 0, cv::Size(4,4), cv::Size(16,16), 1.04, 0);
+         hog_descriptor_.detectMultiScale(ROI, detectedPeople, 0, cv::Size(4,4), cv::Size(16,16), 1.04, 0);
+        //hog_descriptor_.detectMultiScale(*frame, detectedPeople, 0, cv::Size(4,4), cv::Size(16,16), 1.04, 0);
     }
 
     return detectedPeople;
