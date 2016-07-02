@@ -46,6 +46,7 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
     Mat frame = image->GetRGBImage();
     Mat contrast_and_brightness_adjusted_frame = AdjustContrastAndBrightness(&frame);
+    //imshow("Contrast image", contrast_and_brightness_adjusted_frame);
     Mat resized_frame = ResizeFrame(&contrast_and_brightness_adjusted_frame);
 
     std::vector<Rect> detected_people = people_detector_->Detect(&resized_frame);
