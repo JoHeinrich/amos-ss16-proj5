@@ -33,7 +33,7 @@ using namespace cv;
 
 TemplateMatchingPeopleDetector::TemplateMatchingPeopleDetector(std::string image_file) {
     //default value of match method
-    match_method_ = 5;
+    match_method_ = 4;
 
     //read template image
     template_image_ = imread(image_file, CV_LOAD_IMAGE_COLOR);
