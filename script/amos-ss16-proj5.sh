@@ -62,8 +62,6 @@ if [ "${2##*.}" == "hdf5" ]; then
 	exit 0
 fi
 
-#ln -s /dev/null /dev/raw1394';
-
 # mp4 File given
 if [ "${2##*.}" == "mp4" ]; then
   	# checking if client is running / exited
