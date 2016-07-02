@@ -21,8 +21,11 @@ if [ ! -f "$2" ]; then
 	exit 1
 fi
 
+# Get script directory 
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # Start the server -- needs the docker network and the server port
-gnome-terminal -e "./helper.sh $3 $1 $4"
+gnome-terminal -e "$dir/helper.sh $3 $1 $4"
 sleep 3
 
 
