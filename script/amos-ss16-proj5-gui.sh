@@ -4,7 +4,7 @@
 set -e
 echo -en '\n'
 echo "Ubuntu Bash Start Script"
-echo "This script will start our docker container. Please give a port number, the tag for the docker image you want to start, an optional server ip address, and an optional full path to a HDF5 or MP4 file."
+echo "This script will start our docker container. Please give a port number, the tag for the docker image you want to start, the name of a docker network, and pick either an mp4 or hdf5 file."
 
 OUTPUT=$(zenity --forms --title="Amos SS16 Proj5" --text="Enter program parameters" --separator="," --add-entry="Container Tag" --add-entry="Docker Network Name" --add-entry="Port")
 accepted=$?
