@@ -41,43 +41,46 @@ TemplateMatchingPeopleDetector::TemplateMatchingPeopleDetector(std::string image
 
 std::vector<cv::Rect> TemplateMatchingPeopleDetector::Detect(cv::Mat *frame) {
 
-    std::vector<cv::Rect> detectedPeople;
-    cv::Mat image_result;
+     std::vector<cv::Rect> detectedPeople;
+     cv::Mat image_result;
 
-     /// Source image to display
-     cv::Mat image_display;
-     frame->copyTo( image_display );
+     // source image to display
+     //cv::Mat image_display;
+     //frame->copyTo( image_display );
 
-     /// Create the result matrix
+     // create the result matrix
      int result_cols = frame->cols - template_image_.cols + 1;
      int result_rows = frame->rows - template_image_.rows + 1;
 
      image_result.create( result_rows, result_cols, CV_32FC1 );
 
-     /// Do the Matching and Normalize
+     // do the matching and normalize
      matchTemplate( *frame, template_image_, image_result, match_method_ );
      normalize( image_result, image_result, 0, 1, cv::NORM_MINMAX, -1, Mat() );
 
-     /// Localizing the best match with minMaxLoc
+     // localizing the best match with minMaxLoc
      double minVal; double maxVal; cv::Point minLoc; cv::Point maxLoc;
      cv::Point matchLoc;
 
      minMaxLoc( image_result, &minVal, &maxVal, &minLoc, &maxLoc, Mat() );
 
 
-     /// For SQDIFF and SQDIFF_NORMED, the best matches are lower values. For all the other methods, the higher the better
+     // for SQDIFF and SQDIFF_NORMED, the best matches are lower values. For all the other methods, the higher the better
      if( match_method_  == CV_TM_SQDIFF || match_method_ == CV_TM_SQDIFF_NORMED )
        { matchLoc = minLoc; }
      else
        { matchLoc = maxLoc; }
 
-     /// Show me what you got
-     rectangle( image_display, matchLoc, cv::Point( matchLoc.x + template_image_.cols , matchLoc.y + template_image_.rows ), cv::Scalar::all(0), 2, 8, 0 );
-     rectangle( image_result, matchLoc, cv::Point( matchLoc.x + template_image_.cols , matchLoc.y + template_image_.rows ), cv::Scalar::all(0), 2, 8, 0 );
+     // debug output
+     //rectangle( image_display, matchLoc, cv::Point( matchLoc.x + template_image_.cols , matchLoc.y + template_image_.rows ), cv::Scalar::all(0), 2, 8, 0 );
+     //rectangle( image_result, matchLoc, cv::Point( matchLoc.x + template_image_.cols , matchLoc.y + template_image_.rows ), cv::Scalar::all(0), 2, 8, 0 );
 
-     imshow( "Source image", image_display );
-     imshow( "Result image", image_result );
+     //imshow( "Source image", image_display );
+     //imshow( "Result image", image_result );
 
+     // create the found rectangle
+     cv::Rect found_human(matchLoc.x, matchLoc.y, template_image_.cols, template_image_.rows);
+     detectedPeople.push_back(found_human);
 
     return detectedPeople;
 }
