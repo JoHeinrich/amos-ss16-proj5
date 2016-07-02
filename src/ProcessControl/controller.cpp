@@ -76,6 +76,7 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
 
   for (int i=0; i<protobuf_counts; i++) {
 
+    // perform detections on current frame
     Image * current_image = pipeline->ReadImage(i);
     FrameDetectionData* current_detections = detection.ProcessFrame(current_image);
 
@@ -83,6 +84,7 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
         continue;
     }
 
+    // show detected results on current frame
     image_view.ShowImageAndDetections(current_image, current_detections->GetElementsOfType(OBJECT_HUMAN), current_detections->GetElementsOfType(OBJECT_VEHICLE));
     Scenario* scenario = analyser.Analyse(*current_detections);
 
