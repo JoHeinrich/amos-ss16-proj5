@@ -34,7 +34,7 @@ RUN git clone https://github.com/actor-framework/actor-framework.git \
   && cd actor-framework \
   && ./configure \
   && make \
-  && make test \
+#  && make test \
   && sudo make install
 # Adding server vars and the binaries, starting the server
 ENV HTML_INDEX_FILE AutoDrive

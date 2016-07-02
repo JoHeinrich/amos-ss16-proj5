@@ -22,7 +22,7 @@ if [ ! -f "$2" ]; then
 fi
 
 # Start the server -- needs the docker network and the server port
-gnome-terminal -e "./helper.sh $3 $1"
+gnome-terminal -e "./helper.sh $3 $1 $4"
 sleep 3
 
 

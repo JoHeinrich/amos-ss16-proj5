@@ -11,9 +11,9 @@ if [ $flag -gt 0 ]; then
   docker stop serverContainer
   docker rm -fv serverContainer
 fi
-echo "Starting the server"
+echo "Starting the server on port $3"
 echo -en '\n'
-docker run -ti --name=serverContainer --net=$1 -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$2 /bin/bash -c "/home/bin/amos-ss16-proj5 8080"
+docker run -ti --name=serverContainer --net=$1 -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$2 /bin/bash -c "/home/bin/amos-ss16-proj5 $3"
 read -p "Press any key to exit > " -n1 junk
 echo 
 #docker run -ti -d --name=serverContainer --net=$1 amosproj5/amosbuildimage:$2
