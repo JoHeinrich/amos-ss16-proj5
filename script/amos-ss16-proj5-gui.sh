@@ -6,6 +6,7 @@ echo -en '\n'
 echo "Ubuntu Bash Start Script"
 echo "This script will start our docker container. Please give a port number, the tag for the docker image you want to start, the name of a docker network, and pick either an mp4 or hdf5 file."
 
+# Open Form for start parameters
 OUTPUT=$(zenity --forms --title="Amos SS16 Proj5" --text="Enter program parameters" --separator="," --add-entry="Container Tag" --add-entry="Docker Network Name" --add-entry="Port")
 accepted=$?
 if ((accepted != 0)); then
@@ -13,10 +14,12 @@ if ((accepted != 0)); then
     exit 1
 fi
 
+# read parameters from form
 tag=$(awk -F, '{print $1}' <<<$OUTPUT)
 network=$(awk -F, '{print $2}' <<<$OUTPUT)
 port=$(awk -F, '{print $3}' <<<$OUTPUT)
 
+# check for blank fields
 if [ "$tag" == "" ] || [ "$network" == "" ] || [ "$port" == "" ];then
 	echo -en '\n'
 	echo "No empty parameters allowed"
@@ -24,10 +27,7 @@ if [ "$tag" == "" ] || [ "$network" == "" ] || [ "$port" == "" ];then
 	exit 1
 fi
 
-echo "$tag"
-echo "$network"
-echo "$port"
-
+# open file manager to pick mp4 or hdf5 files
 FILE=`zenity --file-selection --title="Select either an mp4 or hdf5 File" --file-filter='*.mp4 *.hdf5 *.MP4 *.HDF5'`
 
 # Checking if the given file is valid
@@ -37,8 +37,11 @@ if [ ! -f "$FILE" ]; then
 	exit 1
 fi
 
+# Get script directory 
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # Start the server -- needs the docker network, container tag, and the server port
-gnome-terminal -e "./helper.sh $network $tag $port"
+gnome-terminal -e "$dir/helper.sh $network $tag $port"
 sleep 3
 
 
