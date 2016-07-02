@@ -53,7 +53,7 @@ if [ "${2##*.}" == "hdf5" ]; then
 	# Starting the client
 	echo "Starting the client"
 	echo -en '\n'
-	docker run -ti --name=clientContainer --net=$3 -v $2:/home/hdf5file.hdf5 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$1 /bin/bash -c "cd /home/bin/; ./amos-ss16-proj5 $4 $ip ../hdf5file.hdf5"
+	docker run -ti --name=clientContainer --net=$3 -v $2:/home/hdf5file.hdf5 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$1 /bin/bash -c "ln -s /dev/null /dev/raw1394; cd /home/bin/; ./amos-ss16-proj5 $4 $ip ../hdf5file.hdf5"
 	echo -en '\n'
 	xhost -local:
 	echo "Reverting xhost settings..."
@@ -61,6 +61,8 @@ if [ "${2##*.}" == "hdf5" ]; then
 	echo "Thanks for using our program!"
 	exit 0
 fi
+
+#ln -s /dev/null /dev/raw1394';
 
 # mp4 File given
 if [ "${2##*.}" == "mp4" ]; then
@@ -82,7 +84,7 @@ if [ "${2##*.}" == "mp4" ]; then
 	echo "Starting the client"
 	echo -en '\n'
 #	echo "/home/bin/amos-ss16-proj5 $4 $ip ../mp4file.mp4"
-	docker run -ti --name=clientContainer --net=$3 -v $2:/home/mp4file.mp4 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$1 /bin/bash -c "cd /home/bin/; ./amos-ss16-proj5 $4 $ip ../mp4file.mp4"
+	docker run -ti --name=clientContainer --net=$3 -v $2:/home/mp4file.mp4 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:$1 /bin/bash -c "ln -s /dev/null /dev/raw1394; cd /home/bin/; ./amos-ss16-proj5 $4 $ip ../mp4file.mp4"
 	echo -en '\n'
 	xhost -local:
 	echo "Reverting xhost settings..."
