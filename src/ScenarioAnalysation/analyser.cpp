@@ -25,15 +25,11 @@
 
 //std
 #include <iostream>
-
-#include "analyser.h"
-
-//object detection
-#include "../ObjectDetection/element.h"
-
-
-//std
 #include <list>
+
+//local
+#include "analyser.h"
+#include "../ObjectDetection/element.h"
 
 Analyser::Analyser(std::vector<Scenario *> scenarios){
 
