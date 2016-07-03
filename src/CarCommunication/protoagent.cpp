@@ -1,5 +1,5 @@
 //
-// protobuf_broker.cpp
+// protoagent.cpp
 // Projectname: amos-ss16-proj5
 //
 // Created on 28.05.2016.
@@ -29,6 +29,11 @@ static actor client_actor;
 static actor io_actor;
 int mess_id = 1;
 
+/*
+  **************************
+  Exit message - Prints warning with given reason
+  **************************
+*/
 void ProtoAgent::print_on_exit(const actor& hdl, const std::string& name) {
   hdl->attach_functor([=](abstract_actor* ptr, uint32_t reason) {
     aout(ptr) << name << " exited with reason " << reason << endl;
@@ -201,7 +206,7 @@ behavior ProtoAgent::server(broker* self, actor buddy) {
       cout << "unexpected: " << to_string(self->current_message()) << endl;
     },
     after(std::chrono::seconds(60)) >> [=] {
-      aout(self) << "received nothing within 60 seconds..." << endl;
+      aout(self) << "received no connection within 60 seconds..." << endl;
       self->send_exit(buddy, exit_reason::remote_link_unreachable);
       self->quit();
     }
@@ -212,6 +217,11 @@ optional<uint16_t> as_u16(const std::string& str) {
   return static_cast<uint16_t>(stoul(str));
 }
 
+/*
+  **************************
+  Client kickoff - spawns Client Actor with given port and host
+  **************************
+*/
 void ProtoAgent::startClient (uint16_t port, const string& host) {
 	cout << "run in client mode" << endl;	
 	// spawn the actor that sends warnings
@@ -220,13 +230,14 @@ void ProtoAgent::startClient (uint16_t port, const string& host) {
 	io_actor = spawn_io_client(protobuf_io, host, port, client_actor);
 	print_on_exit(io_actor, "protobuf_io");
 	print_on_exit(client_actor, "exit warning");
-	// Start the warning message actor by using a kickoff message event sent directly from method
-	//send_as(io_actor, client_actor, atom("kickoff"), io_actor);
-	//await_all_actors_done();
-  	//shutdown();
 }
 
-
+/*
+  **************************
+  Client message - Message from Client to it's host with given Scenario
+  or to shutdown the Client with EXIT
+  **************************
+*/
 void ProtoAgent::sendMsgFromClient(Scenarios id) {	
 	if ( Scenarios::WARN1 == id) {
 		send_as(io_actor, client_actor, atom("warnSc1"), io_actor, mess_id);
@@ -245,6 +256,11 @@ void ProtoAgent::sendMsgFromClient(Scenarios id) {
 	}
 }
 
+/*
+  **************************
+  Server kickoff - spawns server Actor
+  **************************
+*/
 void ProtoAgent::startServer (uint16_t port) {
 	cout << "run in server mode" << endl;
 	// spawn the actor that acks messages
@@ -268,34 +284,5 @@ ProtoAgent::ProtoAgent(uint16_t port, string host)
     this->startClient(port,host);
   }
 }
-
-/*
-int main(int argc, char** argv) {
-	// Parsing arguments
-	message_builder{argv + 1, argv + argc}.apply({
-	  on("-s", as_u16) >> [&](uint16_t port) {
-		// We are a server
-	  	ProtoAgent server(port);
-		//server.startServer(port);
-	  },
-	  on("-c", val<string>, as_u16) >> [&](const string& host, uint16_t port) {
-      		// We are a client
-		ProtoAgent client(port, host);
-		//client.startClient(port, host);
-		client.sendMsgFromClient(Scenarios::WARN1);
-		client.sendMsgFromClient(Scenarios::WARN2);
-		client.sendMsgFromClient(Scenarios::WARN3);
-		await_all_actors_done();
-		client.sendMsgFromClient(Scenarios::EXIT);
-  		shutdown();
-    	  },
-    	  others >> [] {
-      		cerr << "use with either '-s PORT' as server or "
-          	"'-c HOST PORT' as client"
-           	<< endl;
-    }
-  });
-}
-*/
 
 
