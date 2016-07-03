@@ -32,7 +32,7 @@ RUN echo "deb http://nginx.org/packages/mainline/ubuntu/ trusty nginx" > /etc/ap
 # Install CAF
 RUN git clone https://github.com/actor-framework/actor-framework.git \
   && cd actor-framework \
-  && git checkout 44f4d5c635b4c56d5fc32e1672c2debb4689db11
+  && git checkout 0.14.5 \ #last caf release tag
   && ./configure \
   && make \
 #  && make test \
