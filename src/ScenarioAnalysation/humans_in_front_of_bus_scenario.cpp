@@ -31,8 +31,7 @@
 
 bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
 
-    // first: check whether there are humans detected
-
+    // get the detected elements (humans and vehicles)
     std::vector<Element> humans = detected_objects.GetElementsOfType(OBJECT_HUMAN);
     std::vector<Element> vehicles = detected_objects.GetElementsOfType(OBJECT_VEHICLE);
 
@@ -41,7 +40,7 @@ bool HumansInFrontOfBusScenario::Detect(FrameDetectionData detected_objects){
 
         if(vehicles.size() != 0){
 
-            // check whether there are human objects which overlap with vehicle objects
+            // check whether there are human elements which overlap with vehicle elements
             std::vector<Element>::const_iterator humans_iterator;
 
             for(humans_iterator = humans.begin(); humans_iterator != humans.end(); ++humans_iterator){

@@ -24,8 +24,10 @@
 #ifndef __amos_ss16_proj5__image__
 #define __amos_ss16_proj5__image__
 
+//std
 #include <stdio.h>
 
+//opencv
 #include <opencv2/opencv.hpp>
 
 class Image{
@@ -54,7 +56,7 @@ public:
     /**
      * Gets the bgr image
      *
-     * @return The bgr image as opencv::Mat object
+     * @return The bgr image
      */
     virtual cv::Mat GetRGBImage()=0;
     
