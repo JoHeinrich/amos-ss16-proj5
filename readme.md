@@ -32,6 +32,7 @@ Use our [scripts](https://github.com/JoHeinrich/amos-ss16-proj5/tree/master/scri
 - Integrate OpenCV extra modules in OpenCV building: [Download](https://github.com/Itseez/opencv_contrib), [Install](https://github.com/Itseez/opencv_contrib)  `do this before building OpenCV!`
 - OpenCV 3.1: [Download](http://opencv.org/downloads.html), [Install](http://docs.opencv.org/3.1.0/d7/d9f/tutorial_linux_install.html)
 - CAF: C++ Actor Framework 0.14.5: [Download & Install] (https://github.com/actor-framework/actor-framework)
+- A [OpenMP Compiler] (http://openmp.org/wp/openmp-compilers/)
 
 #### Build command: 
     $ mkdir build
