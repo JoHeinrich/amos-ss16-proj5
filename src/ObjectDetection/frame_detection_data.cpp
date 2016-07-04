@@ -39,6 +39,7 @@ void FrameDetectionData::AddElementsOfType(ObjectType type, std::vector<Element>
 
     map_iterator = all_elements_.find(type);
 
+    // insert the new elements only if elements of the type do not exist so far
     if(map_iterator == all_elements_.end()){
 
         all_elements_.insert(std::pair<ObjectType, std::vector<Element> > (type, elements));

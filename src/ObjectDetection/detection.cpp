@@ -21,6 +21,7 @@
 // <http://www.gnu.org/licenses/>.
 //
 
+//local
 #include "detection.h"
 #include "element.h"
 
@@ -44,15 +45,17 @@ Detection::~Detection(){
 
 FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
+    // resize the frame and adjust it
     Mat frame = image->GetRGBImage();
     Mat contrast_and_brightness_adjusted_frame = AdjustContrastAndBrightness(&frame);
     Mat resized_frame = ResizeFrame(&contrast_and_brightness_adjusted_frame);
 
+    // perform detection
     std::vector<Rect> detected_vehicles = vehicle_detector_->Detect(&resized_frame);
     std::vector<Rect> detected_people = people_detector_->DetectInROI(&resized_frame, &detected_vehicles);
 
     // write the detected people and vehicle data into frame detection data and return it
-    // resize the position and the box of detected elements to real size again
+    // resize the positions and the boxes of detected elements to real size again
     FrameDetectionData* detected_objects = new FrameDetectionData();
     std::vector<Element> people_elements;
     std::vector<Element> vehicle_elements;
@@ -137,8 +140,9 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
 }
 
 Mat Detection::ResizeFrame(Mat *frame) {
+
     // resize the image to width of 400px to reduce detection time and improve detection accuracy
-    // dynamic risizing depending on input (min width 400px)
+    // dynamic risizing; depending on input (min width 400px)
 
     // compute resize factor
     Size size = frame->size();
@@ -147,6 +151,7 @@ Mat Detection::ResizeFrame(Mat *frame) {
 
    // std::cout << "Detection: resized factor: " << resize_factor_ << std::endl;
 
+    // perform resizing of the frame
     Mat resized_frame;
     resize(*frame, resized_frame, Size(0, 0), resize_factor_, resize_factor_, CV_INTER_AREA);
 

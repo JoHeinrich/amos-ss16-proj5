@@ -21,9 +21,10 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-
+//std
 #include <sstream>
 
+//local
 #include "bayer_image.h"
 
 
