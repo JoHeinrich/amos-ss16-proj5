@@ -29,12 +29,13 @@ RUN echo "deb http://nginx.org/packages/mainline/ubuntu/ trusty nginx" > /etc/ap
   && apt-get -y update \
   && apt-get -y --no-install-recommends install nginx patch \
   && scrub_image
-# Install CAF
+# Install CAF last caf release tag
 RUN git clone https://github.com/actor-framework/actor-framework.git \
   && cd actor-framework \
+  && git checkout 0.14.5 \ 
   && ./configure \
   && make \
-  && make test \
+#  && make test \
   && sudo make install
 # Adding server vars and the binaries, starting the server
 ENV HTML_INDEX_FILE AutoDrive

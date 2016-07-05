@@ -24,7 +24,10 @@
 #ifndef DETECTOR_H
 #define DETECTOR_H
 
+//opencv
 #include <opencv2/opencv.hpp>
+
+//std
 #include <vector>
 
 class Detector {
@@ -32,11 +35,11 @@ class Detector {
 public:
 
     /**
-    * Detects objects in the given frame (cv::Mat). Must be overwritten in subclass.
+    * Detects objects in the given frame given as a cv::Mat object. Must be overwritten in subclass.
     *
     * @param frame The current frame
     *
-    * @return The vector of all detected objects in the current Frame
+    * @return The vector of all detected objects in the current frame
     **/
     virtual std::vector<cv::Rect> Detect(cv::Mat *frame) = 0;
 

@@ -29,7 +29,7 @@
 #include "../ObjectDetection/daimler_people_detector.h"
 #include "../ObjectDetection/template_matching_people_detector.h"
 #include "../ObjectDetection/detection.h"
-//#include "../ObjectDetection/hog_people_detector.h"
+// #include "../ObjectDetection/hog_people_detector.h"
 #include "../StreamDecoder/image_view.h"
 #include "../ScenarioAnalysation/scenario.h"
 #include "../ScenarioAnalysation/humans_in_front_of_bus_scenario.h"
@@ -61,10 +61,14 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
   FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
   int protobuf_counts = pipeline->GetImageCount();
 
+
   //DaimlerPeopleDetector people_detector;
   //HOGPeopleDetector people_detector;
   TemplateMatchingPeopleDetector people_detector("../../src/ObjectDetection/template.png");
+
+
   CascadeHaarDetector vehicle_detector("cars3.xml");
+ // CascadeHaarDetector people_detector("haarcascade_fullbody.xml", 1.5, 0, cv::Size(14,28), cv::Size(56,112));
   Detection detection(&people_detector, &vehicle_detector);
 
   // set up all objects needed for analysing
@@ -72,8 +76,12 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
   possible_scenarios.push_back(new HumansInFrontOfBusScenario());
   Analyser analyser(possible_scenarios);
 
+
+  
+
   for (int i=0; i<protobuf_counts; i++) {
 
+    // perform detections on current frame
     Image * current_image = pipeline->ReadImage(i);
     FrameDetectionData* current_detections = detection.ProcessFrame(current_image);
 
@@ -81,6 +89,8 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
         continue;
     }
 
+    // show detected results on current frame
+    image_view.ShowImageAndDetections(current_image, current_detections->GetElementsOfType(OBJECT_HUMAN), current_detections->GetElementsOfType(OBJECT_VEHICLE));
     Scenario* scenario = analyser.Analyse(*current_detections);
 
     if(!scenario){
@@ -100,8 +110,9 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
         //Notifying other car
         if(port!=0)
         {
+            ProtoAgent protoagent(port,host);
             std::cout << "Informing other car" << std::endl;
-            ProtoAgent::startClient(port,host);
+            protoagent.sendMsgFromClient(Scenarios::WARN1);
         }
         //#endif
     }

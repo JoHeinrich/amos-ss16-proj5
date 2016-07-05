@@ -41,8 +41,9 @@ void protobuf_AssignDesc_message_2eproto() {
       "message.proto");
   GOOGLE_CHECK(file != NULL);
   warning_descriptor_ = file->message_type(0);
-  static const int warning_offsets_[1] = {
+  static const int warning_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(warning, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(warning, type_),
   };
   warning_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -56,8 +57,9 @@ void protobuf_AssignDesc_message_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(warning));
   ack_descriptor_ = file->message_type(1);
-  static const int ack_offsets_[1] = {
+  static const int ack_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ack, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ack, type_),
   };
   ack_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -124,10 +126,11 @@ void protobuf_AddDesc_message_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\rmessage.proto\022\013org.libcppa\"\025\n\007warning\022"
-    "\n\n\002id\030\001 \002(\005\"\021\n\003ack\022\n\n\002id\030\001 \002(\005\"N\n\tWarnOr"
-    "Ack\022\"\n\004warn\030\001 \001(\0132\024.org.libcppa.warning\022"
-    "\035\n\003ack\030\002 \001(\0132\020.org.libcppa.ack", 150);
+    "\n\rmessage.proto\022\013org.libcppa\"#\n\007warning\022"
+    "\n\n\002id\030\001 \002(\005\022\014\n\004type\030\002 \002(\005\"\037\n\003ack\022\n\n\002id\030\001"
+    " \002(\005\022\014\n\004type\030\002 \002(\005\"N\n\tWarnOrAck\022\"\n\004warn\030"
+    "\001 \001(\0132\024.org.libcppa.warning\022\035\n\003ack\030\002 \001(\013"
+    "2\020.org.libcppa.ack", 178);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "message.proto", &protobuf_RegisterTypes);
   warning::default_instance_ = new warning();
@@ -150,6 +153,7 @@ struct StaticDescriptorInitializer_message_2eproto {
 
 #ifndef _MSC_VER
 const int warning::kIdFieldNumber;
+const int warning::kTypeFieldNumber;
 #endif  // !_MSC_VER
 
 warning::warning()
@@ -171,6 +175,7 @@ warning::warning(const warning& from)
 void warning::SharedCtor() {
   _cached_size_ = 0;
   id_ = 0;
+  type_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -206,7 +211,21 @@ warning* warning::New() const {
 }
 
 void warning::Clear() {
-  id_ = 0;
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<warning*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(id_, type_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -228,6 +247,21 @@ bool warning::MergePartialFromCodedStream(
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &id_)));
           set_has_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_type;
+        break;
+      }
+
+      // required int32 type = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_type:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &type_)));
+          set_has_type();
         } else {
           goto handle_unusual;
         }
@@ -265,6 +299,11 @@ void warning::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
 
+  // required int32 type = 2;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->type(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -278,6 +317,11 @@ void warning::SerializeWithCachedSizes(
   // required int32 id = 1;
   if (has_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
+  }
+
+  // required int32 type = 2;
+  if (has_type()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->type(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -297,6 +341,13 @@ int warning::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->id());
+    }
+
+    // required int32 type = 2;
+    if (has_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->type());
     }
 
   }
@@ -329,6 +380,9 @@ void warning::MergeFrom(const warning& from) {
     if (from.has_id()) {
       set_id(from.id());
     }
+    if (from.has_type()) {
+      set_type(from.type());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -346,7 +400,7 @@ void warning::CopyFrom(const warning& from) {
 }
 
 bool warning::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
@@ -354,6 +408,7 @@ bool warning::IsInitialized() const {
 void warning::Swap(warning* other) {
   if (other != this) {
     std::swap(id_, other->id_);
+    std::swap(type_, other->type_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -373,6 +428,7 @@ void warning::Swap(warning* other) {
 
 #ifndef _MSC_VER
 const int ack::kIdFieldNumber;
+const int ack::kTypeFieldNumber;
 #endif  // !_MSC_VER
 
 ack::ack()
@@ -394,6 +450,7 @@ ack::ack(const ack& from)
 void ack::SharedCtor() {
   _cached_size_ = 0;
   id_ = 0;
+  type_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -429,7 +486,21 @@ ack* ack::New() const {
 }
 
 void ack::Clear() {
-  id_ = 0;
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<ack*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(id_, type_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -451,6 +522,21 @@ bool ack::MergePartialFromCodedStream(
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &id_)));
           set_has_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_type;
+        break;
+      }
+
+      // required int32 type = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_type:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &type_)));
+          set_has_type();
         } else {
           goto handle_unusual;
         }
@@ -488,6 +574,11 @@ void ack::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
 
+  // required int32 type = 2;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->type(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -501,6 +592,11 @@ void ack::SerializeWithCachedSizes(
   // required int32 id = 1;
   if (has_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
+  }
+
+  // required int32 type = 2;
+  if (has_type()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->type(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -520,6 +616,13 @@ int ack::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->id());
+    }
+
+    // required int32 type = 2;
+    if (has_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->type());
     }
 
   }
@@ -552,6 +655,9 @@ void ack::MergeFrom(const ack& from) {
     if (from.has_id()) {
       set_id(from.id());
     }
+    if (from.has_type()) {
+      set_type(from.type());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -569,7 +675,7 @@ void ack::CopyFrom(const ack& from) {
 }
 
 bool ack::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
@@ -577,6 +683,7 @@ bool ack::IsInitialized() const {
 void ack::Swap(ack* other) {
   if (other != this) {
     std::swap(id_, other->id_);
+    std::swap(type_, other->type_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
