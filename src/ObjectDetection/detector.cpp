@@ -30,12 +30,12 @@ cv::Rect* Detector::RescaleROI(cv::Rect *roi, int window_height, int window_widt
 
     cv::Rect* result = new cv::Rect();
 
-    std::cout << "Rescaling : Before: " << roi->width << " " << roi->height << " " << roi->x << "  " << roi->y << std::endl;
+    //std::cout << "Rescaling : Before: " << roi->width << " " << roi->height << " " << roi->x << "  " << roi->y << std::endl;
 
     if(roi->width < window_width){
 
         int difference = window_width - roi->width;
-        std::cout << "width diff : "<< difference << std::endl;
+        //std::cout << "width diff : "<< difference << std::endl;
         //int half_width = window_width/2 + 1;
         result->x = roi->x - (difference/2 +1);
         if(result->x < 0){
@@ -58,7 +58,7 @@ cv::Rect* Detector::RescaleROI(cv::Rect *roi, int window_height, int window_widt
     if(roi->height < window_height){
 
         int difference = window_height - roi->height;
-        std::cout << " Height diff: " << difference << std::endl;
+        //std::cout << " Height diff: " << difference << std::endl;
         //int half_height = window_height/2;
         result->y = roi->y - (difference/2 +1);
         if(result->y < 0){
@@ -78,8 +78,8 @@ cv::Rect* Detector::RescaleROI(cv::Rect *roi, int window_height, int window_widt
         result->height = roi->height;
     }
 
-    std::cout << "Rescaling : After: " << result->width << " " << result->height << " " << result->x << " " << result->y << std::endl;
-    std::cout << max_width << " " << max_height << std::endl;
+    //std::cout << "Rescaling : After: " << result->width << " " << result->height << " " << result->x << " " << result->y << std::endl;
+    //std::cout << max_width << " " << max_height << std::endl;
 
     return result;
 
