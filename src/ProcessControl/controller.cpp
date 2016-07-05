@@ -129,12 +129,12 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
 
 
 void Controller::InitilalizeCarConnection(uint16_t port, std::string host){
-    agent = ProtoAgent(port,host);
+    agent_ = ProtoAgent(port,host);
 }
 
 void Controller::NotifyOtherCar (Scenarios scenario){
     std::cout << "Informing other car" << std::endl;
-    agent.sendMsgFromClient(scenario);
+    agent_.sendMsgFromClient(scenario);
 }
 
 void Controller::SaveAllImagesAsJPEG(std::string videofile) {
