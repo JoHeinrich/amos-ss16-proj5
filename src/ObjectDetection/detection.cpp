@@ -48,11 +48,14 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
     // resize the frame and adjust it
     Mat frame = image->GetRGBImage();
     Mat contrast_and_brightness_adjusted_frame = AdjustContrastAndBrightness(&frame);
+    //imshow("Contrast image", contrast_and_brightness_adjusted_frame);
     Mat resized_frame = ResizeFrame(&contrast_and_brightness_adjusted_frame);
+
 
     // perform detection
     std::vector<Rect> detected_vehicles = vehicle_detector_->Detect(&resized_frame);
     std::vector<Rect> detected_people = people_detector_->DetectInROI(&resized_frame, &detected_vehicles);
+
 
     // write the detected people and vehicle data into frame detection data and return it
     // resize the positions and the boxes of detected elements to real size again
