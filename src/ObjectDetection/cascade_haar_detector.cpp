@@ -34,7 +34,7 @@ CascadeHaarDetector::CascadeHaarDetector(std::string file_name, double scale_fac
 
     // check if classifier was loaded
     if (cascade_haar_classifier_.empty() == true) {
-        cascade_haar_classifier_.load("../../src/ObjectDetection/" + file_name);
+        cascade_haar_classifier_.load("../../docker/assets/" + file_name);
 
         if (cascade_haar_classifier_.empty() == true) {
             cascade_haar_classifier_.load("../../ObjectDetection/" + file_name);
