@@ -28,7 +28,7 @@ cv::Rect* Detector::RescaleROI(cv::Rect *roi, int window_height, int window_widt
     // if the roi is smaller than the detector window,
     // shift and rescale it
 
-    cv::Rect* result;
+    cv::Rect* result = new cv::Rect();
 
     std::cout << "Rescaling : Before: " << roi->width << " " << roi->height << " " << roi->x << "  " << roi->y << std::endl;
 
