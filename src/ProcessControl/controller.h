@@ -77,4 +77,6 @@ private:
      * @param host The host for the communication module (default = "")
      */
     void NotifyOtherCar (Scenarios scenario);
+    
+    ProtoAgent agent;//The agent for the communication
 };
