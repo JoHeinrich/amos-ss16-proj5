@@ -84,3 +84,33 @@ std::vector<cv::Rect> TemplateMatchingPeopleDetector::Detect(cv::Mat *frame) {
 
     return detected_people;
 }
+
+std::vector<cv::Rect> TemplateMatchingPeopleDetector::DetectInROI(cv::Mat *frame, std::vector<cv::Rect> *rois) {
+
+    std::vector<cv::Rect> detected_people;
+
+    for( size_t i = 0; i < rois->size(); i++ ) {
+
+        cv::Mat ROI = frame->operator()( rois->operator[](i) );
+
+        if(ROI.cols < template_image_.cols || ROI.rows < template_image_.rows) {
+
+            continue;
+
+        }
+
+
+        std::vector<cv::Rect> detected_in_roi = Detect(&ROI);
+
+        for (int k = 0; k < detected_in_roi.size(); k++) {
+            detected_in_roi.at(k).x += rois->operator[](i).x;
+            detected_in_roi.at(k).y += rois->operator[](i).y;
+
+            detected_people.push_back(detected_in_roi.at(k));
+        }
+
+        detected_in_roi.clear();
+    }
+
+    return detected_people;
+}
