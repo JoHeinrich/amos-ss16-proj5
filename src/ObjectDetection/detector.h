@@ -47,12 +47,26 @@ public:
     * Detects objects in the given frame given as a cv::Mat object only in the ROIs. Must be overwritten in subclass.
     *
     * @param frame The current frame
-    * @param frame The rois
+    * @param rois The rois
     *
     * @return The vector of all detected objects in the current frame
     **/
     virtual std::vector<cv::Rect> DetectInROI(cv::Mat *frame, std::vector<cv::Rect> *rois) = 0;
 
+protected:
+
+    /**
+    * Rescales a ROI when it is smaller than the detector window. Needed for DetectInROI function.
+    *
+    * @param roi The current roi to rescale
+    * @param window_height The height of the detector window
+    * @param window_width The width of the detector window
+    * @param max_height The maximal height of the frame
+    * @param max_width The maximal width of the frame
+    *
+    * @return The rescaled roi
+    **/
+    cv::Rect* RescaleROI(cv::Rect *roi, int window_height, int window_width, int max_height, int max_width);
 private:
 
 };
