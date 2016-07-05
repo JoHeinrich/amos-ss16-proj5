@@ -29,6 +29,7 @@
 #include "../StreamDecoder/frame_selector.h"
 #include "../StreamDecoder/frame_selector_factory.h"
 #include "../StreamDecoder/image.h"
+#include "../CarCommunication/protoagent.h"
 
 class Controller{
 
