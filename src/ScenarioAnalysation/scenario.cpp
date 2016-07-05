@@ -52,6 +52,16 @@ bool Scenario::DoOverlap(Element first, Element second){
                       << " 3: " << second.GetMaxX() << " " << second.GetMaxY() << " 4: " << second.GetMinX() << " " << second.GetMaxY() <<std::endl;
     */
 
+    // check whether ione element contains the other
+    if(DoContain(first, second)){
+        return true;
+    }
+
+    if(DoContain(second, first)) {
+        return true;
+    }
+
+    // check for overlapping
     if( ( (first.GetMinX() <= second.GetMinX()) && (first.GetMaxX() >= second.GetMinX()) ) ||
             ( (first.GetMaxX() >= second.GetMaxX()) && (first.GetMinX() <= second.GetMaxX()) ) ){
 
@@ -66,7 +76,6 @@ bool Scenario::DoOverlap(Element first, Element second){
 
         return false;
     }
-
     return false;
 
 }
