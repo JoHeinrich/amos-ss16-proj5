@@ -57,7 +57,7 @@ sleep 3
 
 
 # HDF5 File given
-if [ "${2##*.}" == "hdf5" ]; then
+if [ ${2: -5} == ".hdf5" ]; then
 	# checking if client is running / exited
 	containerRunning=$(docker ps -a -f name=clientContainer)
 	flag=`echo $containerRunning|awk '{print match($0,"clientContainer")}'`;
@@ -90,7 +90,7 @@ if [ "${2##*.}" == "hdf5" ]; then
 fi
 
 # mp4 File given
-if [ "${2##*.}" == "mp4" ]; then
+if [ ${2: -4} == ".mp4" ]; then
   	# checking if client is running / exited
 	containerRunning=$(docker ps -a -f name=clientContainer)
 	flag=`echo $containerRunning|awk '{print match($0,"clientContainer")}'`;
