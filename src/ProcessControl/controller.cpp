@@ -54,7 +54,7 @@ void Controller::PlayAsVideo(std::string videofile) {
   }
 }
 
-void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string host) {
+void Controller::AnalyseVideo(std::string videofile) {
   ImageView image_view;
   FrameSelectorFactory frame_selector_factory(videofile);
   FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
@@ -102,11 +102,9 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
         std::cout << "Current detected scenario: " << scenario->GetScenarioInformation() << " in frame: " << i << std::endl;
 
         //Notifying other car
-        if(port!=0)
+        if(communication_is_activated_)
         {
-            ProtoAgent protoagent(port,host);
-            std::cout << "Informing other car" << std::endl;
-            protoagent.sendMsgFromClient(Scenarios::WARN1);
+            NotifyOtherCar(Scenarios::WARN1);
         }
     }
 
