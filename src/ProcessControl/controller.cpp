@@ -127,14 +127,14 @@ void Controller::AnalyseVideo(std::string videofile) {
 
 
 void Controller::InitilalizeCarConnection(uint16_t port, std::string host){
-    agent_ = ProtoAgent(port,host);
+    agent_ = new ProtoAgent(port,host);
     communication_is_activated_ = true;
 }
 
 void Controller::NotifyOtherCar (Scenarios scenario){
     if (communication_is_activated_){
         std::cout << "Informing other car" << std::endl;
-        agent_.sendMsgFromClient(scenario);
+        agent_->sendMsgFromClient(scenario);
     }
     else {
         std::cout << "Communcation not activated" << std::endl;

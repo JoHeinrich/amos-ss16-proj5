@@ -76,6 +76,6 @@ private:
      */
     void NotifyOtherCar (Scenarios scenario);
     
-    ProtoAgent agent_ = NULL;//The agent for the communication
+    ProtoAgent * agent_;//The agent for the communication
     bool communication_is_activated_=false;//flag, if the communication is activated
 };
