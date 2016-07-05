@@ -91,13 +91,14 @@ std::vector<cv::Rect> TemplateMatchingPeopleDetector::DetectInROI(cv::Mat *frame
 
     for( size_t i = 0; i < rois->size(); i++ ) {
 
-        cv::Mat ROI = frame->operator()( rois->operator[](i) );
-
-        if(ROI.cols < template_image_.cols || ROI.rows < template_image_.rows) {
+        /*if(ROI.cols < template_image_.cols || ROI.rows < template_image_.rows) {
 
             continue;
 
-        }
+        }*/
+
+        cv::Rect* rescaled_roi = RescaleROI(&(rois->at(i)), template_image_.rows, template_image_.cols, frame->rows, frame->cols);
+        cv::Mat ROI = frame->operator()( *rescaled_roi );
 
 
         std::vector<cv::Rect> detected_in_roi = Detect(&ROI);
