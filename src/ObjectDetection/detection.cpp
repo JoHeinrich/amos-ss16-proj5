@@ -54,7 +54,7 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
     // perform detection
     std::vector<Rect> detected_vehicles = vehicle_detector_->Detect(&resized_frame);
-    std::vector<Rect> detected_people = people_detector_->DetectInROI(&resized_frame, &detected_vehicles);
+    std::vector<Rect> detected_people = people_detector_->Detect(&resized_frame);
 
 
     // write the detected people and vehicle data into frame detection data and return it
