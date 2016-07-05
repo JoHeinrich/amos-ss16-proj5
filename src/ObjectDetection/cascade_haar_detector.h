@@ -33,7 +33,7 @@ public:
     /**
     * Default constructor.
     **/
-    CascadeHaarDetector(std::string classifier_file, double scale_factor = 1.1, int min_neighbors = 3, cv::Size min_size = cv::Size(20,20), cv::Size max_size = cv::Size(80,80));
+    CascadeHaarDetector(std::string classifier_file, double scale_factor = 1.1, int min_neighbors = 3, cv::Size min_size = cv::Size(40,40), cv::Size max_size = cv::Size(160,160));
 
     /**
     * Detects objects in the given frame (cv::Mat) acording to the classifier.
