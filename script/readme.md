@@ -7,7 +7,7 @@ These scripts are bound to change with the continued progress we make in this pr
 #### Amos-SS16-Proj5 -- the main program
 This script starts our main program that consists of a hdf5/mp4 stream decoder, an object detection, scenario analyzation, and a client-server communication via the C++ Actor Framework. It needs to be run with a docker container tag, the full path to either an mp4 or hdf5 encoded video stream, the name of a docker network and the port the server and client should work on:
 
-$ script/amos-ss16-proj5.sh _CONTAINER_TAG_  _FULL_PATH_TO_FILE_  _NAME_OF_NETWORK_  _PORT_
+$ bash script/amos-ss16-proj5.sh _CONTAINER_TAG_  _FULL_PATH_TO_FILE_  _NAME_OF_NETWORK_  _PORT_
 
 
 Now, you should be able to see object detection for cars and humans in the specified video as well as communication between the client and server.
