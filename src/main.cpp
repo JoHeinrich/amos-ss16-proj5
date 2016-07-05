@@ -38,7 +38,7 @@
 #include "StreamDecoder/frame_selector_factory.h"
 #include "StreamDecoder/image_view.h"
 #include "ProcessControl/controller.h"
-#include "ProcessControl/multithreadedcontroller.h"
+//#include "ProcessControl/multithreadedcontroller.h"
 #include "CarCommunication/protoagent.h"
 
 using namespace std;
@@ -97,8 +97,8 @@ int main(int argc, const char* argv[]) {
         uint16_t port;
         if(str_to_uint16(argv[1],&port))
         {
-            MultithreadedController controller(argv[3],port,argv[2]);
-            //Controller().AnalyseVideo(argv[3],port,argv[2]);
+            //MultithreadedController controller(argv[3],port,argv[2]);
+            Controller().AnalyseVideo(argv[3],port,argv[2]);
         }
         else
         {
