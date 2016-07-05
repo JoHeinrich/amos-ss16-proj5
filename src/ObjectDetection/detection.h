@@ -35,7 +35,7 @@
 
 const double default_contrast_value = 3.0;
 const int default_brightness_value = 50;
-const int default_resized_frame_width = 400;
+const int default_resized_frame_width = 600;
 
 class Detection {
 
@@ -80,7 +80,7 @@ private:
     * @return The resized image
     **/
     cv::Mat ResizeFrame(cv::Mat *frame);
-    
+
     /**
      * Adjust the image for better contrast and better brightness
      *
@@ -91,7 +91,7 @@ private:
      * @return The changed image (= contrastValue * image + brightnessValue)
      **/
     cv::Mat AdjustContrastAndBrightness(cv::Mat *frame, double contrastValue, int brightnessValue);
-    
+
 
     /**
      * Adjust the image for better contrast and better brightness with default values

@@ -64,9 +64,12 @@ std::vector<cv::Rect> CascadeHaarDetector::DetectInROI(cv::Mat *frame, std::vect
             detected_objects[old_size].x += rois->operator[](i).x;
             detected_objects[old_size].y += rois->operator[](i).y;
             old_size ++;
+
+            // imshow(" ", ROI);
+            // cvWaitKey(0);
         }
 
     }
-    
+
     return detected_objects;
 }
