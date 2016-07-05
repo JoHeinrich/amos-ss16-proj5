@@ -32,14 +32,14 @@ cv::Rect* Detector::RescaleROI(cv::Rect *roi, int window_height, int window_widt
 
         int half_width = window_width/2 + 1;
         roi->x = roi->x + half_width;
-        roi->width = roi->width + half_width;
+        roi->width = roi->width + window_width;
 
     }
     if(roi->height < window_height){
 
         int half_height = window_height/2 + 1;
         roi->y = roi->y + half_height;
-        roi->height = roi->height + half_height;
+        roi->height = roi->height + window_height;
 
     }
 
