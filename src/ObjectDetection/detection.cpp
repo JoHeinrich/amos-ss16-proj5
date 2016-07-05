@@ -54,9 +54,6 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
     cvtColor( resized_frame, frame_gray, CV_RGB2GRAY );
     equalizeHist( frame_gray, frame_gray );
 
-    imshow(" ", frame_gray);
-    waitKey(1);
-
     // perform detection
     std::vector<Rect> detected_vehicles = vehicle_detector_->Detect(&frame_gray);
     std::vector<Rect> detected_people = people_detector_->DetectInROI(&frame_gray, &detected_vehicles);
