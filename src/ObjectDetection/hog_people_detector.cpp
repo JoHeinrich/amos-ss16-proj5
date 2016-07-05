@@ -38,24 +38,15 @@ std::vector<cv::Rect> HOGPeopleDetector::Detect(cv::Mat *frame) {
 std::vector<cv::Rect> HOGPeopleDetector::DetectInROI(cv::Mat *frame, std::vector<cv::Rect> *rois) {
 
     std::vector<cv::Rect> detectedPeople;
+
     for( size_t i = 0; i < rois->size(); i++ ) {
-        cv::Mat ROI = frame->operator()( rois->operator[](i) );
-        // imshow( "", ROI );
-        // cv::waitKey(0);
-        // std::cout << ROI.cols << std::endl;
 
-        // FIXME: detectMultiScale does not work on roi?
+        cv::Rect* rescaled_roi = RescaleROI(&(rois->at(i)), 128, 64, frame->rows, frame->cols);
 
-        if(ROI.cols < 64 || ROI.rows < 128) {
+        cv::Mat ROI = frame->operator()( *rescaled_roi );
 
-                std::cout << "Continued because roi is smaller" <<std::endl;
-                    continue;
+        hog_descriptor_.detectMultiScale(ROI, detectedPeople, 0, cv::Size(4,4), cv::Size(1,1), 1.04, 0);
 
-                }
-
-
-         hog_descriptor_.detectMultiScale(ROI, detectedPeople, 0, cv::Size(4,4), cv::Size(1,1), 1.04, 0);
-        //hog_descriptor_.detectMultiScale(*frame, detectedPeople, 0, cv::Size(4,4), cv::Size(16,16), 1.04, 0);
     }
 
     return detectedPeople;

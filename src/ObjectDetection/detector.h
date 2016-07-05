@@ -50,7 +50,7 @@ public:
     **/
     virtual std::vector<cv::Rect> DetectInROI(cv::Mat *frame, std::vector<cv::Rect> *rois) = 0;
 
-private:
+protected:
 
     /**
     * Rescales a ROI when it is smaller than the detector window. Needed for DetectInROI function.
@@ -58,11 +58,13 @@ private:
     * @param roi The current roi to rescale
     * @param window_height The height of the detector window
     * @param window_width The width of the detector window
+    * @param max_height The maximal height of the frame
+    * @param max_width The maximal width of the frame
     *
     * @return The rescaled roi
     **/
-    cv::Rect* RescaleROI(cv::Rect *roi, int window_height, int window_width);
-
+    cv::Rect* RescaleROI(cv::Rect *roi, int window_height, int window_width, int max_height, int max_width);
+private:
 
 };
 
