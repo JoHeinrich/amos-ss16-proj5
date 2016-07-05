@@ -98,7 +98,9 @@ int main(int argc, const char* argv[]) {
         if(str_to_uint16(argv[1],&port))
         {
             //MultithreadedController controller(argv[3],port,argv[2]);
-            Controller().AnalyseVideo(argv[3],port,argv[2]);
+            Controller controller;
+            controller.InitilalizeCarConnection(port,argv[2]);
+            controller.AnalyseVideo(argv[3]);
         }
         else
         {
