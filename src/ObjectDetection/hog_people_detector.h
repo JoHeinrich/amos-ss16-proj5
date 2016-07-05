@@ -21,8 +21,8 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef PEOPLE_DETECTOR_H
-#define PEOPLE_DETECTOR_H
+#ifndef HOG_PEOPLE_DETECTOR_H
+#define HOG_PEOPLE_DETECTOR_H
 
 #include "detector.h"
 
@@ -61,4 +61,4 @@ private:
 };
 
 
-#endif // PEOPLE_DETECTOR_H
+#endif // HOG_PEOPLE_DETECTOR_H
