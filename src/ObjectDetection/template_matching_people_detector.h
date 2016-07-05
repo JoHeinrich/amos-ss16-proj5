@@ -21,26 +21,28 @@
 // <http://www.gnu.org/licenses/>.
 //
 
-#ifndef CASCADE_HAAR_DETECTOR_H
-#define CASCADE_HAAR_DETECTOR_H
+#ifndef TEMPLATE_MATCHING_PEOPLE_DETECTOR_H
+#define TEMPLATE_MATCHING_PEOPLE_DETECTOR_H
 
 #include "detector.h"
 
-class CascadeHaarDetector : public Detector {
+class TemplateMatchingPeopleDetector : public Detector {
 
 public:
 
     /**
-    * Default constructor.
+    * Default constructor. 
+    *
+    * @param image_file The file containg the template image for detection.
     **/
-    CascadeHaarDetector(std::string classifier_file, double scale_factor = 1.1, int min_neighbors = 3, cv::Size min_size = cv::Size(40,40), cv::Size max_size = cv::Size(160,160));
+    TemplateMatchingPeopleDetector(std::string image_file);
 
     /**
-    * Detects objects in the given frame (cv::Mat) acording to the classifier.
+    * Detects people in the given frame (cv::Mat)
     *
     * @param frame The current frame
     *
-    * @return The vector of all detected objects in the current Frame
+    * @return The vector of all detected people in the current Frame
     **/
     std::vector<cv::Rect> Detect(cv::Mat *frame);
 
@@ -56,13 +58,9 @@ public:
 
 private:
 
-    cv::CascadeClassifier cascade_haar_classifier_;
-    double scale_factor_;
-    int min_neighbors_;
-    cv::Size min_size_;
-    cv::Size max_size_;
-
+    cv::Mat template_image_;   ///< The template image for detection
+    int match_method_;      ///< The match method
 };
 
 
-#endif // CASCADE_HAAR_DETECTOR_H
+#endif // TEMPLATE_MATCHING_PEOPLE_DETECTOR_H

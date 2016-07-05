@@ -78,6 +78,11 @@ public:
 	*/ 
 	void startServer (uint16_t port);
 
+	/** 
+	* Sends a message from the client to his host. 
+	* 
+	* @param id Message type 
+	*/ 
 	void sendMsgFromClient(Scenarios id);
 
 	/** 
@@ -86,7 +91,6 @@ public:
 	* @param hdl Actor which shuts down
 	* @param name Actor name 
 	*/ 
-
 	static void print_on_exit(const actor& hdl, const std::string& name);
 
 
@@ -115,7 +119,7 @@ public:
 	static void protobuf_io(broker* self, connection_handle hdl, const actor& buddy);
 
 	/** 
-	* Behavior for server . 
+	* Behavior for server . 	
 	* 
 	* @param self incoming actor
 	* @param buddy communication actor

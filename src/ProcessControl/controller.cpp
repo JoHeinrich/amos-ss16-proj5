@@ -27,6 +27,7 @@
 //local
 #include "../ObjectDetection/cascade_haar_detector.h"
 #include "../ObjectDetection/daimler_people_detector.h"
+#include "../ObjectDetection/template_matching_people_detector.h"
 #include "../ObjectDetection/detection.h"
 #include "../ObjectDetection/hog_people_detector.h"
 #include "../StreamDecoder/image_view.h"
@@ -54,16 +55,21 @@ void Controller::PlayAsVideo(std::string videofile) {
   }
 }
 
-void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string host) {
+void Controller::AnalyseVideo(std::string videofile) {
   ImageView image_view;
   FrameSelectorFactory frame_selector_factory(videofile);
   FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
   int protobuf_counts = pipeline->GetImageCount();
 
-   //DaimlerPeopleDetector people_detector; // TODO: remove if no longer needed
-  HOGPeopleDetector people_detector;
+
+
+  // DaimlerPeopleDetector people_detector;
+  //HOGPeopleDetector people_detector;
+  // TemplateMatchingPeopleDetector people_detector("../../src/ObjectDetection/template.png");
+
   CascadeHaarDetector vehicle_detector("cars3.xml");
-  //CascadeHaarDetector people_detector("haarcascade_fullbody.xml", 1.5, 0, cv::Size(14,28), cv::Size(56,112));
+  CascadeHaarDetector people_detector("haarcascade_fullbody.xml", 1.5, 0, cv::Size(14,28), cv::Size(98,196));
+
   Detection detection(&people_detector, &vehicle_detector);
 
   // set up all objects needed for analysing
@@ -72,10 +78,11 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
   Analyser analyser(possible_scenarios);
 
 
-  
+
 
   for (int i=0; i<protobuf_counts; i++) {
 
+    // perform detections on current frame
     Image * current_image = pipeline->ReadImage(i);
     FrameDetectionData* current_detections = detection.ProcessFrame(current_image);
 
@@ -83,6 +90,7 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
         continue;
     }
 
+    // show detected results on current frame
     image_view.ShowImageAndDetections(current_image, current_detections->GetElementsOfType(OBJECT_HUMAN), current_detections->GetElementsOfType(OBJECT_VEHICLE));
     Scenario* scenario = analyser.Analyse(*current_detections);
 
@@ -99,15 +107,11 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
         // for demo: show information about scenario in current frame
         std::cout << "Current detected scenario: " << scenario->GetScenarioInformation() << " in frame: " << i << std::endl;
 
-        //#ifdef COMBINE
         //Notifying other car
-        if(port!=0)
+        if(communication_is_activated_)
         {
-            ProtoAgent protoagent(port,host);
-            std::cout << "Informing other car" << std::endl;
-            protoagent.sendMsgFromClient(Scenarios::WARN1);
+            NotifyOtherCar(Scenarios::WARN1);
         }
-        //#endif
     }
 
     int key = cvWaitKey(10);
@@ -125,6 +129,22 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
     scenario = NULL;
 
    }
+}
+
+
+void Controller::InitilalizeCarConnection(uint16_t port, std::string host){
+    agent_ = new ProtoAgent(port,host);
+    communication_is_activated_ = true;
+}
+
+void Controller::NotifyOtherCar (Scenarios scenario){
+    if (communication_is_activated_){
+        std::cout << "Informing other car" << std::endl;
+        agent_->sendMsgFromClient(scenario);
+    }
+    else {
+        std::cout << "Communcation not activated" << std::endl;
+    }
 }
 
 void Controller::SaveAllImagesAsJPEG(std::string videofile) {

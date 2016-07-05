@@ -24,8 +24,10 @@
 #ifndef BAYERIMAGE_H
 #define BAYERIMAGE_H
 
-
+//opencv
 #include <opencv2/opencv.hpp>
+
+//local
 #include "image.h"
 
 using namespace cv;
@@ -70,8 +72,9 @@ public:
       int GetImageHeight();
 
      /**
-      * Returns the payload as RGB image
+      * Gets the payload as RGB image
       *
+      * @return The image as cv::Mat object
       */
       Mat GetRGBImage();
     

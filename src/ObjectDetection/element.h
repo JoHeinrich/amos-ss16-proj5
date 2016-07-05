@@ -40,56 +40,56 @@ public:
 
 
     /**
-     *  Gets the position of the element
+     *  Gets the position of the element (x,y of the topleft corner)
      *
      *  @return The vector with the position of the element
      */
     std::vector<int> GetPosition();
 
     /**
-     *  Gets the size of the bounding box of the element
+     *  Gets the size of the bounding box of the element (width, height)
      *
      *  @return The vector with the size of the bounding box of the element
      */
     std::vector<int> GetBoxSize();
 
     /**
-    *   Gets the minimal x position of the bounding box of this element.
+    *   Gets the minimal x position of the bounding box of the element.
     *
     *   @return The minimal x position
     */
     int GetMinX();
 
     /**
-    *   Gets the minimal y position of the bounding box of this element.
+    *   Gets the minimal y position of the bounding box of the element.
     *
     *   @return The minimal y position
     */
     int GetMinY();
 
     /**
-    *   Gets the maximal x position of the bounding box of this element.
+    *   Gets the maximal x position of the bounding box of the element.
     *
     *   @return The maximal x position
     */
     int GetMaxX();
 
     /**
-    *   Gets the maximal y position of the bounding box of this element.
+    *   Gets the maximal y position of the bounding box of the element.
     *
     *   @return The maximal y position
     */
     int GetMaxY();
 
     /**
-    *   Gets the x value of center of the bounding box of this element.
+    *   Gets the x value of center of the bounding box of the element.
     *
     *   @return The x position of the center
     */
     int GetCenterX();
 
     /**
-    *   Gets the y value of center of the bounding box of this element.
+    *   Gets the y value of center of the bounding box of the element.
     *
     *   @return The y position of the center
     */
@@ -98,7 +98,7 @@ public:
 
 private:
     
-   std::vector<int> position_;  ///< The vector containing the position of the element (x and y coordinate of the top left corner)
+   std::vector<int> position_;  ///< The vector containing the position of the element (x and y coordinate of the topleft corner)
    std::vector<int> box_size_;  ///< The vector contatining the width and height of the bounding box of the element
     
 };

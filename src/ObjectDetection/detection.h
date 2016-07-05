@@ -35,7 +35,7 @@
 
 const double default_contrast_value = 3.0;
 const int default_brightness_value = 50;
-const int default_resized_frame_width = 400;
+const int default_resized_frame_width = 600;
 
 class Detection {
 
@@ -44,8 +44,8 @@ public:
     /**
     * Default constructor.
     *
-    * @param *peopleDetector The people detector
-    * @param *vehicleDetector The vehicle detector
+    * @param peopleDetector The people detector
+    * @param vehicleDetector The vehicle detector
     **/
     Detection(Detector * peopleDetector, Detector * vehicleDetector);
 
@@ -56,12 +56,12 @@ public:
     ~Detection();
 
     /**
-    * Resizes one frame and than performs the detection
+    * Resizes the given frame and than performs the detection
     * (people and vehicle for now) on the resized frame.
     *
-    * @param frame The current image of the stream
+    * @param image The current image of the stream
     *
-    * @return A frame detection data object that holds the detected data
+    * @return A FrameDetectionData object that holds the detected data
     **/
     FrameDetectionData* ProcessFrame(Image * image);
 
@@ -80,23 +80,23 @@ private:
     * @return The resized image
     **/
     cv::Mat ResizeFrame(cv::Mat *frame);
-    
+
     /**
      * Adjust the image for better contrast and better brightness
      *
-     * @param frame - the current image of the stream
-     * @param contrastValue - set a value between 1.0-3.0
-     * @param brightnessValue - set a value between 0-100
+     * @param frame The current image of the stream
+     * @param contrastValue  The contrast value (set a value between 1.0-3.0)
+     * @param brightnessValue The brightness value (set a value between 0-100)
      *
-     * @return The changed image = contrastValue * image + brightnessValue
+     * @return The changed image (= contrastValue * image + brightnessValue)
      **/
     cv::Mat AdjustContrastAndBrightness(cv::Mat *frame, double contrastValue, int brightnessValue);
-    
+
 
     /**
      * Adjust the image for better contrast and better brightness with default values
      *
-     * @param frame - the current image of the stream
+     * @param frame The current image of the stream
      *
      * @return The changed image
      **/

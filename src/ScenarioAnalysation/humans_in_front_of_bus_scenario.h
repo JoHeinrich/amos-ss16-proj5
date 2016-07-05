@@ -37,17 +37,17 @@ class HumansInFrontOfBusScenario : public Scenario {
 public:
 
     /**
-    * Overrides the Detect function from Scenario. Deetects whether there are humans in front of the bus.
+    * Overrides the Detect function from Scenario. Detects whether there are humans in front of the bus.
     *
-    * @return true whether the are humans in front of the bus, false if not
+    * @return True when the are humans in front of the bus, false if not.
     */
     virtual bool Detect(FrameDetectionData detected_objects) override;
 
 
     /**
-    * Returns the information about the detected scenario as a human-readable string
+    * Returns the information about the detected scenario as a human-readable string.
     *
-    * @return A string that describes the scenario
+    * @return A string that describes the scenario.
     */
     virtual std::string GetScenarioInformation() override;
 
