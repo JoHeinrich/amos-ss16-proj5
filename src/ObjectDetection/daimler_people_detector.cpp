@@ -43,6 +43,14 @@ std::vector<cv::Rect> DaimlerPeopleDetector::DetectInROI(cv::Mat *frame, std::ve
     for( size_t i = 0; i < rois->size(); i++ ) {
         cv::Mat ROI = frame->operator()( rois->operator[](i) );
 
+        if(ROI.cols < hog_descriptor_.winSize.width || ROI.rows < hog_descriptor_.winSize.height) {
+
+                std::cout << "Continued because roi is smaller" <<std::endl;
+                    continue;
+
+                }
+
+
         hog_descriptor_.detectMultiScale(ROI, detected_people, 1.0, cv::Size(8,8), cv::Size(16,16), 1.00, 0);
 
         /*if (!detected_people.empty() && old_size < detected_people.size() ) {
