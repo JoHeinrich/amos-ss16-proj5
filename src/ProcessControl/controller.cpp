@@ -130,11 +130,17 @@ void Controller::AnalyseVideo(std::string videofile, uint16_t port, std::string 
 
 void Controller::InitilalizeCarConnection(uint16_t port, std::string host){
     agent_ = ProtoAgent(port,host);
+    communication_is_activated_ = true;
 }
 
 void Controller::NotifyOtherCar (Scenarios scenario){
-    std::cout << "Informing other car" << std::endl;
-    agent_.sendMsgFromClient(scenario);
+    if (communication_is_activated_){
+        std::cout << "Informing other car" << std::endl;
+        agent_.sendMsgFromClient(scenario);
+    }
+    else {
+        std::cout << "Communcation not activated" << std::endl;
+    }
 }
 
 void Controller::SaveAllImagesAsJPEG(std::string videofile) {
