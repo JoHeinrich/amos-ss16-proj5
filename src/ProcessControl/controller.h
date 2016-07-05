@@ -56,16 +56,16 @@ public:
      */
     void SaveAllImagesAsJPEG(std::string videofile);
     
-private:
-    
     /**
-    *
-    * Initalizes the connection to another car
-    *
-    * @param port The port for the communication module (default = 0)
-    * @param host The host for the communication module (default = "")
-    */
+     *
+     * Initalizes the connection to another car
+     *
+     * @param port The port for the communication module (default = 0)
+     * @param host The host for the communication module (default = "")
+     */
     void InitilalizeCarConnection(uint16_t port, std::string host);
+    
+private:
     
     /**
      *
@@ -76,6 +76,6 @@ private:
      */
     void NotifyOtherCar (Scenarios scenario);
     
-    ProtoAgent agent_;//The agent for the communication
+    ProtoAgent agent_ = NULL;//The agent for the communication
     bool communication_is_activated_=false;//flag, if the communication is activated
 };
