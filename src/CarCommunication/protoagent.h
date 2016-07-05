@@ -47,24 +47,43 @@ using namespace std;
 using namespace caf;
 using namespace caf::io; 
 
+enum class Scenarios : int { WARN1 = 1, WARN2 = 2, WARN3 = 3, EXIT = 4 };
 
 class ProtoAgent {
 	
 public:
+	
+	/** 
+	* starts the client or the server. 
+	* 
+	* @param port Specified port for communication
+	* @param host Hostname for connection to server if empty server will be started
+
+	*/ 
+	ProtoAgent(uint16_t port, string host = "");
+	
 	/** 
 	* starts the client. 
 	* 
 	* @param port Specified port for communication
-	* @param hsot Hostname for connection to server 
+	* @param host Hostname for connection to server 
+
 	*/ 
-	static void startClient (uint16_t port, const string& host);
+	void startClient (uint16_t port, const string& host);
 
 	/** 
 	* starts the server. 
 	* 
 	* @param port Specified port for communication 
 	*/ 
-	static void startServer (uint16_t port);
+	void startServer (uint16_t port);
+
+	/** 
+	* Sends a message from the client to his host. 
+	* 
+	* @param id Message type 
+	*/ 
+	void sendMsgFromClient(Scenarios id);
 
 	/** 
 	* utility function to print an exit message with custom name. 
@@ -72,7 +91,6 @@ public:
 	* @param hdl Actor which shuts down
 	* @param name Actor name 
 	*/ 
-
 	static void print_on_exit(const actor& hdl, const std::string& name);
 
 
@@ -87,7 +105,7 @@ public:
 	/** 
 	* Server's behavior -- gets the client's warning from the protobuf broker and responds with an "ack" message
 	* 
-	*/ 
+	*/
 	static behavior ackMessage();
 
 
@@ -101,12 +119,13 @@ public:
 	static void protobuf_io(broker* self, connection_handle hdl, const actor& buddy);
 
 	/** 
-	* Behavior for server . 
+	* Behavior for server . 	
 	* 
 	* @param self incoming actor
 	* @param buddy communication actor
 	*/ 
 	static behavior server(broker* self, actor buddy);
 };
+
 
 #endif // PROTOBUF_BROKER_H

@@ -1,5 +1,5 @@
 //
-// protobuf_broker.cpp
+// protoagent.cpp
 // Projectname: amos-ss16-proj5
 //
 // Created on 28.05.2016.
@@ -25,6 +25,15 @@
 
 #include "protoagent.h"
 
+static actor client_actor;
+static actor io_actor;
+int mess_id = 1;
+
+/*
+  **************************
+  Exit message - Prints warning with given reason
+  **************************
+*/
 void ProtoAgent::print_on_exit(const actor& hdl, const std::string& name) {
   hdl->attach_functor([=](abstract_actor* ptr, uint32_t reason) {
     aout(ptr) << name << " exited with reason " << reason << endl;
@@ -33,22 +42,24 @@ void ProtoAgent::print_on_exit(const actor& hdl, const std::string& name) {
 
 /*
   **************************
-  Client's behavior -- sends a warning after kickoff and quits
-  after the warning has been acknowledged by the server
+  Client's behavior -- sends a warning after he gets the "warnServer" event from the controller
   **************************
 */
 behavior ProtoAgent::sendWarning(event_based_actor* self) {
-  auto count = make_shared<size_t>(0);
   return {
-    on(atom("kickoff"), arg_match) >> [=](const actor& pong) {
-      self->send(pong, atom("warning"), 1);
-      self->become (
-        on(atom("ack"), arg_match) >> [=](int value) -> void {
+    on(atom("warnSc1"), arg_match) >> [=](const actor& pong, int id) {
+      self->send(pong, atom("warning1"), id);
+    },
+    on(atom("warnSc2"), arg_match) >> [=](const actor& pong, int id) {
+      self->send(pong, atom("warning2"), id);
+    },
+    on(atom("warnSc3"), arg_match) >> [=](const actor& pong, int id) {
+      self->send(pong, atom("warning3"), id);
+    },
+    on(atom("exit"), arg_match) >> [=](int value) -> void {
           self->quit();
           return;
-        }
-      );
-    }
+    } 
   };
 }
 
@@ -60,8 +71,8 @@ behavior ProtoAgent::sendWarning(event_based_actor* self) {
 */
 behavior ProtoAgent::ackMessage() {
   return {
-    on(atom("warning"), arg_match) >> [](int value) {
-      return make_message(atom("ack"), value);
+    on(atom("warning"), arg_match) >> [](int id, int type) {
+      return make_message(atom("ack"), id, type);
     }
   };
 }
@@ -90,16 +101,32 @@ void ProtoAgent::protobuf_io(broker* self, connection_handle hdl, const actor& b
       self->send_exit(buddy, exit_reason::remote_link_unreachable);
       self->quit(exit_reason::remote_link_unreachable);
     },
-    on(atom("warning"), arg_match) >> [=](int i) {
-      aout(self) << "Send: warning " << i << endl;
+    on(atom("warning1"), arg_match) >> [=](int i) {
+      aout(self) << "Send: 'People in front of car' warning with ID " << i << endl;
       org::libcppa::WarnOrAck p;
       p.mutable_warn()->set_id(i);
+      p.mutable_warn()->set_type(1);      
       write(p);
     },
-    on(atom("ack"), arg_match) >> [=](int i) {
-      aout(self) << "Send: ack " << i << endl;
+    on(atom("warning2"), arg_match) >> [=](int i) {
+      aout(self) << "Send: 'People on street detected' warning with ID " << i << endl;
+      org::libcppa::WarnOrAck p;
+      p.mutable_warn()->set_id(i);
+      p.mutable_warn()->set_type(2);
+      write(p);
+    },
+    on(atom("warning3"), arg_match) >> [=](int i) {
+      aout(self) << "Send: warning of type 3 with ID " << i << endl;
+      org::libcppa::WarnOrAck p;
+      p.mutable_warn()->set_id(i);
+      p.mutable_warn()->set_type(3);      
+      write(p);
+    },
+    on(atom("ack"), arg_match) >> [=](int i, int type) {
+      aout(self) << "Send: ack with ID " << i << " of type " << type << endl;
       org::libcppa::WarnOrAck p;
       p.mutable_ack()->set_id(i);
+      p.mutable_ack()->set_type(type);
       write(p);
     },
     [=](const down_msg& dm) {
@@ -117,12 +144,17 @@ void ProtoAgent::protobuf_io(broker* self, connection_handle hdl, const actor& b
       org::libcppa::WarnOrAck p;
       p.ParseFromArray(msg.buf.data(), static_cast<int>(msg.buf.size()));
       if (p.has_warn()) {
-        aout(self) << "Received: warning " << p.warn().id() << endl;
-        self->send(buddy, atom("warning"), p.warn().id());
+      	if (p.warn().type() == 1)
+	        aout(self) << "Received: 'People in front of car' warning with ID " << p.warn().id() << endl;
+	    if (p.warn().type() == 2)
+	        aout(self) << "Received: 'People on street detected' warning with ID " << p.warn().id() << endl;
+	    if (p.warn().type() == 3 || p.warn().type() == 4)
+	    	aout(self) << "Received: warning with ID " << p.warn().id() << " of type " << p.warn().type() << endl;
+        self->send(buddy, atom("warning"), p.warn().id(), p.warn().type());
       }
       else if (p.has_ack()) {
-        aout(self) << "Received: ack " << p.ack().id() << endl;
-        self->send(buddy, atom("ack"), p.ack().id());
+        aout(self) << "Received: ack for ID " << p.ack().id() << " of type " << p.ack().type() << endl;
+        self->send(buddy, atom("ack"), p.ack().id(), p.ack().type());
       }
       else {
         self->quit(exit_reason::user_shutdown);
@@ -174,7 +206,7 @@ behavior ProtoAgent::server(broker* self, actor buddy) {
       cout << "unexpected: " << to_string(self->current_message()) << endl;
     },
     after(std::chrono::seconds(60)) >> [=] {
-      aout(self) << "received nothing within 60 seconds..." << endl;
+      aout(self) << "received no connection within 60 seconds..." << endl;
       self->send_exit(buddy, exit_reason::remote_link_unreachable);
       self->quit();
     }
@@ -185,52 +217,72 @@ optional<uint16_t> as_u16(const std::string& str) {
   return static_cast<uint16_t>(stoul(str));
 }
 
+/*
+  **************************
+  Client kickoff - spawns Client Actor with given port and host
+  **************************
+*/
 void ProtoAgent::startClient (uint16_t port, const string& host) {
 	cout << "run in client mode" << endl;	
 	// spawn the actor that sends warnings
-	auto client_actor = spawn(sendWarning);
+	client_actor = spawn(sendWarning);
 	// spawn a broker to serialize and recognize messages
-	auto io_actor = spawn_io_client(protobuf_io, host, port, client_actor);
+	io_actor = spawn_io_client(protobuf_io, host, port, client_actor);
 	print_on_exit(io_actor, "protobuf_io");
 	print_on_exit(client_actor, "exit warning");
-	// Start the warning message actor by using a kickoff message event sent directly from main
-	send_as(io_actor, client_actor, atom("kickoff"), io_actor);
-	await_all_actors_done();
-  	shutdown();
 }
 
+/*
+  **************************
+  Client message - Message from Client to it's host with given Scenario
+  or to shutdown the Client with EXIT
+  **************************
+*/
+void ProtoAgent::sendMsgFromClient(Scenarios id) {	
+	if ( Scenarios::WARN1 == id) {
+		send_as(io_actor, client_actor, atom("warnSc1"), io_actor, mess_id);
+		mess_id++;
+	}
+	if ( Scenarios::WARN2 == id) {
+		send_as(io_actor, client_actor, atom("warnSc2"), io_actor, mess_id);
+		mess_id++;
+	}
+	if ( Scenarios::WARN3 == id) {
+		send_as(io_actor, client_actor, atom("warnSc3"), io_actor, mess_id);
+		mess_id++;
+	}
+	if ( Scenarios::EXIT == id) {
+		send_as(io_actor, client_actor, atom("exit"), 1);
+	}
+}
+
+/*
+  **************************
+  Server kickoff - spawns server Actor
+  **************************
+*/
 void ProtoAgent::startServer (uint16_t port) {
 	cout << "run in server mode" << endl;
 	// spawn the actor that acks messages
 	auto serv_actor = spawn(ackMessage);
 	// spawn an IO server to handle communication and work with the broker later (uses the behavior server helper)
-	auto sever_actor = spawn_io_server(server, port, serv_actor);
-	print_on_exit(sever_actor, "server");
+	auto server_actor = spawn_io_server(server, port, serv_actor);
+	print_on_exit(server_actor, "server");
 	print_on_exit(serv_actor, "exit ack");
 	await_all_actors_done();
 	shutdown();
 }
 
-/*#ifndef COMBINE
-int main(int argc, char** argv) {
-	// Parsing arguments
-	message_builder{argv + 1, argv + argc}.apply({
-	  on("-s", as_u16) >> [&](uint16_t port) {
-		// We are a server
-	  	ProtoAgent server;
-		server.startServer(port);
-	  },
-	  on("-c", val<string>, as_u16) >> [&](const string& host, uint16_t port) {
-      		// We are a client
-		ProtoAgent client;
-		client.startClient(port, host);
-    	  },
-    	  others >> [] {
-      		cerr << "use with eihter '-s PORT' as server or "
-          	"'-c HOST PORT' as client"
-           	<< endl;
-    }
-  });
+ProtoAgent::ProtoAgent(uint16_t port, string host)
+{
+  if(host == "")
+  {
+    this->startServer(port);
+  }
+  else
+  {
+    this->startClient(port,host);
+  }
 }
 
-#endif*/
+

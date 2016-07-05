@@ -30,6 +30,7 @@
 //std
 #include <vector>
 
+//local
 #include "../ObjectDetection/frame_detection_data.h"
 #include "scenario.h"
 #include "humans_in_front_of_bus_scenario.h"
@@ -53,7 +54,7 @@ public:
     void AddScenario(Scenario* scenario);
 
     /**
-     * Analyses the frame detection data and detetermines which scenario is there
+     * Analyses the frame detection data and detetermines which scenario is in the given frame detection data.
      *
      * @param detected_objects    The frame data with detected objects
      * @return The detected scenario

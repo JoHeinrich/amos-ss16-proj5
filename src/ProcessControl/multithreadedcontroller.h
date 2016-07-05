@@ -35,6 +35,27 @@ using namespace std;
 
 #ifndef MULTITHREADEDCONTROLLER
 #define MULTITHREADEDCONTROLLER
+
+//define keys
+const int KEY_ESC = 27;
+
+class ImageData
+{
+    public:
+    Image *current_image;
+    FrameDetectionData *frame_detection_data;
+    
+    ImageData(Image *current_image, FrameDetectionData *frame_detection_data):current_image(current_image),frame_detection_data(frame_detection_data)
+    {
+
+    }
+    ~ImageData()
+    {
+        delete current_image;
+        delete frame_detection_data;
+    }
+};
+
 class MultithreadedController
 {
     string videofile;
@@ -42,9 +63,12 @@ class MultithreadedController
     string host;
 
     Queue<Image>* imageQueue;
-    Queue<FrameDetectionData>* fddQueue;
+    Queue<ImageData>* analysationQueue;
     Queue<string>* warningQueue;
+    Queue<ImageData>* displayQueue;
 
+    //Unlocks all queues
+    void Unlock();
 public:
     MultithreadedController(std::string videofile, uint16_t port = 0, std::string host = "");
 
@@ -77,7 +101,13 @@ public:
     */
     void CarCommunication(bool& loop);
 
-    
+    /*
+    * takes ONE or more FrameDetectionData from the displayQueue and displays it
+    * 
+    *
+    * @loop continues the loop while true
+    */
+    void ShowVideo(bool& loop);
 };
 
 #endif
