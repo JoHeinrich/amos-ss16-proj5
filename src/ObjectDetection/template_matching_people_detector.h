@@ -46,6 +46,16 @@ public:
     **/
     std::vector<cv::Rect> Detect(cv::Mat *frame);
 
+    /**
+    * Detects objects in the given frame (cv::Mat) only in the ROIs. Must be overwritten in subclass.
+    *
+    * @param frame The current frame
+    * @param frame The rois
+    *
+    * @return The vector of all detected objects in the current Frame
+    **/
+    std::vector<cv::Rect> DetectInROI(cv::Mat *frame, std::vector<cv::Rect> *rois);
+
 private:
 
     cv::Mat template_image_;   ///< The template image for detection
