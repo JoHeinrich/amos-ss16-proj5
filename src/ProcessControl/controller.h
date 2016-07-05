@@ -56,4 +56,24 @@ public:
      *@param videofile The path to the video file
      */
     void SaveAllImagesAsJPEG(std::string videofile);
+    
+private:
+    
+    /**
+    *
+    * Initalizes the connection to another car
+    *
+    * @param port The port for the communication module (default = 0)
+    * @param host The host for the communication module (default = "")
+    */
+    void InitilalizeCarConnection(uint16_t port, std::string host);
+    
+    /**
+     *
+     * Notifies the other car wirh a given scenario
+     *
+     * @param port The port for the communication module (default = 0)
+     * @param host The host for the communication module (default = "")
+     */
+    void NotifyOtherCar (Scenarios scenario);
 };
