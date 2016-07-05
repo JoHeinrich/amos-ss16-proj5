@@ -38,7 +38,6 @@
 #ifndef H5_NO_STD
 #endif  // H5_NO_STD
 #endif
-
 #include "H5Cpp.h"
 
 #ifndef H5_NO_NAMESPACE
@@ -59,54 +58,54 @@ public:
     /**
     * Reads the given hdf5 file and fills the image ids and description string information.
     *
-    *  @return 0 if everything went good; 0 if it failed
+    * @return 0 if everything went good; -1 if it failed
     */
     int ReadFile();
 	
     /**
      *  Reads one protobuf file at the given index.
      *
-     *  @param  index The index of the protobuf to be read. If it does not exist, the first protobuf file is read
-     *  @return The vector with protobuf file
+     * @param  index The index of the protobuf to be read. If it does not exist, the first protobuf file is read
+     * @return The vector with protobuf file
      */
     std::vector<int64_t> ReadOneProtobufFile(unsigned int index);
 
     /**
-     *  Gets the vector with all protobuf files
+     * Gets the vector with all protobuf files as vectors
      *
-     *  @return  The vector with the protobuf files
+     * @return  The vector with the protobuf files
      */
     std::vector<std::vector<int64_t> > ReadAllProtobufFiles();
 
     /**
-     *  Gets the total number of protobuf files in the file
+     * Gets the total number of protobuf files in the file
      *
-     *  @return  The number of protobuf files
+     * @return  The number of protobuf files
      */
     int GetNumberOfProtobufFiles();
 
 
      /**
-     *  Gets the (protobuf) description attribute of the protobuf files.
+     * Gets the (protobuf) description attribute of the protobuf files.
      *
-     *  @return The string with the protobuf description.
+     * @return The string with the protobuf description.
      */	
     std::string GetProtobufFilesDescription();
     
     /**
-     *  Gets the vector with z values of all protobuf files
+     * Gets the vector with z values of all protobuf files
      *
-     *  @return  The vector with the z values of protobuf files
+     * @return  The vector with the z values of protobuf files
      */
     //std::vector<std::vector<int64_t> > GetZValues();
     
 
     /**
-     *  Gets an z values buffer at the specialized index position
+     * Gets an z values buffer at the specialized index position
      *
-     *  @param iIndex The index of the desired protobuf file
+     * @param iIndex The index of the desired protobuf file
      *
-     *  @return The vector with z values buffer at index index, the first buffer when the index doesn't exist
+     * @return The vector with z values buffer at index index, the first buffer when the index doesn't exist
      */
     //std::vector<int64_t> GetZValueBuffer(unsigned int index);
 

@@ -41,7 +41,7 @@ public:
     *
     * @param detected_objects The frame data with detected objects
     *
-    * @return true whether the circumstances for a certain scenario are met, false if not
+    * @return True when the circumstances for a certain scenario are met, false if not
     */
     virtual bool Detect(FrameDetectionData detected_objects) = 0;
     
@@ -55,44 +55,44 @@ public:
 
 
     /**
-    * Computes the distance between two objects. Uses the distance between the position of the objects as default. Can be overriden in subclasses.
+    * Computes the distance between two elements. Uses the distance between the position of the elements as default. Can be overriden in subclasses.
     *
-    * @param first The first object
-    * @param second The second object
+    * @param first_element The first element
+    * @param second_element The second element
     *
-    * @return The distance between the objects
+    * @return The distance between the elements
     */
-    static float ComputeDistance(Element first, Element second);
+    static float ComputeDistance(Element first_element, Element second_element);
     
     /**
-     * Computes the distance between two objects. Uses the distance between the center of the objects. Can be overriden in subclasses.
+     * Computes the distance between two elements' centers. Can be overriden in subclasses.
      *
-     * @param first The first object
-     * @param second The second object
+     * @param first_element The first element
+     * @param second_element The second element
      *
-     * @return The distance between the center of the objects.
+     * @return The distance between the center of the elements.
      */
-    static float ComputeCenterDistance(Element first, Element second);
+    static float ComputeCenterDistance(Element first_element, Element second_element);
 
     /**
-     * Computes whether the two objects overlap. As default, overlapping of one pixel in the bounding boxes of the elements is enough to return true. Can be overriden in subclasses.
+     * Computes whether the two elements overlap. As default, overlapping of one pixel in the bounding boxes of the elements is enough to return true. Can be overriden in subclasses.
      *
-     * @param first The first object
-     * @param second The second object
+     * @param first_element The first element
+     * @param second_element The second element
      *
-     * @return true whether there is an overlapping, false if not
+     * @return True if elements overlap, false if not
      */
-    static bool DoOverlap(Element first, Element second);
+    static bool DoOverlap(Element first_element, Element second_element);
 
     /**
      * Computes whether the big element contains the small one 
      *
-     * @param big The surrounding object
-     * @param small The contained object
+     * @param big_element The surrounding element
+     * @param small_element The contained element
      *
-     * @return true whether it is contained, false if not (equal size and position will be true)
+     * @return True whether the big element contains the small one, false if not (equal size and position will be true)
      */
-    static bool DoContain(Element big, Element small);
+    static bool DoContain(Element big_element, Element small_element);
 
 
 private:
@@ -100,12 +100,12 @@ private:
     /**
      * Computes the distance between two points. Helper function for all distance functions. Can be overriden in subclasses.
      *
-     * @param first The first point vector
-     * @param second The second point vector
+     * @param first_point The first point vector (x,y position)
+     * @param second_point The second point vector (x,y position)
      *
      * @return The distance between the two points.
      */
-    static float ComputePointDistance(std::vector<int> first, std::vector<int> second);
+    static float ComputePointDistance(std::vector<int> first_point, std::vector<int> second_point);
     
 
 };

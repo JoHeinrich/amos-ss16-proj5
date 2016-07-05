@@ -29,28 +29,53 @@
 #include "../StreamDecoder/frame_selector.h"
 #include "../StreamDecoder/frame_selector_factory.h"
 #include "../StreamDecoder/image.h"
+#include "../CarCommunication/protoagent.h"
 
 class Controller{
 
 public:
     /**
-     * Opens a HDF5Videofile and displays it
+     * Opens a HDF5 videofile and displays it
      *
-     *@param videofile path to the video file
+     * @param videofile path to the video file
      */
     void PlayAsVideo(std::string videofile);
     
     /**
-     * Opens a HDF5Videofile, calls the Analyser and displays the video and the Analyser-results
+     * Opens a HDF5 videofile, calls the Detectors, Analyser and displays the video and the Analyser results
      *
-     *@param videofile path to the video file
+     * @param videofile The path to the video file
+     *
      */
-    void AnalyseVideo(std::string videofile, uint16_t port = 0, std::string host = "");
+    void AnalyseVideo(std::string videofile);
 
     /**
-     * Saves all images as jepg to disc
+     * Saves all images as jepg to disc space
      *
-     *@param videofile path to the video file
+     *@param videofile The path to the video file
      */
     void SaveAllImagesAsJPEG(std::string videofile);
+    
+    /**
+     *
+     * Initalizes the connection to another car
+     *
+     * @param port The port for the communication module (default = 0)
+     * @param host The host for the communication module (default = "")
+     */
+    void InitilalizeCarConnection(uint16_t port, std::string host);
+    
+private:
+    
+    /**
+     *
+     * Notifies the other car wirh a given scenario
+     *
+     * @param port The port for the communication module (default = 0)
+     * @param host The host for the communication module (default = "")
+     */
+    void NotifyOtherCar (Scenarios scenario);
+    
+    ProtoAgent * agent_;//The agent for the communication
+    bool communication_is_activated_=false;//flag, if the communication is activated
 };
