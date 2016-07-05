@@ -34,7 +34,7 @@ CascadeHaarDetector::CascadeHaarDetector(std::string file_name, double scale_fac
 
     // check if classifier was loaded
     if (cascade_haar_classifier_.empty() == true) {
-        cascade_haar_classifier_.load("../../src/ObjectDetection/" + file_name);
+        cascade_haar_classifier_.load("../../docker/assets/" + file_name);
 
         if (cascade_haar_classifier_.empty() == true) {
             cascade_haar_classifier_.load("../../ObjectDetection/" + file_name);
@@ -59,17 +59,15 @@ std::vector<cv::Rect> CascadeHaarDetector::DetectInROI(cv::Mat *frame, std::vect
 
         cascade_haar_classifier_.detectMultiScale(ROI, detected_objects, scale_factor_, min_neighbors_, 0, min_size_, max_size_);
 
-        if (!detected_objects.empty() && old_size < detected_objects.size() ) {
-            detected_objects.back().x += rois->operator[](i).x;
-            detected_objects.back().y += rois->operator[](i).y;
-            old_size ++;
-            // FIXME: bounding box is not displayed at the right location!
-            // imshow( "", ROI );
-            // cv::waitKey(0);
-        }
-    }
+        while ( old_size < detected_objects.size() ) {
 
-    for (size_t i = 0; i < detected_objects.size(); i++) {
+            detected_objects[old_size].x += rois->operator[](i).x;
+            detected_objects[old_size].y += rois->operator[](i).y;
+            old_size ++;
+
+            // imshow(" ", ROI);
+            // cvWaitKey(0);
+        }
 
     }
 
