@@ -153,9 +153,6 @@ Mat Detection::ResizeFrame(Mat *frame) {
 
     resize_factor_ = static_cast<float>(default_resized_frame_width)/size.width;
 
-    resize_factor_ = 0.3125; // TODO: find out why this resize factor works better than the default?
-    // std::cout << "Detection: resized factor: " << resize_factor_ << std::endl;
-
     // perform resizing of the frame
     Mat resized_frame;
     resize(*frame, resized_frame, Size(0, 0), resize_factor_, resize_factor_, CV_INTER_AREA);
