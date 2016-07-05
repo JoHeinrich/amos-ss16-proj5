@@ -44,3 +44,4 @@ std::vector<cv::Rect> DaimlerPeopleDetector::DetectInROI(cv::Mat *frame, std::ve
 
     return detected_people;
 }
+
