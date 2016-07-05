@@ -60,7 +60,10 @@ std::vector<cv::Rect> DaimlerPeopleDetector::DetectInROI(cv::Mat *frame, std::ve
     size_t old_size = 0;
     std::vector<cv::Rect> detected_people;
     for( size_t i = 0; i < rois->size(); i++ ) {
-        cv::Mat ROI = frame->operator()( rois->operator[](i) );
+
+        cv::Rect* rescaled_roi = RescaleROI(&(rois->at(i)), hog_descriptor_.winSize.height, hog_descriptor_.winSize.width, frame->rows, frame->cols);
+
+        cv::Mat ROI = frame->operator()( *rescaled_roi );
 
         hog_descriptor_.detectMultiScale(ROI, detected_people, 0, cv::Size(4,4), cv::Size(0,0), 1.05, 0);
 
