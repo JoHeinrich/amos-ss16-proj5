@@ -31,17 +31,28 @@ DaimlerPeopleDetector::DaimlerPeopleDetector() {
 std::vector<cv::Rect> DaimlerPeopleDetector::Detect(cv::Mat *frame) {
 
     std::vector<cv::Rect> detected_people;
-    hog_descriptor_.detectMultiScale(*frame, detected_people, 1.0, cv::Size(8,8), cv::Size(16,16), 1.00, 0); // TODO: adjust settings to HDF5 data
+    hog_descriptor_.detectMultiScale(*frame, detected_people, 1.0, cv::Size(8,8), cv::Size(16,16), 1.00, 0);
 
     return detected_people;
 }
 
 std::vector<cv::Rect> DaimlerPeopleDetector::DetectInROI(cv::Mat *frame, std::vector<cv::Rect> *rois) {
 
-    // TODO: proper implementaion, right now it is the samw as Detect(frame)
+    size_t old_size = 0;
     std::vector<cv::Rect> detected_people;
-    hog_descriptor_.detectMultiScale(*frame, detected_people, 1.0, cv::Size(8,8), cv::Size(16,16), 1.00, 0);
+    for( size_t i = 0; i < rois->size(); i++ ) {
+        cv::Mat ROI = frame->operator()( rois->operator[](i) );
+
+        hog_descriptor_.detectMultiScale(ROI, detected_people, 0, cv::Size(4,4), cv::Size(0,0), 1.05, 0);
+
+        while ( old_size < detected_people.size() ) {
+
+            detected_people[old_size].x += rois->operator[](i).x;
+            detected_people[old_size].y += rois->operator[](i).y;
+            old_size ++;
+        }
+
+    }
 
     return detected_people;
 }
-
