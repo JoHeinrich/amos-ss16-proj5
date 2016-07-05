@@ -78,5 +78,6 @@ private:
      */
     void NotifyOtherCar (Scenarios scenario);
     
-    ProtoAgent agent;//The agent for the communication
+    ProtoAgent agent_;//The agent for the communication
+    
 };
