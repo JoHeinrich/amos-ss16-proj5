@@ -56,7 +56,7 @@ Use our [scripts](https://github.com/JoHeinrich/amos-ss16-proj5/tree/master/scri
     e.g.:(using port 8080)
     $ ./amos-ss16-proj5 8080
     
-    2. Start the detection 
+    2. Start the detection (use another terminal window/tab)
     ./amos-ss16-proj5 PORT SERVER_IP FULL/PATH/TO/VIDEO
     
     e.g.: (using port 8080 and localhost)
