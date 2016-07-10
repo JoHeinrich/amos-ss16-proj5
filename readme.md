@@ -15,7 +15,7 @@ A bus stops at a bus stop vis-à-vis to a school. A car that drives behind the b
 - Implement the scenario using software agents and inter-ECU (electronic control unit, i.e. car) communication
 
 #### Setup:
-- Operating System: Linux Ubuntu
+- Operating System: Linux Ubuntu (also tested with Mac OS X 10.10)
 - SW Agents library: CAF: C++ Actor Framework
 - Library for detection: OpenCV
 - Messaging format: HDF5, Google Protobuf
