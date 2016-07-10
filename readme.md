@@ -38,11 +38,17 @@ Use our [scripts](https://github.com/JoHeinrich/amos-ss16-proj5/tree/master/scri
     $ git clone https://github.com/JoHeinrich/amos-ss16-proj5.git
     $ cd amos-ss16-proj5
 
-#### Build command: 
+#### Build project: 
     $ mkdir build
     $ cd build
     $ cmake ..
     $ make
+
+#### Run project on your computer:
+##### Just the detection
+    $ ./amos-ss16-proj5 FULL/PATH/TO/VIDEO
+    e.g.:
+    $ ./amos-ss16-proj5 video.mp4
 
 #### Source code documentation:
 See our [Doxygen site](http://joheinrich.github.io/amos-ss16-proj5-gh-pages/index.html)
