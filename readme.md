@@ -34,6 +34,10 @@ Use our [scripts](https://github.com/JoHeinrich/amos-ss16-proj5/tree/master/scri
 - CAF: C++ Actor Framework 0.14.5: [Download & Install] (https://github.com/actor-framework/actor-framework)
 - A [OpenMP Compiler] (http://openmp.org/wp/openmp-compilers/)
 
+#### Clone project: 
+    $ git clone https://github.com/JoHeinrich/amos-ss16-proj5.git
+    $ cd amos-ss16-proj5
+
 #### Build command: 
     $ mkdir build
     $ cd build
