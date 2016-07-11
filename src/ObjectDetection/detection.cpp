@@ -111,7 +111,7 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
         people_elements.push_back(current_elem);
     }
-
+    RemoveMultipleDetectedElements(&people_elements);
     detected_objects->AddElementsOfType(OBJECT_HUMAN, people_elements);
 
     for(int i=0; i<detected_vehicles.size(); i++) {
@@ -131,7 +131,7 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
         vehicle_elements.push_back(current_elem);
     }
-
+    RemoveMultipleDetectedElements(&vehicle_elements);
     detected_objects->AddElementsOfType(OBJECT_VEHICLE, vehicle_elements);
 
 
@@ -141,6 +141,28 @@ FrameDetectionData* Detection::ProcessFrame(Image * image) {
 
 
     return detected_objects;
+}
+
+void Detection::RemoveMultipleDetectedElements(std::vector<Element> * elements){
+    std::vector<int> elements_to_delete;
+    if (elements->size() >= 2){
+        //find elements to delete
+        for(int i=0; i<elements->size(); i++) {
+            Element curr_element = elements->at(i);
+            for(int j=0; j<elements->size(); j++){
+                if (i!=j){
+                    if (curr_element.IsIncludedIn(elements->at(j))){
+                        elements_to_delete.push_back(i);
+                        break;
+                    }
+                }
+            }
+        }
+        //delete elements
+        for(int i=0; i<elements_to_delete.size(); i++){
+            elements->erase(elements->begin()+elements_to_delete.at(i));
+        }
+    }
 }
 
 Mat Detection::ResizeFrame(Mat *frame) {
