@@ -52,91 +52,95 @@ if [ "$network" == "" ] || [ "$port" == "" ];then
 fi
 
 # open file manager to pick mp4 or hdf5 files
-FILE=`zenity --file-selection --title="Select either an mp4 or hdf5 File" --file-filter='*.mp4 *.hdf5 *.MP4 *.HDF5'`
-
-# Checking if the given file is valid
-if [ ! -f "$FILE" ]; then
-	zenity --error --text="Filepath invalid"
-	echo -en '\n'
-	echo "Thanks for using our program!"
-	exit 1
-fi
-
+FILE=`zenity --file-selection --multiple --title="Select either an mp4 or hdf5 File" --separator=";" --file-filter='*.mp4 *.hdf5 *.MP4 *.HDF5'`
+IFS=';'; arrFiles=($FILE); unset IFS;
 # Get script directory 
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Start the server -- needs the docker network, container tag, and the server port
-gnome-terminal -e "$dir/helper.sh $network release $port"
-sleep 3
+for i in "${arrFiles[@]}"; do
+	# Showing current file used for detection for viewers
+	echo "Loading new file: $i"
+	# Checking if the given files are valid
+	if [ ! -f "$i" ]; then
+		zenity --error --text="Filepath invalid: $i"
+		echo -en '\n'
+		echo "Thanks for using our program!"
+		exit 1
+	fi	
+
+	# Start the server -- needs the docker network, container tag, and the server port
+	gnome-terminal -e "$dir/helper.sh $network release $port"
+	# Little sleep before starting, so you can actually read about the file and server can startup
+	sleep 3
 
 
+	# HDF5 File given
+	if [ "${i##*.}" == "hdf5" ]; then
+		# checking if client is running / exited
+		containerRunning=$(docker ps -a -f name=clientContainer)
+		flag=`echo $containerRunning|awk '{print match($0,"clientContainer")}'`;
+		#echo $flag
+		if [ $flag -gt 0 ]; then
+		  docker stop clientContainer
+		  docker rm -fv clientContainer
+		fi
+	
+		# Getting server ip via docker network
+		echo "Fetching server ip"
+		echo -en '\n'
+		line=$(docker network inspect $network | sed -n '/serverContainer/{n;n;n;p}')
+		ip=$(echo $line | cut -c17-26)
+	
+		# Configuring the xhost
+		echo "Configuring xhost"
+		xhost +local:
+	
+		# Starting the client inside the docker container
+		echo "Starting the client"
+		echo -en '\n'
+		docker run -ti --name=clientContainer --net=$network -v $i:/home/hdf5file.hdf5 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:release /bin/bash -c "ln -s /dev/null /dev/raw1394; cd /home/bin/; ./amos-ss16-proj5 $port $ip ../hdf5file.hdf5"
+		echo -en '\n'
+		xhost -local:
+		echo "Reverting xhost settings..."
+		echo -en '\n'
+		echo "Thanks for using our program!"
+#		exit 0
+	fi
 
-# HDF5 File given
-if [ "${FILE##*.}" == "hdf5" ]; then
-	# checking if client is running / exited
-	containerRunning=$(docker ps -a -f name=clientContainer)
-	flag=`echo $containerRunning|awk '{print match($0,"clientContainer")}'`;
-	#echo $flag
-	if [ $flag -gt 0 ]; then
-	  docker stop clientContainer
-	  docker rm -fv clientContainer
+	# mp4 File given
+	if [ "${i##*.}" == "mp4" ]; then
+	  	# checking if client is running / exited
+		containerRunning=$(docker ps -a -f name=clientContainer)
+		flag=`echo $containerRunning|awk '{print match($0,"clientContainer")}'`;
+		echo $flag
+		if [ $flag -gt 0 ]; then
+		  docker stop clientContainer
+		  docker rm -fv clientContainer
+		fi
+	
+		# Getting server ip via docker network
+		echo "Fetching server ip"
+		echo -en '\n'
+		line=$(docker network inspect $network | sed -n '/serverContainer/{n;n;n;p}')
+		ip=$(echo $line | cut -c17-26)
+	
+		# Configuring the xhost
+		echo "Configuring xhost"
+		xhost +local:
+	
+		# Starting the client inside the docker container
+		echo "Starting the client"
+		echo -en '\n'
+		docker run -ti --name=clientContainer --net=$network -v $i:/home/mp4file.mp4 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:release /bin/bash -c "ln -s /dev/null /dev/raw1394; cd /home/bin/; ./amos-ss16-proj5 $port $ip ../mp4file.mp4"
+		echo -en '\n'
+		xhost -local:
+		echo "Reverting xhost settings..."
+		echo -en '\n'
+		echo "Thanks for using our program!"
+#		exit 0
 	fi
 	
-	# Getting server ip via docker network
-	echo "Fetching server ip"
-	echo -en '\n'
-	line=$(docker network inspect $network | sed -n '/serverContainer/{n;n;n;p}')
-	ip=$(echo $line | cut -c17-26)
-	
-	# Configuring the xhost
-	echo "Configuring xhost"
-	xhost +local:
-	
-	# Starting the client inside the docker container
-	echo "Starting the client"
-	echo -en '\n'
-	docker run -ti --name=clientContainer --net=$network -v $FILE:/home/hdf5file.hdf5 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:release /bin/bash -c "ln -s /dev/null /dev/raw1394; cd /home/bin/; ./amos-ss16-proj5 $port $ip ../hdf5file.hdf5"
-	echo -en '\n'
-	xhost -local:
-	echo "Reverting xhost settings..."
-	echo -en '\n'
-	echo "Thanks for using our program!"
-	exit 0
-fi
-
-# mp4 File given
-if [ "${FILE##*.}" == "mp4" ]; then
-  	# checking if client is running / exited
-	containerRunning=$(docker ps -a -f name=clientContainer)
-	flag=`echo $containerRunning|awk '{print match($0,"clientContainer")}'`;
-	echo $flag
-	if [ $flag -gt 0 ]; then
-	  docker stop clientContainer
-	  docker rm -fv clientContainer
-	fi
-	
-	# Getting server ip via docker network
-	echo "Fetching server ip"
-	echo -en '\n'
-	line=$(docker network inspect $network | sed -n '/serverContainer/{n;n;n;p}')
-	ip=$(echo $line | cut -c17-26)
-	
-	# Configuring the xhost
-	echo "Configuring xhost"
-	xhost +local:
-	
-	# Starting the client inside the docker container
-	echo "Starting the client"
-	echo -en '\n'
-	docker run -ti --name=clientContainer --net=$network -v $FILE:/home/mp4file.mp4 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e LD_LIBRARY_PATH=/home/openCV/lib:$LD_LIBRARY_PATH amosproj5/amosbuildimage:release /bin/bash -c "ln -s /dev/null /dev/raw1394; cd /home/bin/; ./amos-ss16-proj5 $port $ip ../mp4file.mp4"
-	echo -en '\n'
-	xhost -local:
-	echo "Reverting xhost settings..."
-	echo -en '\n'
-	echo "Thanks for using our program!"
-	exit 0
-fi
-
+done
 
 
 
