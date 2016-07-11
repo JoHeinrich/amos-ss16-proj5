@@ -78,3 +78,25 @@ int Element::GetCenterY(){
 
 }
 
+bool Element::IsIncludedIn(Element other_element){
+
+    if(other_element.GetMinX() > GetMinX()){
+        return false;
+    }
+    if(other_element.GetMaxX() < GetMaxX()){
+        return false;
+    }
+
+    if(other_element.GetMinY() > GetMinY()){
+        return false;
+    }
+
+    if(other_element.GetMaxY() < GetMaxY()){
+        return false;
+    }
+
+    return true;
+}
+
+
+
