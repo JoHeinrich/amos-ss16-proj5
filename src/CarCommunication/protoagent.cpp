@@ -267,9 +267,9 @@ void ProtoAgent::startServer (uint16_t port) {
 	auto serv_actor = spawn(ackMessage);
 	// spawn an IO server to handle communication and work with the broker later (uses the behavior server helper)
 	auto server_actor = spawn_io_server(server, port, serv_actor);
+	await_all_actors_done();
 	print_on_exit(server_actor, "server");
 	print_on_exit(serv_actor, "exit ack");
-	await_all_actors_done();
 	shutdown();
 }
 
