@@ -160,7 +160,9 @@ void Detection::RemoveMultipleDetectedElements(std::vector<Element> * elements){
         }
         //delete elements
         for(int i=0; i<elements_to_delete.size(); i++){
-            elements->erase(elements->begin()+elements_to_delete.at(i));
+            if (elements->size()>elements_to_delete.at(i)){
+                elements->erase(elements->begin()+elements_to_delete.at(i));
+            }
         }
     }
 }
