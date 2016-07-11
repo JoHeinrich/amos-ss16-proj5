@@ -102,6 +102,12 @@ private:
      **/
     cv::Mat AdjustContrastAndBrightness(cv::Mat *frame);
 
+    /**
+     * Removes multiple detected elements from a given vector<Element>
+     *
+     * @param elements the std::vector<Element> as pointer with the elements
+     **/
+    void  RemoveMultipleDetectedElements(std::vector<Element> * elements);
 };
 
 
