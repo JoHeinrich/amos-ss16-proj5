@@ -101,6 +101,13 @@ private:
    std::vector<int> position_;  ///< The vector containing the position of the element (x and y coordinate of the topleft corner)
    std::vector<int> box_size_;  ///< The vector contatining the width and height of the bounding box of the element
     
+    /**
+     *   Checks, if other element is completely included
+     *
+     *   @return true, if other is completley included, false if not
+     */
+    bool IsIncludedIn(Element other_element);
+    
 };
 
 
