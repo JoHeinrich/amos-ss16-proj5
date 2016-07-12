@@ -57,10 +57,38 @@ str_to_uint16(const char *str, uint16_t *res)
 
 int main(int argc, const char* argv[]) {
 
-    if (argc > 4 || argc == 1){
-
-        cerr << "Usage1:  " << " FULL_PATH_TO_VIDEO_FILE (IMAGE_INDEX)\n";
-        cerr << "Usage2:  " << " PORT (SERVERIP FULL_PATH_TO_VIDEO_FILE)" << endl;
+    std::cout << "AMOS Project 2016 - Group 5 @ University of Erlangen-Nuremberg		\n"
+    "																					\n"
+    "                 _____   															\n"
+    "                | ____|   															\n"
+    "  __ _ _ __ ___ | |__   ___  ___ 													\n"
+    " / _` | '_ ` _ \\|___ \\ / _ \\/ __|												\n"
+    "| (_| | | | | | |___) | (_) \\__ \\												\n"
+    " \\__,_|_| |_| |_|____/ \\___/|___/												\n"
+    "																					\n" << std::endl;
+    
+    if (argc > 4 || argc == 1 || argc == 3){
+        std::cout << "This program                                                      \n"
+        "- takes a .hdf5 or .mp4 video                                                  \n"
+        "- performs a car and bus detection on it                                       \n"
+        "- performs a human detection                                                   \n"
+        "- performs analyzation of -human in front of bus scenario-                     \n"
+        "- if scenario detected: send warning to other process                          \n"
+        "                                                                               \n" << std::endl;
+        
+        
+        std::cout <<"Usage:                                                             \n"
+        "                                                                               \n"
+        "Usage 1 (Detection)                                                            \n"
+        "FULL/PATH/TO/VIDEO                                                             \n"
+        "                                                                               \n"
+        "Usage 2: (Detection and communication)                                         \n"
+        "a) Start the server:                                                           \n"
+        "PORT                                                                           \n"
+        "b) Start the detection (use another terminal window/tab):                      \n"
+        "PORT SERVER_IP FULL/PATH/TO/VIDEO                                              \n" << std::endl;
+    
+        
         return -1;
 
     }
@@ -78,38 +106,20 @@ int main(int argc, const char* argv[]) {
             Controller controller;
             controller.AnalyseVideo(argv[1]);
         }
-    } 
-
-    if(argc == 3){
-        /*FrameSelectorFactory frame_selector_factory(argv[1]);
-        FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
-        // read one image
-        unsigned int index = 0;
-        stringstream string_index(argv[2]);
-        string_index >> index;
-        Image * result_image = pipeline->ReadImage(index);
-
-        ImageView image_viewer;
-        image_viewer.ShowImage(result_image, 0);*/
     }
     
     if(argc == 4){
         uint16_t port;
-        if(str_to_uint16(argv[1],&port))
-        {
+        if(str_to_uint16(argv[1],&port)){
             //MultithreadedController controller(argv[3],port,argv[2]);
             Controller controller;
             controller.InitilalizeCarConnection(port,argv[2]);
             controller.AnalyseVideo(argv[3]);
         }
-        else
-        {
+        else{
             cerr << "Could not read port" << endl;
         }
-
-}
-
-
+    }
     return 0;
 }
 
