@@ -75,6 +75,20 @@ int main(int argc, const char* argv[]) {
         "- performs analyzation of -human in front of bus scenario-                     \n"
         "- if scenario detected: send warning to other process                          \n"
         "                                                                               \n" << std::endl;
+        
+        
+        std::cout <<"Usage:                                                             \n"
+        "                                                                               \n"
+        "Usage 1 (Detection)                                                            \n"
+        "FULL/PATH/TO/VIDEO.mp4                                                         \n"
+        "                                                                               \n"
+        "Usage 2: (Detection and communication)                                         \n"
+        "a) Start the server:                                                           \n"
+        "PORT                                                                           \n"
+        "b) Start the detection (use another terminal window/tab):                      \n"
+        "PORT SERVER_IP FULL/PATH/TO/VIDEO                                              \n" << std::endl;
+    
+        
         return -1;
 
     }
