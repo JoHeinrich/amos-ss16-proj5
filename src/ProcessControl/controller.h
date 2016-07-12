@@ -71,8 +71,7 @@ private:
      *
      * Notifies the other car wirh a given scenario
      *
-     * @param port The port for the communication module (default = 0)
-     * @param host The host for the communication module (default = "")
+     * @param scenario The scenario that should be sent
      */
     void NotifyOtherCar (Scenarios scenario);
     
