@@ -100,9 +100,9 @@ void MultithreadedController::ObjectDetection(bool& loop)
 {
     //namedWindow( "Camera stream", WINDOW_AUTOSIZE );
     // DaimlerPeopleDetector people_detector;
-    
-    HOGPeopleDetector people_detector;
-    CascadeHaarDetector vehicle_detector("cars3.xml");
+     CascadeHaarDetector vehicle_detector("cars3.xml");
+     CascadeHaarDetector people_detector("haarcascade_fullbody.xml", 1.5, 0, cv::Size(14,28), cv::Size(98,196));
+
     Detection detection(&people_detector, &vehicle_detector);
     do
     {
