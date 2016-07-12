@@ -57,10 +57,10 @@ Use our [scripts](https://github.com/JoHeinrich/amos-ss16-proj5/tree/master/scri
     $ ./amos-ss16-proj5 8080
     
     2. Start the detection (use another terminal window/tab)
-    ./amos-ss16-proj5 PORT SERVER_IP FULL/PATH/TO/VIDEO
+    $ ./amos-ss16-proj5 PORT SERVER_IP FULL/PATH/TO/VIDEO
     
     e.g.: (using port 8080 and localhost)
-    ./amos-ss16-proj5 8080 127.0.0.1 video.mp4
+    $ ./amos-ss16-proj5 8080 127.0.0.1 video.mp4
 
 #### Source code documentation:
 See our [Doxygen site](http://joheinrich.github.io/amos-ss16-proj5-gh-pages/index.html)
