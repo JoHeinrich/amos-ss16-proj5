@@ -38,7 +38,7 @@
 #include "StreamDecoder/frame_selector_factory.h"
 #include "StreamDecoder/image_view.h"
 #include "ProcessControl/controller.h"
-//#include "ProcessControl/multithreadedcontroller.h"
+#include "ProcessControl/multithreadedcontroller.h"
 #include "CarCommunication/protoagent.h"
 
 using namespace std;
@@ -111,10 +111,10 @@ int main(int argc, const char* argv[]) {
     if(argc == 4){
         uint16_t port;
         if(str_to_uint16(argv[1],&port)){
-            //MultithreadedController controller(argv[3],port,argv[2]);
-            Controller controller;
-            controller.InitilalizeCarConnection(port,argv[2]);
-            controller.AnalyseVideo(argv[3]);
+            MultithreadedController controller(argv[3],port,argv[2]);
+            //Controller controller;
+            //controller.InitilalizeCarConnection(port,argv[2]);
+            //controller.AnalyseVideo(argv[3]);
         }
         else{
             cerr << "Could not read port" << endl;
