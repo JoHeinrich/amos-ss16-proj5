@@ -68,8 +68,13 @@ int main(int argc, const char* argv[]) {
     "																					\n" << std::endl;
     
     if (argc > 4 || argc == 1 || argc == 3){
-        cerr << "Usage1:  " << " FULL_PATH_TO_VIDEO_FILE (IMAGE_INDEX)\n";
-        cerr << "Usage2:  " << " PORT (SERVERIP FULL_PATH_TO_VIDEO_FILE)" << endl;
+        std::cout << "This program                                                      \n"
+        "- takes a .hdf5 or .mp4 video                                                  \n"
+        "- performs a car and bus detection on it                                       \n"
+        "- performs a human detection                                                   \n"
+        "- performs analyzation of -human in front of bus scenario-                     \n"
+        "- if scenario detected: send warning to other process                          \n"
+        "                                                                               \n" << std::endl;
         return -1;
 
     }
