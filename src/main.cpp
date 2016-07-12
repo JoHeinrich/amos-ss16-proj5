@@ -57,8 +57,17 @@ str_to_uint16(const char *str, uint16_t *res)
 
 int main(int argc, const char* argv[]) {
 
+    std::cout << "AMOS Project 2016 - Group 5 @ University of Erlangen-Nuremberg		\n"
+    "																					\n"
+    "                 _____   															\n"
+    "                | ____|   															\n"
+    "  __ _ _ __ ___ | |__   ___  ___ 													\n"
+    " / _` | '_ ` _ \\|___ \\ / _ \\/ __|												\n"
+    "| (_| | | | | | |___) | (_) \\__ \\												\n"
+    " \\__,_|_| |_| |_|____/ \\___/|___/												\n"
+    "																					\n" << std::endl;
+    
     if (argc > 4 || argc == 1){
-
         cerr << "Usage1:  " << " FULL_PATH_TO_VIDEO_FILE (IMAGE_INDEX)\n";
         cerr << "Usage2:  " << " PORT (SERVERIP FULL_PATH_TO_VIDEO_FILE)" << endl;
         return -1;
