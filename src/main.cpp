@@ -67,7 +67,7 @@ int main(int argc, const char* argv[]) {
     " \\__,_|_| |_| |_|____/ \\___/|___/												\n"
     "																					\n" << std::endl;
     
-    if (argc > 4 || argc == 1){
+    if (argc > 4 || argc == 1 || argc == 3){
         cerr << "Usage1:  " << " FULL_PATH_TO_VIDEO_FILE (IMAGE_INDEX)\n";
         cerr << "Usage2:  " << " PORT (SERVERIP FULL_PATH_TO_VIDEO_FILE)" << endl;
         return -1;
@@ -87,19 +87,6 @@ int main(int argc, const char* argv[]) {
             Controller controller;
             controller.AnalyseVideo(argv[1]);
         }
-    } 
-
-    if(argc == 3){
-        /*FrameSelectorFactory frame_selector_factory(argv[1]);
-        FrameSelector* pipeline = frame_selector_factory.GetFrameSelector();
-        // read one image
-        unsigned int index = 0;
-        stringstream string_index(argv[2]);
-        string_index >> index;
-        Image * result_image = pipeline->ReadImage(index);
-
-        ImageView image_viewer;
-        image_viewer.ShowImage(result_image, 0);*/
     }
     
     if(argc == 4){
