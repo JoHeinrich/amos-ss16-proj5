@@ -69,7 +69,7 @@ private:
     
     /**
      *
-     * Notifies the other car wirh a given scenario
+     * Notifies the other car with a given scenario
      *
      * @param scenario The scenario that should be sent
      */
